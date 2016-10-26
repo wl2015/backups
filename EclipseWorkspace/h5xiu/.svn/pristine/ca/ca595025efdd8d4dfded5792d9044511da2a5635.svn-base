@@ -1,0 +1,533 @@
+package com.h5.controller;
+
+import java.util.HashMap;
+
+import java.util.Map;
+
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+
+
+import com.h5.entity.PhoneCode;
+import com.h5.entity.User;
+import com.h5.service.CommonService;
+import com.h5.service.UserService;
+import com.h5.util.Constants;
+
+import com.h5.util.CryptogramUtil;
+import com.h5.util.DateUtil;
+import com.h5.util.SystemUtil;
+import com.h5.util.ValidateUtil;
+
+@Controller
+public class UserController {
+	
+	private static final Logger logger = Logger.getLogger(UserController.class);
+	@Inject
+	private CommonService commonservice;
+	@Inject
+	public UserService userService;
+	
+	private final int SEND_CODE_WAIT_TIME = 60;
+	
+	/**
+	 * 退出登录
+	 * @return
+	 * */	
+	@RequestMapping("/user/backToLogin")
+	public String intobackToLogin(HttpServletRequest request) throws Exception {
+		request.getSession().removeAttribute(Constants.LOGINUSER_SESSION_NAME_USER);
+		return "user/login";
+	}
+	
+	/**
+	 * 获取用户信息
+	 * @return
+	 * */	
+	@RequestMapping("/user/userInfo")
+	public String getInfo(HttpServletRequest request, ModelMap map){		
+		User uInfo=(User)request.getSession().getAttribute(Constants.LOGINUSER_SESSION_NAME_USER);						
+		map.put("code",Constants.AJAX_SUCCESS_MESSAGE);
+		map.put("user", uInfo);		
+		return "user/userInfo";
+	}
+
+	
+	/**
+	 * 修改昵称
+	 * @return
+	 * @throws Exception
+	 * */
+	@RequestMapping("/user/changeName")
+	@ResponseBody
+	public Map<String, Object> changeName(HttpServletRequest request) throws Exception {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		User loginu=(User)request.getSession().getAttribute(Constants.LOGINUSER_SESSION_NAME_USER);
+		String key = (String)request.getSession().getAttribute(Constants.ENCRYPT_CODE);
+			
+		logger.debug("\n\n\n\n------------------------msg: "+"Welcome to Demo!");		
+		logger.debug("\n\n\n\n------------------------id: "+loginu.getUserId());
+		//对新昵称解密
+		String newName = CryptogramUtil.decrypt(ValidateUtil.valiStrIsEmpty(request.getParameter("newname")), key);		
+		newName=SystemUtil.removeAllTagFromHtml(newName);
+		//修改昵称
+		boolean ischanged=userService.changeNiceName(loginu.getUserId(), newName);
+		logger.debug("\n\n\n\n-----------------------nameisChange: "+ischanged);
+		if(ischanged){	
+			resultMap.put("code", Constants.AJAX_SUCCESS_ALERT_CODE);
+			resultMap.put("msg", "昵称修改成功");
+			loginu.setUserName(newName);
+			request.getSession().setAttribute(Constants.LOGINUSER_SESSION_NAME_USER, loginu);
+			return 	resultMap;			
+		}else{
+			resultMap.put("code", Constants.AJAX_FAIL_ALERT_CODE);
+			resultMap.put("msg", "昵称修改失败，请重新修改");
+			return 	resultMap;		
+		}
+	}
+	
+	
+	
+	/**
+	 * 修改密码（已知原密码，并根据原密码进行修改）
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/user/changePassword")
+	@ResponseBody
+	public Map<String, Object> changePass(HttpServletRequest request) throws Exception{
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		User loginu=(User)request.getSession().getAttribute(Constants.LOGINUSER_SESSION_NAME_USER);
+		String key = (String)request.getSession().getAttribute(Constants.ENCRYPT_CODE);		
+		Map<String, Object> datas=CryptogramUtil.decryptAll(ValidateUtil.valiStrIsEmpty(request.getParameter("t")), key);			
+		
+		//获取数据
+		String oldPass = (String) datas.get("oldPass");		
+		String newPass = (String) datas.get("newPass");
+		oldPass=SystemUtil.removeAllTagFromHtml(oldPass);
+		newPass=SystemUtil.removeAllTagFromHtml(newPass);
+		String reNewPass = (String) datas.get("reNewPass");
+		
+		String md5oldPass=CryptogramUtil.md5(oldPass);
+		String md5NewPass=CryptogramUtil.md5(newPass);
+		String loginuPass=loginu.getPassword();
+		logger.debug("\n\n\n\n------------------------msg: "+"Welcome to Demo!");
+		logger.debug("\n\n\n\n--------loginuPass: "+loginuPass+".....oldpass:"+oldPass+".......newPass:"+newPass);
+		//新密码验证
+		if(newPass == null || reNewPass == null || !newPass.equals(reNewPass)){
+			resultMap.put("code", Constants.AJAX_FAIL_ALERT_CODE);
+			resultMap.put("msg", "两次新密码输入不一致");
+			return 	resultMap;
+		}
+		//原密码验证
+		if(oldPass == null || !md5oldPass.equals(loginuPass)){
+			resultMap.put("code", Constants.AJAX_FAIL_ALERT_CODE);
+			resultMap.put("msg", "原密码错误");
+			return 	resultMap;
+		}
+		////passChanged标志是否修改成功 0:但修改没成功，1：密码修改成功
+		int passChanged=userService.changePass(loginu.getUserId(), md5NewPass);
+		if(passChanged>0){
+			loginu.setPassword(md5NewPass);
+			request.getSession().setAttribute(Constants.LOGINUSER_SESSION_NAME_USER, loginu);
+			resultMap.put("code", Constants.AJAX_SUCCESS_ALERT_CODE);
+			resultMap.put("msg", "密码修改成功");
+			return 	resultMap;
+		}
+		
+		resultMap.put("code", Constants.AJAX_FAIL_ALERT_CODE);
+		resultMap.put("msg", "密码修改失败");
+		return 	resultMap;
+		
+	}
+	
+
+	/**
+	 * 修改头像
+	 * @return
+	 */
+	@RequestMapping("/user/changeIcon")
+	@ResponseBody
+	public Map<String, Object> changeIcon(HttpServletRequest request) throws Exception{
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		String icon=request.getParameter("s");
+		icon=SystemUtil.removeAllTagFromHtml(icon);
+		User loginu=(User)request.getSession().getAttribute(Constants.LOGINUSER_SESSION_NAME_USER);
+		//添加到数据库
+		boolean changeLogo=userService.changeLogo(loginu.getUserId(), icon);
+		if(changeLogo){		
+			loginu.setUserHeadImg(icon);
+			request.getSession().setAttribute(Constants.LOGINUSER_SESSION_NAME_USER, loginu);
+			resultMap.put("code", Constants.AJAX_SUCCESS_ALERT_CODE);
+			resultMap.put("msg", "头像修改成功");
+			return resultMap;
+		}
+		resultMap.put("code", Constants.AJAX_FAIL_ALERT_CODE);
+		resultMap.put("msg", "头像修改失败");
+		return resultMap;
+	}
+	/**
+	 * 请求注册页面
+	 * @return返回注册页面
+	 */
+	@RequestMapping("/user/regist")	
+	public String toRegist(HttpServletRequest request){
+		return "user/regist";
+	}
+	
+	/**
+	 * 请求登录页面
+	 * @return登录页面
+	 */
+	@RequestMapping("/user/login")
+	public String toLogin(HttpServletRequest request){
+		return "user/login";
+	}
+	
+	/**
+	 * 登录时，忘记密码，请求到找回密码页面
+	 * @return找回密码页面
+	 */
+	@RequestMapping("/user/toresetPass")
+	public String toResetPass(HttpServletRequest request, ModelMap map){	
+		String phoneNum=SystemUtil.removeAllTagFromHtml(request.getParameter("phoneNum"));		
+		if(!ValidateUtil.strIsPhone(phoneNum)){
+				return "user/login";
+		}
+		map.put("phoneNum",phoneNum);	
+		return "user/findpassword";
+	}
+	
+	/**
+	 * 登录时，即刻验证是否存在该电话号码
+	 * @throws Exception
+	 * @return
+	 */
+	@RequestMapping("/user/checkePhone")
+	@ResponseBody
+	public Map<String, Object> checkePhone(HttpServletRequest request) throws Exception{
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		String key = (String)request.getSession().getAttribute(Constants.ENCRYPT_CODE);		
+
+		String phoneNum= (String)SystemUtil.removeAllNotCompleteTagFromHtml(CryptogramUtil.decrypt(ValidateUtil.valiStrIsEmpty(request.getParameter("phoneNum")), key));				
+
+		logger.debug("\n\n\n\n-----------------------phoneNum:"+phoneNum+"\n\n");
+		//0：数据库中不存在该手机号，1：数据库中存在该手机号
+		int isExsist=userService.usefulPhone(phoneNum);
+		//存在此手机号
+		if(isExsist>0){
+			resultMap.put("code", Constants.AJAX_SUCCESS_ALERT_CODE);
+			resultMap.put("msg", "存在此手机号");
+			return resultMap;
+		}
+		
+		resultMap.put("code", Constants.AJAX_FAIL_ALERT_CODE);
+		resultMap.put("msg", "此手机号不存在");
+		return resultMap;
+	}
+	
+	/**
+	 * 根据登录数据登录
+	 * @throws Exception
+	 * @return
+	 */
+	@RequestMapping("/user/doLogin")
+	@ResponseBody
+	public Map<String, Object> doLogin(HttpServletRequest request) throws Exception{
+		String key = (String)request.getSession().getAttribute(Constants.ENCRYPT_CODE);
+		Map<String, Object> resultMap=new HashMap<String, Object>();
+		/*Map<String, Object> datas = CryptogramUtil.decryptAll(ValidateUtil.valiStrIsEmpty(request.getParameter("t")), key);
+		//String phone = (String) datas.get("phoneNum");
+		phone=SystemUtil.removeAllTagFromHtml(phone);
+		String pass = (String) datas.get("password");
+		pass=SystemUtil.removeAllTagFromHtml(pass);*/
+		
+		//非整个form表单提交数据
+		String phone =SystemUtil.removeAllTagFromHtml(CryptogramUtil.decrypt(ValidateUtil.valiStrIsEmpty(request.getParameter("phoneNum")), key));
+		String pass  = SystemUtil.removeAllTagFromHtml(CryptogramUtil.decrypt(ValidateUtil.valiStrIsEmpty(request.getParameter("password")), key));
+		String md5Pass=CryptogramUtil.md5(ValidateUtil.valiStrIsEmpty(pass));	
+		logger.debug("\n\nphone:"+phone+";"+pass+"\n\n");
+		if(!ValidateUtil.strIsPhone(phone)){
+			resultMap.put("code", Constants.AJAX_FAIL_ALERT_CODE);
+			resultMap.put("msg", "请检查你的电话号码");
+			return resultMap;
+		}
+		//返回登录用户的用户信息
+		User u=userService.doLogin(phone, md5Pass);
+		if(u != null){
+			request.getSession().setAttribute(Constants.LOGINUSER_SESSION_NAME_USER, u);
+			resultMap.put("code", Constants.AJAX_SUCCESS_SKIP_CODE);
+			return  resultMap;
+		}			
+		resultMap.put("code", Constants.AJAX_FAIL_ALERT_CODE);
+		resultMap.put("msg", "登录失败，请检查你的登录信息");
+		return  resultMap;		
+	}
+	
+	/**
+	 * 登录忘记密码时，手机发送验证码方式重置密码
+	 * @throws Exception
+	 * @return
+	 */
+	@RequestMapping("/user/doResetPass")
+	@ResponseBody
+	public Map<String, Object> doResetPass(HttpServletRequest request) throws Exception{
+		Map<String, Object> resultMap=new HashMap<String, Object>();
+		//检查是否已发送验证码
+		PhoneCode phoneCode = (PhoneCode)request.getSession().getAttribute(Constants.SEND_PHONE_CODE);
+		int nowTime = DateUtil.convertCurrentDTTMtoInt();
+		//验证验证码是否超时
+		// || (nowTime - phoneCode.getCreateTime() > Constants.SEND_CODE_WAIT_TIME)
+		if(phoneCode == null){
+			resultMap.put("code", Constants.AJAX_FAIL_ALERT_CODE);
+			resultMap.put("msg", "未获取验证码或验证码超时，请重新获取验证码");
+			return resultMap;
+		}
+		//获取表单数据
+		String key = (String)request.getSession().getAttribute(Constants.ENCRYPT_CODE);
+		Map<String, Object> data = CryptogramUtil.decryptAll(ValidateUtil.valiStrIsEmpty(request.getParameter("t")), key);
+		String phoneNum = (String) data.get("phoneNum");
+		phoneNum=SystemUtil.removeAllTagFromHtml(phoneNum);
+		String newPass = (String) data.get("newPass");
+		newPass=SystemUtil.removeAllTagFromHtml(newPass);
+		String reNewPass = (String) data.get("reNewPass");			
+		String smsCode = (String) data.get("smsCode");
+		String phoneodescode=String.valueOf(phoneCode.getCode());
+		String phoneCodePhone=phoneCode.getPhone();
+			
+		String md5Pass= CryptogramUtil.md5(ValidateUtil.valiStrIsEmpty(newPass));
+			
+		if(phoneNum.equals(phoneCodePhone) && newPass.equals(reNewPass) && smsCode.equals(phoneodescode)){
+			//重置密码是否成功，true：成功，false：失败
+			boolean isReset=userService.reSetPass(phoneNum, md5Pass);
+			if(isReset){					
+				resultMap.put("code", Constants.AJAX_SUCCESS_SKIP_CODE);
+				resultMap.put("msg", "重置密码成功");
+				return resultMap;
+			}
+			
+			resultMap.put("code", Constants.AJAX_FAIL_ALERT_CODE);
+			resultMap.put("msg", "密码修改失败，请重新修改");
+			return resultMap;
+			
+		}		
+		resultMap.put("code", Constants.AJAX_FAIL_ALERT_CODE);
+		resultMap.put("msg", "你的表单数据有误，请重新修改");
+		return resultMap;			
+	}
+	
+	/**
+	 * 注册，提交数据到数据库
+	 * @throws Exception
+	 * @return
+	 */
+	@RequestMapping("/user/doRegist")
+	@ResponseBody
+	public  Map<String, Object> doRegist(HttpServletRequest request) throws Exception{
+		Map<String, Object> resultMap=new HashMap<String, Object>();
+		String key = (String)request.getSession().getAttribute(Constants.ENCRYPT_CODE);		
+		Map<String, Object> data=CryptogramUtil.decryptAll(ValidateUtil.valiStrIsEmpty(request.getParameter("t")), key);
+		PhoneCode phoneCode = (PhoneCode)request.getSession().getAttribute(Constants.SEND_PHONE_CODE);			
+		if(phoneCode == null){
+			resultMap.put("code",Constants.AJAX_FAIL_ALERT_CODE);
+			resultMap.put("msg", "注册失败，请获取验证码");
+			return resultMap;
+		}
+		
+		String pass = (String) data.get("password");
+		pass=SystemUtil.removeAllTagFromHtml(pass);
+		String rePass = (String) data.get("rePassword");								
+		String name = (String) data.get("name");
+		name=SystemUtil.removeAllTagFromHtml(name);
+		
+		//下面是对有验证码的注册		
+		String phoneNum = (String) data.get("phoneNum");
+		phoneNum=SystemUtil.removeAllTagFromHtml(phoneNum);
+		//phoneNum = phoneNum.replace("-", "");
+		String smsCode = (String) data.get("smsCode");
+		String phoneCodeCode=String.valueOf(phoneCode.getCode());		
+		String phoneCodephone=phoneCode.getPhone();
+		String md5Pass=CryptogramUtil.md5(pass);
+		//验证手机号码格式
+		if(!ValidateUtil.strIsPhone(phoneNum)){
+			resultMap.put("code",Constants.AJAX_FAIL_ALERT_CODE);
+			resultMap.put("msg", "注册失败，请核对您的电话号码");
+			return resultMap;
+		}
+		//验证码，手机号验证
+		if(!phoneNum.equals(phoneCodephone) || !smsCode.equals(phoneCodeCode)){
+			resultMap.put("code",Constants.AJAX_FAIL_ALERT_CODE);
+			resultMap.put("msg", "注册失败，重新获取验证码");
+			return resultMap;
+		}
+		//验证密码一致性
+		if(!pass.equals(rePass)){
+			resultMap.put("code",Constants.AJAX_FAIL_ALERT_CODE);
+			resultMap.put("msg", "密码不一致");
+			return resultMap;
+		}
+		
+						
+		int registTime = DateUtil.convertCurrentDTTMtoInt();
+	     String registIp = SystemUtil.getRequestIp(request);				
+		//int status= 1;
+		User u=new User();
+		/*u.setLastLoginIp(registIp);
+		u.setLastLoginTime(registTime);*/
+		u.setPassword(md5Pass);
+		u.setPhoneNum(phoneNum);
+		u.setRegisterIp(registIp);
+		u.setRegisterTime(registTime);
+		u.setUserName(name);
+		/*u.setUserStatus(status);
+		u.setUserHeadImg("http://ww3.sinaimg.cn/bmiddle/4a925477gw1eq4zn1rokaj20w81ev13m.jpg");
+		u.setAccountMoney( new BigDecimal(0));*/
+		//返回true：注册成功， false：注册不成功
+		boolean isRegist=userService.doregist(u);
+		if(isRegist){
+			request.getSession().removeAttribute(Constants.SEND_PHONE_CODE);
+			resultMap.put("code", Constants.AJAX_SUCCESS_SKIP_CODE);
+			return resultMap;
+		}
+			
+		resultMap.put("code",Constants.AJAX_FAIL_ALERT_CODE);
+		resultMap.put("msg", "注册失败，请核对您数据的正确性！");
+		return resultMap;
+	}
+	
+	/**
+	 * 获取验证码(未注册情况下)
+	 * @throws Exception
+	 * @return
+	 */
+	@RequestMapping("/getsmsCode")
+	@ResponseBody
+	public Map<String,Object> getsmsCode(HttpServletRequest request) throws Exception{
+		Map<String,Object> resultMap = new HashMap<String, Object>();
+		//获得密钥
+		String key = (String) request.getSession().getAttribute(Constants.ENCRYPT_CODE);
+		String phoneNum =  ValidateUtil.valiStrIsPhone(CryptogramUtil.decrypt(ValidateUtil.valiStrIsEmpty(request.getParameter("p")), key));		
+		phoneNum=SystemUtil.removeAllTagFromHtml(phoneNum);
+		
+		//count表示该电话号码是否已存在于数据库中，1：表示已存在，0：表示还不存在
+		int count=userService.usefulPhone(phoneNum);
+		
+		//重置密码时，根据数据库已存在的电话号码发送验证码
+		//注册时，验证数据库中不存在该电话号码后，再发送验证码
+		if(count==0){
+			//随机生成验证码
+			int identifyingCode = SystemUtil.getPhoneCheckCode();
+			logger.debug("\n\n\n ---- vertifyCode: " +identifyingCode);
+			int now = DateUtil.convertCurrentDTTMtoInt();
+			if (null == request.getSession().getAttribute(Constants.SEND_PHONE_CODE) 
+					|| (now - ((PhoneCode) request.getSession().getAttribute(Constants.SEND_PHONE_CODE)).getCreateTime() > Constants.SEND_CODE_WAIT_TIME)){				
+				///手机未注册，调用手机发送验证码方法(暂时不用)
+				//String result = commonservice.doSendPhoneMessage(phoneNum, String.valueOf(identifyingCode));
+				request.getSession().setAttribute(Constants.SEND_PHONE_CODE, new PhoneCode(phoneNum, identifyingCode, now));
+				resultMap.put("code", Constants.AJAX_SUCESS_IDENTIFYING_CODE);
+				resultMap.put("msg", "短信已发送");
+				return resultMap;
+			}
+			//先前验证码还未失效
+			resultMap.put("code", Constants.AJAX_FAIL_IDENTIFYING_CODE);
+			resultMap.put("msg", "请等待...");
+			return resultMap;				
+		}
+		resultMap.put("code", Constants.AJAX_FAIL_IDENTIFYING_CODE);
+		resultMap.put("msg", "此手机号无效");
+		return resultMap;
+	}
+	
+	
+	/**
+	 * 获取验证码(已注册情况下)
+	 * @throws Exception
+	 * @return
+	 */
+	@RequestMapping("/getsmsCodeHadRegist")
+	@ResponseBody
+	public Map<String,Object> getsmsCodeHadRegist(HttpServletRequest request) throws Exception{
+		Map<String,Object> resultMap = new HashMap<String, Object>();
+		//获得密钥
+		String key = (String) request.getSession().getAttribute(Constants.ENCRYPT_CODE);
+		String phoneNum =  ValidateUtil.valiStrIsPhone(CryptogramUtil.decrypt(ValidateUtil.valiStrIsEmpty(request.getParameter("p")), key));		
+		phoneNum=SystemUtil.removeAllTagFromHtml(phoneNum);
+		//count表示该电话号码是否已存在于数据库中，1：表示已存在，0：表示还不存在
+		int count=userService.usefulPhone(phoneNum);
+		
+		//重置密码时，根据数据库已存在的电话号码发送验证码		
+		if(count>0){
+			//随机生成验证码
+			int identifyingCode = SystemUtil.getPhoneCheckCode();
+			logger.debug("\n\n\n ---- vertifyCode: " +identifyingCode);
+			int now = DateUtil.convertCurrentDTTMtoInt();
+			if (null == request.getSession().getAttribute(Constants.SEND_PHONE_CODE) 
+					|| (now - ((PhoneCode) request.getSession().getAttribute(Constants.SEND_PHONE_CODE)).getCreateTime() > Constants.SEND_CODE_WAIT_TIME)){				
+				///手机未注册，调用手机发送验证码方法(暂时不用)
+				//String result = commonservice.doSendPhoneMessage(phoneNum, String.valueOf(identifyingCode));
+				request.getSession().setAttribute(Constants.SEND_PHONE_CODE, new PhoneCode(phoneNum, identifyingCode, now));
+				resultMap.put("code", Constants.AJAX_SUCESS_IDENTIFYING_CODE);
+				resultMap.put("msg", "短信已发送");
+				return resultMap;
+			}
+			//先前验证码还未失效
+			resultMap.put("code", Constants.AJAX_FAIL_IDENTIFYING_CODE);
+			resultMap.put("msg", "请等待...");
+			return resultMap;				
+		}
+		resultMap.put("code", Constants.AJAX_FAIL_IDENTIFYING_CODE);
+		resultMap.put("msg", "此手机号无效");
+		return resultMap;
+	}
+	
+	/*
+	 * /**
+	 * 注册时，第一步：验证‘手机号   验证码’是否正确
+	 * @throws Exception
+	 * @return
+	 * @RequestMapping("/user/registStep1")
+	@ResponseBody
+	public  Map<String,Object> redgistStep1(HttpServletRequest request) throws Exception{
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		PhoneCode phoneCode = (PhoneCode)request.getSession().getAttribute(Constants.SEND_PHONE_CODE);
+		//验证是否已发送验证码
+		if(phoneCode == null){
+			resultMap.put("code", Constants.AJAX_FAIL_ALERT_CODE);
+			resultMap.put("msg", "请先获取验证码");
+			return resultMap;	
+		}
+		
+		String key = (String)request.getSession().getAttribute(Constants.ENCRYPT_CODE);
+		Map<String, Object> data= CryptogramUtil.decryptAll(ValidateUtil.valiStrIsEmpty(request.getParameter("t")), key);
+		String phoneNum = (String) data.get("phoneNum");
+		phoneNum=SystemUtil.removeAllTagFromHtml(phoneNum);
+		String smsCode = (String) data.get("smsCode");
+		//验证手机号格式是否合格
+		if(!ValidateUtil.strIsPhone(phoneNum)){
+			resultMap.put("code",Constants.AJAX_FAIL_ALERT_CODE);
+			resultMap.put("msg", "验证失败，请核对您的电话号码");
+			return resultMap;
+		}
+		//phoneNum = phoneNum.replace("-", "");
+		String phoneodescode=String.valueOf(phoneCode.getCode());
+		//验证注册手机号与发送验证码的手机号是否一致
+		if(phoneodescode.equals(smsCode) && phoneCode.getPhone().equals(phoneNum)){	
+			request.getSession().setAttribute("checkesmsCode","true");
+			resultMap.put("code",Constants.AJAX_SUCCESS_ALERT_CODE);
+			resultMap.put("msg", "验证成功，请点击下一步继续");
+		}
+		else{
+			resultMap.put("code",Constants.AJAX_FAIL_ALERT_CODE);
+			resultMap.put("msg", "验证失败，请60秒后重新获取验证码");
+		}
+		return resultMap;	
+	}*/
+}

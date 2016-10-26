@@ -1,0 +1,153 @@
+package com.h5.service.impl;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.h5.dao.ModelDao;
+import com.h5.entity.Model;
+import com.h5.service.ModelService;
+import com.h5.util.CryptogramUtil;
+import com.h5.util.DateUtil;
+import com.h5.util.SystemUtil;
+
+@Service
+@Transactional
+public class ModelServiceImpl implements ModelService {
+	
+	@Inject
+	private ModelDao modelDao;
+	
+	private static final Logger logger = Logger.getLogger(ModelServiceImpl.class);
+
+	/**
+	 * 管理员获取所有模板信息
+	 * */
+	public List<Model> doGetAllModel() {
+		return modelDao.getAllModel();
+	}
+
+	/**
+	 * 管理员获取该模板的部分信息
+	 * */
+	public Model doGetModelById(String modelId) {
+		Model model = modelDao.getModelById(modelId);
+		
+		if (!model.getMusicId().equals(null)){
+			model.setMusic(modelDao.getMusicById(model.getMusicId()));
+			return model;
+		}
+		return model;
+	}
+
+	/**
+	 * 管理员编辑模板：获取模板详细信息
+	 * */
+	public Model doEditModel(String modelId) {
+		Model model = modelDao.editModel(modelId);
+		
+		if (!model.getMusicId().equals(null)){
+			model.setMusic(modelDao.getMusicById(model.getMusicId()));
+			return model;
+		}
+		return model;
+	}
+/****************************逻辑可能存在问题************************************/
+	/**
+	 * 管理员：保存编辑后的模板
+	 * */
+	public boolean doSaveModel(Model model) {
+		if (model.getMusic() != null){
+			return modelDao.saveModel(model) && modelDao.saveMusic(model.getMusic(), model.getId());
+		}
+		return modelDao.saveModel(model);
+	}
+	/****************************逻辑可能存在问题************************************/
+
+	/**
+	 * 管理员：根据模板id删除模板
+	 * */
+	public boolean doDeleteModel(String id) {
+		
+		return modelDao.deleteModel(id);
+	}
+
+	/**
+	 * 管理员：复制模板
+	 * */
+	public boolean doCopyModel(String id, String title, String key,
+			String uploadUrl) {
+		Model oldModel = modelDao.getDetailModelById(id);
+		Model newModel = oldModel;
+		
+		newModel.setId("");
+		newModel.setTitle(title);
+		newModel.setCreateTime(DateUtil.convertCurrentDTTMtoInt());
+		newModel.setLastReviseTime(DateUtil.convertCurrentDTTMtoInt());
+		newModel.setVersion(0);
+		
+		String newModelId = modelDao.copyModel(newModel);
+		
+		if (newModelId.equals("-1")){
+			String qrCodeUrl = "";
+			String qrCodeAddr = "";
+			try {
+				qrCodeUrl = "HTTP://192.168.191.1:8080/h5xiu/intoProduct?id="+CryptogramUtil.encrypt(newModelId, key);
+				qrCodeAddr = SystemUtil.getQrcode(uploadUrl, qrCodeUrl);
+				
+				//将二维码地址存入数据库
+				if (modelDao.setQrCodeAddr(newModelId ,qrCodeAddr)){
+					return true;
+				}
+				else{
+					return false;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+		
+		return false;
+	}
+
+	/**
+	 * 管理员：将模板下线
+	 * */
+	public boolean doOffLineModel(String id) {
+		return modelDao.offLineModel(id);
+	}
+
+	/**
+	 *管理员：添加模板
+	 * */
+	public String doAddModel(Model model) {
+		
+		return modelDao.addModel(model);
+	}
+
+	public boolean doSetQrCodeAddrById(String modelId, String qrCodeAddr) {
+		return modelDao.setQrCodeAddr(modelId, qrCodeAddr);
+	}
+
+	/**
+	 * 用户：根据模板类别获取模板，0表示所有模板
+	 * */
+	public List<Model> doGetModelByType(String key, int typeId) {
+		List<Model> modelList = modelDao.getModelByType(typeId);
+		for (int i=0; i<modelList.size(); i++){
+			String id = modelList.get(i).getId();
+			try {
+				id = CryptogramUtil.decrypt(id, key);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			modelList.get(i).setId(id);
+		}
+		return modelList;
+	}
+}

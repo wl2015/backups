@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yc.dao.AdminDAO">
+
+<!--   MyBatis的核心是其映射文件,SqlMap文件,里面配置了项目中用到了什么SQL语句,和数据库相关的逻辑都在这个映射文件里.顾名思义,
+  映射文件就是对Java对象和SQL的映射.这里简单介绍一下映射文件中resultMap的用法:
+  resultMap – 它描述如何将结果集映射到Java对象.
+  resultMap属性：type为java实体类；id为此resultMap的标识:<resultMap id="BaseResultMap" type="com.test.mybatis.vo.MybatisOrder" >
+  resultMap的子元素：
+  id – 一般对应到数据库中该行的ID,设置此项可以提高Mybatis性能.
+  result – 映射到JavaBean 的某个"简单类型"属性,String,int等.
+  association – 映射到JavaBean 的某个"复杂类型"属性,其他JavaBean类.
+  collection –复杂类型集合,a collection of complex types -->
+  
+  <resultMap id="AdminResultMap" type="com.yc.bean.Admin">
+    <id column="a_id" property="adminId" jdbcType="VARCHAR" />
+    <result column="a_account" property="adminAccount" jdbcType="VARCHAR" />
+    <result column="a_password" property="adminPassword" jdbcType="VARCHAR" />
+    <result column="a_name" property="adminName" jdbcType="VARCHAR" />
+    <result column="a_phone" property="adminPhone" jdbcType="VARCHAR" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="a_mail" property="adminMail" jdbcType="VARCHAR" />
+    <result column="last_login_time" property="lastLoginTime" jdbcType="VARCHAR" />
+    <result column="last_login_ip" property="lastLoginIp" jdbcType="VARCHAR" />
+    <result column="createtime" property="createTime" jdbcType="VARCHAR" />
+    
+    <collection property="limitsList" column="a_id"  ofType="Limits" select="getAdminLimitsInfo"/> 
+  </resultMap>
+
+  <resultMap id="MessageTextResultMap" type="com.yc.bean.MessageText">
+    <id column="text_id" property="textId" jdbcType="INTEGER" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="VARCHAR"  />
+  </resultMap>
+  
+  <resultMap id="MessageResultMap" type="com.yc.bean.Message">
+    <id column="message_id" property="messageId" jdbcType="INTEGER" javaType="int" />
+    <result column="send_id" property="sendId" jdbcType="INTEGER" javaType="int" />
+    <result column="rec_id" property="recId" jdbcType="INTEGER" javaType="int" />
+    <result column="text_id" property="textId" jdbcType="INTEGER" javaType="int" />
+    <result column="status" property="status" jdbcType="INTEGER" javaType="int" />
+  </resultMap>
+  
+  <resultMap id="SalesResultMap" type="com.yc.bean.Sales">
+    <id column="s_id" property="salesId" jdbcType="VARCHAR" />
+    <result column="d_id" property="dishId" jdbcType="VARCHAR" />
+    <result column="m_id" property="merchantId" jdbcType="VARCHAR" />
+    <result column="s_num" property="salesNum" jdbcType="VARCHAR" />
+    <result column="cost_sales" property="costSales" jdbcType="VARCHAR" />
+    <result column="retail_sales" property="retailSales" jdbcType="VARCHAR" />
+    <result column="profit" property="profit" jdbcType="VARCHAR" />
+    <result column="f_time" property="financeTime" jdbcType="VARCHAR" />
+  </resultMap>
+  
+   <resultMap id="SalesTotalResultMap" type="com.yc.bean.SalesTotal">
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="d_id" property="dishId" jdbcType="VARCHAR" />
+    <result column="dishName" property="dishName" jdbcType="VARCHAR" />
+    <result column="costSales" property="costSales" jdbcType="VARCHAR" />
+    <result column="numTotal" property="numTotal" jdbcType="VARCHAR" />
+    <result column="costTotal" property="costTotal" jdbcType="VARCHAR" />
+
+  </resultMap>
+  
+  <resultMap id="FinanceResultMap" type="com.yc.bean.Finance">
+    <id column="f_id" property="financeId" jdbcType="VARCHAR" />
+    <result column="d_id" property="dishId" jdbcType="VARCHAR" />
+    <result column="m_id" property="merchantId" jdbcType="VARCHAR" />
+    <result column="num_total" property="numTotal" jdbcType="VARCHAR" />
+    <result column="cost_total" property="costTotal" jdbcType="VARCHAR" />
+     <result column="retail_total" property="retailTotal" jdbcType="VARCHAR" />
+      <result column="profit_total" property="profitTotal" jdbcType="VARCHAR" />
+    <result column="f_time" property="financeTime" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+<resultMap id="AdvanceDetailMap" type="com.yc.bean.AdvanceDetail">
+    <id property="advanceId" column="ad_id" javaType="Integer" jdbcType="INTEGER" />
+    <result property="advanceTime" column="ad_time"  jdbcType="VARCHAR" />
+    <result property="advanceStatus" column="ad_status" javaType="Integer" jdbcType="INTEGER" />
+    <result property="refund" column="refund" javaType="Integer" jdbcType="INTEGER" />
+    <result property="userStatus" column="user_status" javaType="Integer" jdbcType="INTEGER" />
+    <result property="orderId" column="o_id" javaType="Integer" jdbcType="INTEGER" />
+    <result property="merchantId" column="m_id" javaType="Integer" jdbcType="INTEGER" />
+    <result property="money" column="money" javaType="double" jdbcType="DOUBLE" /> 
+  </resultMap>
+  
+<resultMap id="CreateAdvanceMap" type="com.yc.bean.CreateAdvance">
+    <id property="createId" column="create_id" javaType="Integer" jdbcType="INTEGER" />
+    <result property="merchantId" column="m_id"  jdbcType="VARCHAR" />
+    <result property="shopName" column="shop_name"  jdbcType="VARCHAR" />
+    <result property="totalMoney" column="total_money"  jdbcType="VARCHAR" />
+    <result property="timeSlot" column="ad_time" jdbcType="VARCHAR" />
+    <result property="createTime" column="createtime" jdbcType="VARCHAR" />
+    <result property="createAdvanceStatus" column="create_status" jdbcType="VARCHAR" />
+</resultMap>
+
+<resultMap id="LimitsMap" type="com.yc.bean.Limits">
+    <id property="limitId" column="l_id" javaType="Integer" jdbcType="INTEGER" />
+    <result property="limit" column="limit"  jdbcType="VARCHAR" />
+</resultMap>
+
+<resultMap id="refundOrdersMap" type="com.yc.bean.RefundOrder">
+
+    <id column="ro_id" property="refundOrderId" javaType="Integer" jdbcType="INTEGER" /> 
+    <result column="o_id" property="orderId"  jdbcType="VARCHAR" />  
+    <result column="u_name" property="userName" jdbcType="VARCHAR" />
+    <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />  
+    <result column="o_time" property="orderTime" jdbcType="VARCHAR" />  
+    <result column="refund" property="refund"   jdbcType="VARCHAR" />
+    <result column="time" property="time"   jdbcType="VARCHAR" />
+    <result column="content" property="content"   jdbcType="VARCHAR" />
+    
+   <collection property="dishlist" column="o_id" javaType="ArrayList" ofType="DishList" select="com.yc.dao.DishListDao.getDishlistByO_Id"/> 
+  </resultMap>
+  
+
+<resultMap id="SalesListMap" type="com.yc.bean.SalesList">
+
+    <id column="s_id" property="salesId" javaType="Integer" jdbcType="INTEGER" /> 
+    <result column="shop_name" property="shopName"  jdbcType="VARCHAR" />  
+    <result column="d_name" property="dishName" jdbcType="VARCHAR" />
+    <result column="s_num" property="salesNum" jdbcType="VARCHAR" />
+    <result column="f_time" property="createTime" jdbcType="VARCHAR" />  
+   
+</resultMap>
+
+  
+  
+  <!-- 管理员账号登录 -->
+  <select id="accountLogin" parameterType="com.yc.bean.Admin" resultMap="AdminResultMap">
+    SELECT * FROM admin WHERE a_account=#{adminAccount,jdbcType=VARCHAR} and
+    a_password=#{adminPassword,jdbcType=VARCHAR}
+  </select>
+
+  <!-- 管理员手机登录 -->
+  <select id="phoneLogin" parameterType="com.yc.bean.Admin" resultMap="AdminResultMap">
+    SELECT * FROM admin WHERE a_phone=#{adminPhone,jdbcType=VARCHAR} and
+    a_password=#{adminPassword,jdbcType=VARCHAR}
+  </select>
+
+
+  <!-- 判断管理员密码是否存在 -->
+  <select id="isExistPassword"  resultType="Integer">
+        SELECT COUNT(*) FROM admin WHERE a_id=#{0} AND a_password = #{1} 
+  </select>
+  
+  <!-- 修改管理员密码 ， -->
+  <update id="updateAdminPwd" parameterType="com.yc.bean.Admin">
+    update admin set a_password=#{adminPassword,jdbcType=VARCHAR} where a_id=#{adminId,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 重置管理员密码（忘记密码） -->
+  <update id="repeatPassword" parameterType="com.yc.bean.Admin">
+    update admin set a_password=#{adminPassword,jdbcType=VARCHAR} where a_phone=#{adminPhone,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 根据管理员账户去查询数据库是否有对应的记录 -->
+  <select id="queryAdminForAccount" parameterType="com.yc.bean.Admin" resultMap="AdminResultMap">
+    select * from admin where a_account=#{adminAccount,jdbcType=VARCHAR} and a_password = #{adminPassword}
+  </select>
+
+  
+  <!-- 根据管理员手机号去查询数据库是否有对应的记录 -->
+  <select id="queryAdminForPhone" parameterType="com.yc.bean.Admin" resultMap="AdminResultMap">
+    select * from admin where a_phone=#{adminPhone,jdbcType=VARCHAR} and a_password = #{adminPassword}
+  </select>
+  
+  <!-- 查询是否有此管理员手机号 -->
+  <select id="getAdminPhone" parameterType="String" resultType="Integer">
+    select COUNT(*) from admin where a_phone=#{0}
+  </select>
+
+  <!-- 根据管理员id查询用户资料 -->
+  <select id="getAdminInfoId" parameterType="Integer" resultMap="AdminResultMap">
+    select * from admin where a_id=#{adminId};
+  </select>
+
+
+
+  <!-- 生成一条站内信，并获取其id  -->
+  <insert id="writeMessageText" useGeneratedKeys="true" keyProperty="textId" parameterType="com.yc.bean.MessageText" >  
+        insert into messagetext (message,createtime) values (#{message,jdbcType=VARCHAR},#{createtime,jdbcType=DATE})  
+  </insert>  
+
+  <!-- 查询所有商家的id -->
+  <select id="queryAllMerchantsId"  resultType="Integer">
+    select m_id from merchant 
+  </select>
+  <!-- 群发站内信给商家 -->
+  <insert id="sendMessage" parameterType="java.util.Map">
+    insert into message(send_id,rec_id,text_id,status) values
+    <foreach collection="merIdList" item="item" index="index" separator=",">
+       (0, #{item}, #{textId}, 0)
+    </foreach>
+  </insert>
+  <!-- 得到本月站内信 -->
+  <select id="getMessageTextList" parameterType="Integer" resultMap="MessageTextResultMap">
+    SELECT * FROM messagetext WHERE MONTH(createtime) = #{0} 
+  </select>
+  
+  
+  <!-- 生成一条出货单 -->
+  <insert id="addSales" parameterType="com.yc.bean.Sales">
+    insert into sales (d_id, m_id, s_num, cost_sales, retail_sales, profit, f_time) 
+    values 
+    (#{dishId},#{merchantId},#{salesNum},#{costSales},#{retailSales},#{profit},#{financeTime})
+  </insert>
+  <!-- 获取本月出货单列表 -->
+  <select id="getSalesList" parameterType="Integer" resultMap="SalesListMap">
+    SELECT  s.s_id, m.shop_name,  d.d_name,  s.s_num,  s.f_time   FROM  sales AS s,  dish AS d,  merchant AS m
+            WHERE  s.m_id = m.m_id  AND s.d_id = d.d_id AND MONTH(f_time)=#{0}
+  </select>
+  
+  <!-- 查询菜品销售额 -->
+  <select id="salesTotalList" resultMap="SalesTotalResultMap">
+      SELECT d_id, SUM(s_num) as numTotal,SUM(cost_sales) as costTotal FROM sales where f_time BETWEEN #{0} AND #{1} GROUP BY d_id 
+  </select>
+ 
+<!-- 暂时不操作finance表-->
+
+<!-- 通过商家id获取预付款数量 -->
+<select id="getAdvanceCountByMerchantId" resultType="Integer">
+  SELECT COUNT(*) FROM merchant AS m,orders AS o, advance AS a 
+      WHERE m.m_id=#{0} AND m.m_id = o.m_id AND o.o_id = a.o_id AND pay_status = 1 AND a.ad_status = 0 AND YEAR(a.ad_time)=#{1} AND MONTH(a.ad_time)=#{2}
+</select>
+
+  <!-- 预付款查询 -->
+  <select id="queryAdvance"  resultMap="AdvanceDetailMap">
+   SELECT  m.m_id,a.ad_id,o.o_id,o.money,o.user_status,o.refund,a.ad_status,a.ad_time FROM merchant AS m,orders AS o, advance AS a 
+      WHERE m.m_id=#{0} AND m.m_id = o.m_id AND o.o_id = a.o_id AND pay_status = 1 AND YEAR(a.ad_time)=#{1} AND MONTH(a.ad_time)=#{2} 
+                        AND a.ad_status = 0  ORDER BY   o.refund,a.ad_time desc
+  </select>
+  
+  <!-- 生成预付款单 -->
+  <select id="createAdvanceByMerchantId" resultMap="CreateAdvanceMap">
+   SELECT m.m_id,m.shop_name,SUM(o.money) AS totalMoney, a.ad_time FROM merchant AS m,orders AS o, advance AS a 
+      WHERE m.m_id=#{0} AND m.m_id = o.m_id AND o.o_id = a.o_id AND pay_status = 1  AND user_status = 1 AND ad_status = 0 AND YEAR(a.ad_time)=#{1} AND MONTH(a.ad_time)=#{2}
+  </select>
+  <!-- 获得可生成预付款记录orderIdList -->
+  <select id="getAdvanceOrderIdList" resultType="Integer">
+   SELECT a.o_id FROM orders AS o, advance AS a 
+      WHERE  o.o_id = a.o_id AND pay_status = 1  AND user_status = 1 AND ad_status = 0 AND YEAR(a.ad_time)=#{0} AND MONTH(a.ad_time)=#{1}
+  </select>
+  <!-- 将生成预付款单的记录ad_status状态更改 -->
+  <update id="updateAdvanceStatus" parameterType="java.util.List" >    
+    UPDATE advance SET ad_status = 1 WHERE o_id IN
+    <foreach collection="list" item="item" index="index" open="(" separator="," close=")" >
+        #{item}
+    </foreach>
+  </update>
+  
+  
+  <!-- 查询应该自动确认收货的预付款 -->
+  <select id="getShouldDoAdvance"  resultMap="AdvanceDetailMap">
+   SELECT  m.m_id,a.ad_id,o.o_id,o.money,o.user_status,o.refund,a.ad_status,a.ad_time FROM merchant AS m,orders AS o, advance AS a 
+      WHERE m.m_id=#{0} AND m.m_id = o.m_id AND o.o_id = a.o_id   AND pay_status = 1 
+                        AND refund = 0                            AND user_status = 0
+                        AND a.ad_status = 0                       AND YEAR(a.ad_time)=#{1} AND MONTH(a.ad_time)=#{2} 
+                        
+                       
+  </select>
+  <!-- 自动更改订单“确认收货” -->
+  <update id="doUserStatusOrder" parameterType="java.util.List" >
+    UPDATE orders SET user_status = 1  WHERE o_id IN
+     <foreach collection="list" item="item" index="index" open="(" separator="," close=")" >
+        #{item} 
+    </foreach>
+  </update>
+  
+  <!-- 生成预付款单(插入数据库) -->
+  <insert id="addCreateAdvance" parameterType="com.yc.bean.CreateAdvance">
+      INSERT INTO createadvance (m_id,shop_name,total_money,ad_time,createtime)
+            VALUES (#{merchantId},#{shopName},#{totalMoney},#{timeSlot},#{createTime})
+  </insert>
+  <!-- 查询预付款单 -->
+  <select id="queryCreateAdvance" resultMap="CreateAdvanceMap">
+      SELECT * FROM createadvance
+  </select>
+  <!-- 确认打款预付款单给商家 -->
+  <update id="payCreateAdvance" parameterType="Integer">
+    UPDATE createadvance SET create_status = 1 WHERE create_id = #{0}
+  </update>  
+  <!-- 确认退款给用户 -->
+  <update id="payRefundOrder" parameterType="Integer">
+    UPDATE orders SET refund = 2  WHERE o_id = #{0}
+  </update> 
+  <!-- 驳回用户退款申请 -->
+  <update id="rejectRefundOrder" parameterType="Integer">
+    UPDATE orders SET refund = 0  WHERE o_id = #{0}
+  </update> 
+  <!-- 删除退款理由 -->
+  <delete id="deleteRefundReason" parameterType="Integer">
+    delete from refund_reason where o_id=#{0}
+  </delete>
+  
+  
+  <!-- 获得管理员个人职位信息 -->
+  <select id="getAdminLimitsInfo" parameterType="Integer" resultMap="LimitsMap">
+    SELECT l.l_id,l.limit FROM limits AS l,limituser AS lu WHERE lu.a_id = #{0} AND l.l_id = lu.l_id
+  </select>
+  
+  <!-- 获取所有管理员(分页) -->
+  <select id="getAdminList" parameterType="page" resultMap="AdminResultMap">
+    select * from admin limit #{startPos}, #{pageSize}
+  </select>
+  
+  <!-- 获得管理员总数量 -->
+  <select id="getAllAdminCount" resultType="long">
+    SELECT COUNT(*) FROM  admin
+  </select>
+  
+    <!-- 根据id获取管理员信息 -->
+  <select id="getAdminById" parameterType="Integer" resultMap="AdminResultMap">
+    select * from admin where a_id=#{0}
+  </select>
+  
+
+  <!-- 创建新的管理员 -->
+  <insert id="addAdmin" useGeneratedKeys="true" keyProperty="adminId" parameterType="com.yc.bean.Admin" >  
+        INSERT INTO admin (a_account, a_password, a_name, a_phone, a_mail, createtime)
+            VALUES (#{adminAccount},#{adminPassword},#{adminName},#{adminPhone},#{adminMail},#{createTime})
+  </insert>  
+
+  <!-- 新的管理员注册权限 -->
+  <insert id="registerLimits" parameterType="java.util.Map">
+      INSERT INTO limituser (a_id,l_id) VALUES 
+    <foreach collection="limitIdList" item="item" index="index" separator=",">
+       (#{adminId}, #{item})
+    </foreach>
+  </insert>
+  
+  <!-- 根据id删除管理员 -->
+  <delete id="deleteAdmin" parameterType="Integer">
+    delete from admin where a_id=#{0}
+  </delete>
+  <!-- 根据a_id删除权限使用者limitUser-->
+  <delete id="deleteLimitUser" parameterType="Integer">
+    delete from limituser where a_id=#{0}
+  </delete>
+  
+  <!-- 修改管理员信息 -->
+  <update id="updateAdmin" parameterType="com.yc.bean.Admin">
+    update admin set 
+    a_account=#{adminAccount},a_password=#{adminPassword},a_name=#{adminName},a_phone=#{adminPhone},
+    a_mail=#{adminMail}
+    where a_id=#{adminId}
+  </update>
+  
+   <!-- 判断管理员账号是否存在（注册） -->
+  <select id="isExistAccount" parameterType="com.yc.bean.Admin"  resultType="Integer">
+        SELECT COUNT(*) FROM admin WHERE a_account=#{adminAccount}
+  </select>
+   <!-- 判断管理员手机是否存在（注册） -->
+  <select id="isExistPhone" parameterType="com.yc.bean.Admin"  resultType="Integer">
+        SELECT COUNT(*) FROM admin WHERE  a_phone = #{adminPhone} 
+  </select>
+  
+  <!-- 查询用户退款单列表 -->
+  <select id="queryRefundOrderList" resultMap="refundOrdersMap">
+     SELECT  o.o_id,  u.u_name,  m.shop_name,  o.address,  o.o_time,  o.refund,  rs.time,  rs.content
+              FROM  orders AS o,  user AS u,  merchant AS m,  refund_reason AS rs
+              WHERE  o.refund > 0 AND o.o_id = rs.o_id 
+                                  AND o.o_id = rs.o_id
+                                  AND u.u_id = o.u_id
+                                  AND m.m_id = o.m_id  AND o.user_status=0   ORDER BY   o.refund,rs.time
+  </select>
+  
+  <!-- 获取退款单详情 -->
+  <select id="getRefundOrder" parameterType="Integer" resultMap="refundOrdersMap">
+     SELECT  o.o_id,  u.u_name,  m.shop_name,  o.address,  o.o_time,  o.refund,  rs.time,  rs.content
+              FROM  orders AS o,  user AS u,  merchant AS m,  refund_reason AS rs
+                        WHERE     o.o_id = #{0}
+                                  AND o.o_id = rs.o_id 
+                                  AND o.o_id = rs.o_id
+                                  AND u.u_id = o.u_id
+                                  AND m.m_id = o.m_id     ORDER BY  rs.time
+  </select>
+  
+  <!-- 获得用户退款单数量 -->
+  <select id="getRefundOrderCount" resultType="Integer">
+     SELECT  COUNT(*)  FROM  orders AS o,  user AS u,  merchant AS m,  refund_reason AS rs
+              WHERE  o.refund = 1 AND o.o_id = rs.o_id 
+                                  AND o.o_id = rs.o_id
+                                  AND u.u_id = o.u_id
+                                  AND m.m_id = o.m_id  AND o.user_status=0
+  </select>
+</mapper>

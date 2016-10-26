@@ -1,0 +1,27 @@
+@CHARSET "UTF-8";
+  .order-alert{
+    animation: order 10s infinite;
+    animation-direction:alternate;
+    animation-timing-function: linear;
+    -moz-animation: order 10s infinite;
+    -moz-animation-direction: alternate;
+    -moz-animation-timing-function: linear;
+    -webkit-animation: order 10s infinite;
+    -webkit-animation-direction: alternate;
+    -webkit-animation-timing-function: linear;
+  }
+  @keyframes order{
+    0% {left: 60%;}
+    25% {left: 50%;}
+    50% {left: 40%;}
+    75% {left: 50%;}
+    100% {left: 60%}
+  }
+  
+  @-moz-keyframes order{
+    0% {left: 60%;}
+    25% {left: 50%;}
+    50% {left: 40%;}
+    75% {left: 50%;}
+    100% {left: 60%}
+  }

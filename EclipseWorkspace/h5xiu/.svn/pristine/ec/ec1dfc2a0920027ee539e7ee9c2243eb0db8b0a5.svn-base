@@ -1,0 +1,20 @@
+package com.h5.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class TestController {
+	
+	@RequestMapping("music")
+	public String upMusic(){
+		return "test/music";
+	}
+	
+	@RequestMapping("/intoUserCenter")
+	public String intoUserCenter(){
+		return "test/html5";
+	}
+	
+}

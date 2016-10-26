@@ -1,0 +1,162 @@
+package com.h5.dao.impl;
+
+import java.io.Serializable;
+
+import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
+
+import com.h5.dao.BaseDao;
+import com.h5.dao.UserDao;
+import com.h5.entity.User;
+@Repository
+public class UserDaoImpl extends BaseDao<User> implements UserDao{
+	
+	private static final Logger logger = Logger.getLogger(UserDaoImpl.class);
+
+	@Override
+	protected Class<User> getEntity() {
+		// TODO Auto-generated method stub
+		return User.class;
+	}
+	
+	/**
+	 * 修改头像
+	 * @param id：登录时封装的用户id, logoUrl：头像地址
+	 * @return
+	 * */
+	public boolean changeLogo(String id,String logoUrl){
+		String hql="update User set userHeadImg = ? where userId = ?";
+		Query query=super.createQuery(hql, new Object[]{logoUrl,id});
+		int count=query.executeUpdate();
+		if(count > 0){
+			return true;
+		}
+		return false;
+	}
+	/**
+	 * 获取用户信息（根据用户的登录信息获取用户详细信息）
+	 * @param u：登录时封装的用户对象
+	 * @return
+	 * */
+	//获取用户信息
+	public User getUserInfo(User u) {
+		// TODO Auto-generated method stub
+		String hql="from User where phoneNum=? and password=?";
+		Query query=super.createQuery(hql, new Object[]{u.getPhoneNum(),u.getPassword()});
+		User u2=(User)query.uniqueResult();
+		
+		return u2;
+	}
+
+	
+	/**
+	 * 修改用户昵称
+	 * @param id：用户id号，nicename：新的昵称名
+	 * @return
+	 * */
+	public boolean changeNiceName(String Id,String nicename) {
+		// TODO Auto-generated method stub
+		String hql="update User set userName = ? where userId = ?";
+		Query query=super.createQuery(hql, new Object[]{nicename,Id});
+		int count=query.executeUpdate();
+		if(count>0){
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * 修改密码
+	 * @param id：用户id号，newPass：新的密码
+	 * @return 0:但修改没成功，1：密码修改成功
+	 * */
+	public int changePass(String Id, String newPass) {
+		// TODO Auto-generated method stub
+		
+			String hql2="update User set password = ? where userId = ?";
+			Query query2=super.createQuery(hql2, new Object[]{newPass,Id});
+			int count2=query2.executeUpdate();
+			if(count2>0){
+				return 1;
+			}
+			return 0;						
+	}
+	
+	
+	/**
+	 * 通过id获取用户
+	 * @param id：用户id号
+	 * @return
+	 * */
+	public User getUserById(String id) {
+		// TODO Auto-generated method stub
+		String hql="from User where userId = ?";
+		Query query=super.createQuery(hql, new Object[]{id});
+		User u=(User)query.uniqueResult();
+		return u;
+	}
+	
+	//验证手机号是否已存在
+	/**
+	 * 验证手机号在数据库中是否已存在
+	 * @param phone：手机号
+	 * @return
+	 * */
+	public int usefulPhone(String phone){
+		String hql="select count(*) from User where phoneNum=?";
+		
+		Query query=super.createQuery(hql, new Object[]{phone});
+		long count = (Long)query.uniqueResult();			
+		if(count>0){
+			return 1;
+		}
+		return 0;
+	}
+	
+	//注册一个用户
+	/**
+	 * 普通用户注册
+	 * @param u：注册的用户对象
+	 * @return
+	 * */
+	public boolean doregist(User u){
+		
+		Serializable u1=super.add(u);		
+		if(u1!=null){
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * 普通用户登录
+	 * @param phoneNum：手机号，pass：加密后的密码
+	 * @return
+	 * */
+	//用户登录
+	public User doLogin(String phoneNum, String pass){
+		String hql="from User where phoneNum=? and password=?";
+		Query query=super.createQuery(hql, new Object[]{phoneNum,pass});
+		User u=(User)query.uniqueResult();
+		return u;		
+	}
+	
+	/**
+	 * 根据手机号重置密码
+	 * @param phoneNum：手机号，newPass：加密后的新密码
+	 * @return
+	 * */
+	//根据手机号重置密码
+	public boolean reSetPass(String phoneNum, String newpass ){
+		String hql="update User set password = ? where phoneNum = ?";
+		Query query=super.createQuery(hql, new Object[]{newpass,phoneNum});
+		int count=query.executeUpdate();
+		if(count>0){
+			return true;
+		}
+		return false;
+	}
+
+}

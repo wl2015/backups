@@ -1,0 +1,114 @@
+@charseset 'utf-8';
+*{
+	margin:0;
+	padding:0;
+	list-style:none;
+	
+}
+.newDish{
+	width:60%;
+	margin:0 auto;
+}
+
+.addDishes{
+	width:600px;
+	height:550px;
+}
+.addDishes ul{
+	width:500px;
+	height:450px;
+	margin:10px auto;
+	margin-top:20px;
+}
+.addDishes ul li{
+	width:100%;
+	height:30px;
+	line-height:30px;
+	margin-bottom:20px;
+	clear:both;
+}
+.addDishes ul .textA{
+	height:100px;
+	margin-bottom:20px;
+}
+.addDishes ul .imgShow{
+	height:100px;
+	margin-bottom:20px;
+}
+
+.addDishes ul li strong{
+	display:block;
+	float:left;
+	width:20%;
+	height:30px;
+	line-height:30px;
+}
+
+#pic{
+	display:block;
+	border-radius:5px;
+
+}
+.addDishes ul li input,textArea,#pic{
+	float:left;
+	width:60%;
+	height:30px;
+}
+
+.addDishes ul .twoInline strong{
+	display:block;
+	float:left;
+	width:10%;
+	height:30px;
+	line-height:30px;
+}
+
+.addDishes ul .twoInline input,select{
+	display:block;
+	float:left;
+	width:25%;
+	height:30px;
+}
+.addDishes ul .twoInline .two{
+	margin-left:10%;
+}
+#pic{
+	width:30%;
+	height:100px;
+}
+#viewFiles{
+	width:30%;
+	height:30px;
+}
+.addDishes ul li textArea{
+	height:100px;
+	resize:none;
+}
+.addDishes ul li:after{
+	content:'';
+	display:block;
+	clear:both;
+}
+.addDishes .twoButton{
+	width:100%;
+	height:30px;
+	margin-top:80px;
+}
+.addDishes #cancelAdd,#sureAdd{
+	float:left;
+	width:20%;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	background:#8B0000;
+	border-radius:5px;
+	cursor:pointer;
+	color:#fff;
+	
+}
+#cancelAdd{
+	margin-left:8%;
+}
+#sureAdd{
+	margin-left:27%;
+}

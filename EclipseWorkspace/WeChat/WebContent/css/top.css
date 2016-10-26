@@ -1,0 +1,34 @@
+div{
+	background-color:#BB825B;
+	font-family:"Microsoft YaHei","微软雅黑","SimSun","宋体";
+	font-size:15px;color:white;
+}
+a{
+	color:white;
+	text-decoration: none;
+}
+a:link { /* 未访问的链接 */
+	color:white;
+	text-decoration: none;
+}
+a:visited {/* 已访问的链接 */
+	color:white;
+	text-decoration: none;
+}
+a:active{ /* 被选择的链接 */
+	text-decoration: none;
+	color:white; 
+}
+a:hover {/* 当有鼠标悬停在链接上 */
+	color:red; 
+	text-decoration: underline;
+}
+.f1{
+	float:left;
+}
+.f2{
+	float:right;
+}
+.m1{margin:10px 0 0 10px;}
+.m2{margin:5px 5px 8px 0;}
+.m3{margin:3px 0 0 5px;}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="<@s.url relativeUrl="res/js/jQuery/jquery.js"/>"></script>
+<title>管理员登录</title>
+</head>
+<body>
+	<section style="width:900px;margin:10px auto">
+		<form action='<@s.url relativeUrl="admin/relogin2"/>' method="post" id="loginForm">
+			<input type="text" name="p" />
+			<input type="password" name="w" />
+			<input type="button" value="登录" id="submit"/>
+		</form>
+		
+	</section>
+	<script type="text/javascript">
+	//$(function(){
+		$("#submit").click(function(){
+			console.log("sssssss");
+			/* var phone = $("#p").val();
+			var passw = $("#w").val(); */
+			$.ajax({
+				url: $("#loginForm").attr('action'),
+				type: 'post',
+				dataType: 'json',
+				data: $('#loginForm'),
+				success: function(res){
+					console.log(res.msg);
+				}
+			});
+		});
+	//});
+	</script>
+	
+	
+
+</body>
+</html>

@@ -1,0 +1,490 @@
+﻿/*判断相应输入框输入内容是否正确的全局变量*/
+var checkVPhoneNum = 0;
+var checkVCode = 0;
+var checkRNickName = 0;
+var checkRPassword = 0;
+var checkRSurepass = 0;
+var password;//判断输入的密码
+var surepassword//判断重复输入的密码是否正确
+
+/**
+ * 判断为空
+ */
+var isEmpty = function(obj) {
+	if (obj == null || obj == undefined || jQuery.trim(obj).length == 0 || obj == "" || obj === "null") {
+		return true;
+	}
+	return false;
+};
+/**
+ * 设置regist里的默认项
+ */
+
+
+$(function(){
+	$('.vertify-input').onlyNum();
+	$('.vertify-phone').onlyNum();
+	$('#vertify-phone').maxLength(11);
+	$('#vertify-input').maxLength(6);
+	$('#input-password').maxLength(16);
+	$('#regist-nickname').maxLength(20);
+	$('#regist-password').maxLength(16);
+	$('#regist-checkpassword').maxLength(16);
+	
+	$('#next-BTN').click(function(){
+		registPhoneNumber();
+		registVertify();
+		var phone=$('#vertify-phone').val();
+		var sms=$('#vertify-input').val();
+		if (checkVPhoneNum == 1 && checkVCode == 1)
+		{
+			$.ajax ({
+				url: $.WEB_ROOT + '/user/checkeSmsCode',
+				type:'post',
+				data: {
+					phoneNum:phone,
+					smsCode:sms
+				},
+				dataFilter: {
+					s:['phoneNum','smsCode']
+				},
+				dataType:'json',
+				success:function(res){
+					if(res.code== AJAX_SUCCESS_ALERT_CODE){
+						alert(" sms success ")
+						showRegistPage();
+					}
+					else{
+						alert(res.msg);
+					}					
+				},
+				error:function(){
+					alert("数据提交失败，请稍后重试");
+				}
+			});	
+		}
+	});
+	$('#regist-BTN').click(function(){
+		registNicename();
+		registPassword();
+		registSurePassword();
+		//alert(checkRNickName + "+" + checkRPassword + "+" + checkRSurepass);
+		if(checkRNickName == 1 && checkRPassword==1 && checkRSurepass==1){
+			doRegist();
+		}
+	});
+	
+	//$(".gotoLogin").attr("href",$.WEB_ROOT + '/user/login');
+	$("#vertify-phone").focus(function(){	
+		$(this).prev().html("电	话");
+		$(this).prev().css('background-color','#42C2B3');
+		$(this).css('border-color','#F0F0F0');
+	}).blur(function() {
+		var $phone=$(this);
+		var $tip=$(this).prev();
+		if(CHECK.isPhoneNumber($(this).val())){
+			//从数据库中检查该号码是否存在
+			$.ajax({
+				url: $.WEB_ROOT + '/user/checkePhone',
+				type:'post',
+				data:{
+					phoneNum:$(this).val()
+				},
+				dataType:'json',
+				dataFilter: {
+					s:['phoneNum']
+				},
+				success:function(res) {				
+					if(res.code == AJAX_PHONENUM_EXIST_CODE){						
+						$tip.html(res.msg);
+						$tip.css('background-color','#FF9FAA');
+						$phone.css('border-color','#FF9FAA');
+						return false;
+					}
+					//phoneisExist=1;
+					return true;
+				}
+				/*error:function() {
+					alert("系统繁忙，请稍后再试");
+					//phoneisExist=0;
+					return;
+				}*/
+			});
+		}else{
+			$(this).prev().html("请输入正确电话");
+			$(this).prev().css('background-color','#FF9FAA');
+			$(this).css('border-color','#FF9FAA');
+		}			
+	});
+	$("#vertify-input").focus(function(){
+		$(this).prev().html("验证码");
+		$(this).prev().css('background-color','#42C2B3');
+		$(this).css('border-color','#F0F0F0');
+	}).blur(function() {
+		if(!CHECK.isNumber($(this).val())){				
+			$(this).prev().css('background-color','#FF9FAA');
+			$(this).css('border-color','#FF9FAA');
+			$(this).prev().html('请输入正确验证码');
+		}
+	});
+	$("#regist-nickname").focus(function(){
+		$(this).prev().html("昵	称");
+		$(this).prev().css('background-color','#42C2B3');
+		$(this).css('border-color','#F0F0F0');
+	}).blur(function() {
+		if(isEmpty($(this).val())){				
+			$(this).prev().css('background-color','#FF9FAA');
+			$(this).css('border-color','#FF9FAA');
+			$(this).prev().html('昵称不能为空');
+		}
+	});
+	$("#regist-password").focus(function(){
+		$(this).prev().html("密	码");
+		$(this).prev().css('background-color','#42C2B3');
+		$(this).css('border-color','#F0F0F0');
+	}).blur(function() {
+		if(!CHECK.isPassword($(this).val())){				
+			$(this).prev().css('background-color','#FF9FAA');
+			$(this).css('border-color','#FF9FAA');
+			$(this).prev().html('密码的长度应为6-16位');
+		}
+	});
+	$("#regist-checkpassword").focus(function(){
+		$(this).prev().html("确认密码");
+		$(this).prev().css('background-color','#42C2B3');
+		$(this).css('border-color','#F0F0F0');
+	}).blur(function() {
+		if(!CHECK.isPassword($(this).val())){				
+			$(this).prev().css('background-color','#FF9FAA');
+			$(this).css('border-color','#FF9FAA');
+			$(this).prev().html('密码的长度应为6-16位');
+		}
+		if($(this).val() != $("#regist-password").val()){
+			$(this).prev().css('background-color','#FF9FAA');
+			$(this).css('border-color','#FF9FAA');
+			$(this).prev().html('密码不一致');
+		}
+	});
+	
+	$(".vertify-BTN").click(function clickCheckCode(){
+		var $buttonNode=$(this);
+		var buttonVal=$buttonNode.html();
+		var phoneNode=$("#vertify-phone");
+		var phoneNum=phoneNode.val();
+		
+		if(!CHECK.isPhoneNumber(phoneNum)){
+			alert("请输入正确的手机号");
+			return;
+		}
+		$buttonNode.unbind('click');
+		$buttonNode.html("正在发送...");
+		phoneNode.attr('readonly','readonly');			
+		$.ajax ({
+			url: $.WEB_ROOT + '/getsmsCode',
+			type:'post',
+			data:{
+				p:phoneNum
+			},
+			dataType:'json',
+			dataFilter: {
+				s:['p']
+			},
+			success:function(res) {
+				if(res.code == 1003) {
+					//获取成功,执行延迟加载程序
+					successCallback();
+				}else if (res.code == AJAX_FAIL_IDENTIFYING_CODE) {
+					whenErrorCallBack(res.msg);
+				}else {
+					whenErrorCallBack(res.msg);
+				}
+			},
+			error:function(res) {
+				whenErrorCallBack("连接错误，请重新发送验证码");
+			}
+		
+		});
+		
+		//发送验证码成功时要调用的函数
+		var successCallback = function() {
+			var waitTime = 60;
+			var timerId = setInterval(timeRun, 1000);
+			function timeRun() {
+				if (waitTime == 0) {
+					clearInterval(timerId);
+					phoneNode.removeAttr('readonly');				
+					$buttonNode.html(buttonVal);
+					$buttonNode.click(clickCheckCode);
+				} else {
+					waitTime --;
+					$buttonNode.html('短信已发送('+waitTime+')');
+				}
+			}
+		};
+		//发送验证码失败时要调用的函数
+		var whenErrorCallBack = function(msg) {		
+			alert(msg);
+			phoneNode.removeAttr('readonly');		
+			$buttonNode.html(buttonVal);
+			$buttonNode.click(clickCheckCode);	
+		}		
+	});
+	
+
+});
+
+
+/*判断输入框内容是否为空*/
+function registPhoneNumber(){
+	var phonenum = $('#vertify-information li:eq(0) input');
+	var tip = $('#vertify-information li:eq(0) span');
+	var isMobile = /^(?:13\d|15\d|18\d)\d{5}(\d{3}|\*{3})$/; //手机号码验证规则
+	var mobile =  phonenum.val();
+
+	if(mobile==='' || !isMobile.test(mobile)){
+		tip.css('background-color','#FF9FAA');
+		$('#vertify-information li:eq(0)').css('border-color','#FF9FAA');
+		tip.html('请输入正确电话');
+		checkVPhoneNum = 0;
+	}else{
+		checkVPhoneNum = 1;
+	}
+	phonenum.bind('input propertychange', function(){
+		if( phonenum.val() != '' && isMobile.test(phonenum.val())){
+			tip.css('background-color','#42C2B3');
+			$('#vertify-information li:eq(0)').css('border-color','#F0F0F0');
+			tip.html('电	话');
+			checkVPhoneNum = 1;
+		}
+	});
+
+}
+
+function registVertify(){
+	var vertify = $('.vertify-li input');
+	var tip = $('.vertify-li span:eq(0)');
+	var vertifyInput = $('.vertify-input');
+	var vertifyBTN = $('.vertify-BTN');
+
+	if(vertify.val()==='' || vertify.val().length < 6){
+		tip.css('background-color','#FF9FAA');
+		vertifyBTN.css('background-color','#FF9FAA');
+		vertifyInput.css('border-color','#FF9FAA');
+		$('.vertify-li').css('border-color','#FF9FAA');
+		tip.text('请输入验证码');
+		checkVCode = 0;
+	}else{
+		checkVCode = 1;
+	}
+	vertify.bind('input propertychange', function(){
+		if(vertify.val()!='' && vertify.val().length == 6){
+				tip.css('background-color','#42C2B3');
+				vertifyBTN.css('background-color','#42C2B3');
+				vertifyInput.css('border-color','#F0F0F0');
+				tip.html('验证码');
+				checkVCode = 1
+		}
+	});
+}
+
+function registNicename(){
+	var nickname = $('#regist-information li:eq(0) input');
+	var tip = $('#regist-information li:eq(0) span');
+
+	if(nickname.val()===''){
+		tip.css('background-color','#FF9FAA');
+		$('#regist-information li:eq(0)').css('border-color','#FF9FAA');
+		tip.html('请输入昵称');
+		checkRNickName = 0;
+	}else{
+		checkRNickName = 1;
+	}
+	nickname.bind('input propertychange', function(){
+		if( nickname.val() != ''){
+			tip.css('background-color','#42C2B3');
+			$('#regist-information li:eq(0)').css('border-color','#F0F0F0');
+			tip.html('昵	称');
+			checkRNickName = 1;
+		}
+	});
+
+}
+
+function registPassword(){
+	password = $('#regist-information li:eq(1) input');
+	var tip = $('#regist-information li:eq(1) span');
+
+	if(password.val() != '' && password.val().length >=6){
+		checkRPassword = 1;
+	}else{
+		if(password.val() === ''){
+			tip.css('background-color','#FF9FAA');
+			$('#regist-information li:eq(1)').css('border-color','#FF9FAA');
+			tip.html('请输入密码');
+			checkRPassword = 0;
+		}
+		if(password.val() != '' && password.val().length <6){
+			tip.css('background-color','#FF9FAA');
+			$('#regist-information li:eq(1)').css('border-color','#FF9FAA');
+			tip.html('密码长度不足');
+			checkRPassword = 0;
+		}
+		
+	}
+	password.bind('input propertychange', function(){
+		if(password.val()!=''){
+			if(password.val().length < 6){
+				tip.css('background-color','#FF9FAA');
+				$('#regist-information li:eq(1)').css('border-color','#FF9FAA');
+				tip.html('密码长度不足');
+			}else{
+				tip.css('background-color','#42C2B3');
+				$('#regist-information li:eq(1)').css('border-color','#F0F0F0');
+				tip.html('密	码');
+				if(password.val() === surepassword.val()){
+					$('#regist-information li:eq(2) span').css('background-color','#42C2B3');
+					$('#regist-information li:eq(2)').css('border-color','#F0F0F0');
+					$('#regist-information li:eq(2) span').html('确认密码');
+				}else{
+					$('#regist-information li:eq(2) span').css('background-color','#FF9FAA');
+					$('#regist-information li:eq(2)').css('border-color','#FF9FAA');
+					$('#regist-information li:eq(2) span').text('密码不同');
+				}
+				checkRPassword = 1;
+			}
+		}
+	});
+}
+
+function registSurePassword(){
+	surepassword = $('#regist-information li:eq(2) input');
+	var tip = $('#regist-information li:eq(2) span');
+
+	if(surepassword.val() != '' && surepassword.val().length >= 6 && surepassword.val() === password.val()){
+		checkRSurepass = 1;
+	}else{
+		tip.css('background-color','#FF9FAA');
+		$('#regist-information li:eq(2)').css('border-color','#FF9FAA');
+		tip.html('请验证密码');
+		checkRSurepass = 0;
+	}
+	surepassword.bind('input propertychange', function(){
+		if(surepassword.val()!=''){
+			if(surepassword.val().length < 6){
+				tip.css('background-color','#FF9FAA');
+				$('#regist-information li:eq(2)').css('border-color','#FF9FAA');
+				tip.text('密码长度不足');
+			}else{
+				if(surepassword.val()!= password.val()){
+					tip.css('background-color','#FF9FAA');
+					$('#regist-information li:eq(2)').css('border-color','#FF9FAA');
+					tip.text('密码不同');
+				}else{
+					tip.css('background-color','#42C2B3');
+					$('#regist-information li:eq(2)').css('border-color','#F0F0F0');
+					tip.html('确认密码');
+					checkRSurepass = 1;
+				}
+			}
+		}
+	});
+}
+
+//切换页面
+function showRegistPage(){
+	$('#regist-content').show();
+	$('#vertify-content').hide();
+}
+
+/**
+ *去注册
+ */
+function doRegist(){		
+	//表单合格后提交表单
+		$.ajax ({
+			url: $.WEB_ROOT + '/user/doRegist',
+			type:'post',
+			data: $('#registForm'),
+			dataType:'json',
+			success:function(res){
+				if(res.code == AJAX_SUCCESS_SKIP_CODE){
+					window.location = $.WEB_ROOT + '/user/login';
+				}
+				else{
+					alert(res.msg);
+				}					
+			},
+			error:function(){
+				alert("注册失败，请重新注册");
+			}
+		});			
+}
+
+
+/**
+ * checkCode(手机发送验证码)
+ */
+/*function clickCheckCode(node){
+	alert("bbbbbbbbb");
+	var $buttonNode=$(node);
+	var buttonVal=$buttonNode.html();
+	var phoneNode=$("#vertify-phone");
+	var phoneNum=phoneNode.val();
+	
+	if(!CHECK.isPhoneNumber(phoneNum)){
+		alert("请输入正确的手机号");
+		return;
+	}
+	$buttonNode.unbind('click');
+	$(node).html("正在发送...");
+	phoneNode.attr('readonly','readonly');			
+	$.ajax ({
+		url: $.WEB_ROOT + '/getsmsCode',
+		type:'post',
+		data:{
+			p:phoneNum
+		},
+		dataType:'json',
+		dataFilter: {
+			s:['p']
+		},
+		success:function(res) {
+			if(res.code == 1003) {
+				//获取成功,执行延迟加载程序
+				successCallback();
+			}else if (res.code == AJAX_FAIL_IDENTIFYING_CODE) {
+				whenErrorCallBack(res.msg);
+			}else {
+				whenErrorCallBack(res.msg);
+			}
+		},
+		error:function(res) {
+			whenErrorCallBack("连接错误，请重新发送验证码");
+		}
+	
+	});
+	
+	//发送验证码成功时要调用的函数
+	var successCallback = function() {
+		var waitTime = 60;
+		var timerId = setInterval(timeRun, 1000);
+		function timeRun() {
+			if (waitTime == 0) {
+				clearInterval(timerId);
+				phoneNode.removeAttr('readonly');				
+				$buttonNode.html(buttonVal);
+				$buttonNode.click(clickCheckCode);
+			} else {
+				waitTime --;
+				$buttonNode.html('短信已发送('+waitTime+')');
+			}
+		}
+	};
+	//发送验证码失败时要调用的函数
+	var whenErrorCallBack = function(msg) {		
+		alert(msg);
+		phoneNode.removeAttr('readonly');		
+		$buttonNode.html(buttonVal);
+		$buttonNode.click(clickCheckCode);
+	};	
+}*/

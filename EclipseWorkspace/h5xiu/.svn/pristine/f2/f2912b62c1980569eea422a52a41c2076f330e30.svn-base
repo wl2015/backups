@@ -1,0 +1,40 @@
+$(function(){
+	//showDesigner();
+	//showHotDemo();
+	showItem();
+	$('#demo').click(function(){
+		showDemo();
+		var demo_block=$(".demo-block-cover");
+		
+		demo_block.mouseover(function(){
+			$(this).css({"opacity":"1"}),
+			$(".btn-content").css({"opacity":"1"});
+		});
+		demo_block.mouseout(function(){
+			$(this).css({"opacity":"0"}),
+			$(".btn-content").css({"opacity":"0"});
+		});
+		
+	});
+	
+	$('#editor').click(function(){
+		showDesigner();
+		showItemName();
+		showAndCloseBTN();
+	});
+	
+	$('#hot').click(function(){
+		showHotDemo();
+		var qrcode = $(".qrcode");
+		qrcode.mouseover(function(){
+			$(this).css({"opacity":"1"});
+		});
+		qrcode.mouseout(function(){
+			$(this).css({"opacity":"0"});			
+		});
+	});
+	
+	$('#program').click(function(){
+		showItem();
+	});
+});

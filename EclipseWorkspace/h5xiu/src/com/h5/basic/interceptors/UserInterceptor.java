@@ -1,0 +1,73 @@
+package com.h5.basic.interceptors;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+import org.json.JSONObject;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import com.h5.util.Constants;
+/**
+ * 用户数据拦截器
+ * @author Paul Iverson
+ *
+ */
+public class UserInterceptor extends HandlerInterceptorAdapter {
+
+	private static final Logger log = Logger.getLogger(UserInterceptor.class);
+	
+	private List<String> allowUrls;
+	
+	@Override
+	public boolean preHandle(HttpServletRequest request,
+			HttpServletResponse response, Object handler) throws Exception {
+		String requestUrl = request.getRequestURI();
+		if (requestUrl.startsWith(request.getContextPath() + "/res/")){
+			return true;
+		}
+		
+		for(String url : allowUrls){
+			if (requestUrl.endsWith(url)){
+				return true;
+			}
+		}
+		
+		if (request.getSession().getAttribute(Constants.LOGINUSER_SESSION_NAME_USER) != null){
+			return true;
+		}else{
+			log.debug("Session timout when user access " + requestUrl);
+        	
+        	String hdAccep = request.getHeader("accept");
+            String hdXReq = request.getHeader("X-Requested-With");
+            if ( (hdAccep != null && hdAccep.indexOf("application/json") > -1) || (hdXReq != null && hdXReq.indexOf("XMLHttpRequest") > -1) ) { //如果是异步请求
+            	//JSON格式返回 
+            	JSONObject obj = new JSONObject();
+            	obj.put("msg", Constants.SESSION_TIMEOUT_ALERT_MESSAGE);
+            	obj.put("message", "登录信息超时，请先登录后再操作！");
+            	
+            	response.setCharacterEncoding(request.getCharacterEncoding());
+            	response.setContentType("application/json");
+                try {
+                    response.getWriter().println(obj.toString());  
+                } catch (IOException e) {  
+                	log.error("Exception happens when write error message to response.", e); 
+                }
+            } /*else if (requestUrl.endsWith("/m")) {
+            	request.getRequestDispatcher("/wedding/sync").forward(request, response);
+            }*/ else {
+            	log.debug("\n\n\n\n-----redirct");
+                response.sendRedirect(request.getContextPath() + "/user/login.html");
+            }
+            
+            return false;
+		}
+	}
+	
+	public void setAllowUrls(List<String> allowUrls) {
+		this.allowUrls = allowUrls;
+	}
+}

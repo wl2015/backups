@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>viewer.html</title>
+	
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+    <style type="text/css">
+#top{width:1000px;height:100px;margin:auto;}
+#leftBtn{width: 18px; text-align: left;height: 100px; float:left; background-image: url(images/images/left.jpg);}
+#rightBtn{width: 18px; height: 100px; float:right;background-image: url(images/images/right.jpg);}
+#smallPhoto{ text-align: center; float:left;margin-left:10px;margin-right:5px; }
+#bigPhoto{width:1000px;height:600px;text-align:center;margin:auto;}
+.photo{width:100px; height:100px;cursor:pointer;}
+#bottom{width:1000px;height:50px;margin:auto;}
+</style> 
+
+<script type="text/javascript">
+$(function(){
+	loadPhoto(1,9);//页面加载函数,每次显示9张图片，加载时候显示1-9
+	$("#count").text("1");
+	$("#leftBtn").click(function(){
+	var firstIndex=parseInt($("#smallTr :first-child image").attr("id"),10);
+	if(firstIndex<=1){ //如果已经到第一页了
+	return;
+	}
+	else{
+	var startId=firstIndex-9;
+	var endId=startId+8;
+	$("#count").text(startId);
+	loadPhoto(startId,endId);
+	}
+	});
+	$("#rightBtn").click(function(){
+	var sum=$("#sum").text();
+	var lastIndex=parseInt($("#smallTr :last-child image").attr("id"),10);
+	if(lastIndex>=parseInt(sum,10)){ //如果已经到最后一页了
+	return;
+	}
+	else{
+	var startId=lastIndex+1;
+	var endId=startId+8;
+	$("#count").text(startId);
+	loadPhoto(startId,endId);
+	}
+	});
+});
+//获取图片总数
+function getCountPhoto(){
+$.post("viewServer.ashx",{"action":"countPhoto"},function(data,status){
+if(status!="success"){
+alert("图片总数加载失败！");
+}
+else{
+$("#sum").text(data);
+}
+});
+};
+//加载图片的公共函数，索引从startid到endId
+function loadPhoto(startId,endId){
+$.post("viewServer.ashx",{"startId":startId,"endId":endId,"action":"getData"},function(data,status){ //告诉后台要哪几张图片
+if(status!="success"){
+alert("小图片加载失败！");
+}
+else{
+getCountPhoto(); //获取图片总数
+$("#smallTr").empty();
+var photos=$.parseJSON(data); //使用json传递数据，json用着就是爽啊
+for(var i=0;i<photos.length;i++){
+var photo=photos[i];
+var td=$("<td ><img id='"+photo.Rownum+"' class='photo' src='images/"+photo.ImageUrl+"'/></td>");
+$("#smallTr").append(td);
+}
+$("#tmpimg").attr("src","images/"+photos[0].ImageUrl);
+}
+//为每个小图片设置mouseover和click事件
+$("#smallTr img").mouseenter(function(){
+$(this).attr("cursor","pointer");
+})
+.click(function(){
+$("#count").text($(this).attr("id"));
+$("#tmpimg").attr("src",$(this).attr("src"));
+});
+});
+};
+//如果图片加载过慢，提示加载中。。。。
+$("#loading").ajaxStart(function(){
+$(this).show();
+})
+.ajaxStop(function(){
+$(this).hide();
+});
+</script> 
+
+  </head>
+  
+  <body style="text-align: center;">
+		<form id="form1" runat="server">
+		<div id="top" style="text-align: center">
+		<input id="leftBtn" type="button" />
+		<div id="smallPhoto">
+		<table>
+		<tr id="smallTr">
+		</tr>
+		</table>
+		</div>
+		<input id="rightBtn" type="button" />
+		</div>
+		<div id="bigPhoto">
+		<span style="display:none;" id="loading">加载中.....</span> <br /> <img id="tmpimg" src="" style="position: relative; height: 600px; width: 800px;"/>
+		</div>
+		<br />
+		<div id="bottom">
+		共<span id="sum" style="visibility: visible;"><strong>0</strong></span>张， 当前第<span id="count" style="visibility:visible;"><strong>0</strong></span>张
+		</div>
+		</form>
+</body>
+</html>
+
+

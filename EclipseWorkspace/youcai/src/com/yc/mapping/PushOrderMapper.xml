@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yc.dao.PushOrderDao">
+	<resultMap id="PushOrderMap" type="com.yc.bean.PushOrder">
+		<id column="go_id" property="goId" javaType="Integer" jdbcType="INTEGER" />
+		<result column="o_id" property="oId" javaType="Integer" jdbcType="INTEGER" />
+		<result column="m_id" property="mId" javaType="Integer" jdbcType="INTEGER" />
+		<result column="m_sure" property="mSure" javaType="Integer" jdbcType="INTEGER" />
+		<result column="u_sure" property="uSure" javaType="Integer" jdbcType="INTEGER" />
+		<result column="spend_time" property="spendTime" javaType="Integer" jdbcType="INTEGER" />
+		<result column="range" property="range" javaType="Integer" jdbcType="INTEGER" />
+		<!-- <association property="user" column="o_id" select="com.yc.dao.UserDAO.getUserByOrderId"/> -->
+		<collection property="dishlist" column="o_id" javaType="ArrayList" ofType="DishList" select="com.yc.dao.DishListDao.getDishlistByO_Id"/>		
+	</resultMap>
+	<!--  商家选取商家还未抢过的订单 -->
+  <!-- SELECT * FROM `youcai`.`pushorder`,`order` where `pushorder`.o_id = `order`.o_id 
+  and `pushorder`.m_sure = 0 and `pushorder`.u_sure = 0 and `pushorder`.m_id = 2 -->
+  <select id="getNewOrder" ></select>
+	<!-- 商户获取可抢订单 -->
+	<select id="SelectPushOrder" parameterType="int" resultMap="PushOrderMap">
+		 SELECT pushorder.go_id, pushorder.o_id FROM pushorder, orders where pushorder.m_id = #{0} and pushorder.m_sure = 0
+		  and pushorder.u_sure = 0 and pushorder.o_id = orders.o_id and orders.m_id = 0 and orders.o_time <![CDATA[  > ]]> date_sub(NOW(), INTERVAL 1
+ 		day);  
+	</select>
+	<!-- 商家确认抢单，确认相关信息 -->	
+	<update id="mSureOrder" parameterType="java.util.List">
+		<foreach collection="list" item="item" separator=";" > 
+			 update pushorder 
+			 <set> m_sure = 1 , spend_time = #{item.spendTime} </set>
+			 where go_id = #{item.id} 
+		</foreach>
+	</update>
+	
+	<!-- 通过商家id获取可抢订单数量 -->
+  <select id="getPushOrderCount" parameterType="int" resultType="int">
+  	select count(go_id) from pushorder, orders where pushorder.m_id = #{0} and pushorder.m_sure = 0
+	 and pushorder.u_sure = 0 and pushorder.o_id = orders.o_id and orders.m_id = 0 and orders.o_time <![CDATA[  > ]]> date_sub(NOW(), INTERVAL 1
+ 		day);
+  </select>
+  
+ <!--  删除没抢的订单 -->
+ 	<delete id="deleteNotSureOrder">
+ 		delete from pushorder where go_id in 
+ 		<foreach item="item" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		and m_sure = 0;
+ 	</delete>
+ <!-- <delete id="deleteDeforePushOrder" >
+ 	delete pushorder.* from orders, pushorder where orders.o_time
+ 	<![CDATA[  < ]]>
+ 	date_sub(NOW(), INTERVAL 2 day) and pushorder.o_id = orders.o_id; 
+ 	
+ </delete> -->
+ 
+</mapper>

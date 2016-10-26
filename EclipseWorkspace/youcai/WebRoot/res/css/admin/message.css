@@ -1,0 +1,100 @@
+@charseset 'utf-8';
+*{
+	margin:0;
+	padding:0
+}
+.message{
+	width:90%;
+	margin:0 auto;
+}
+.messageLeft{
+	float:left;
+	width:50%;
+}
+.messageRight{
+	float:left;
+	width:48%;
+	height:500px;
+	overflow:auto;  /*固定高度。超出滚动*/
+	border:1px solid #800000;
+	border-radius:5px;
+	
+}
+.message:after{  /*伪元素清浮动*/
+	content:'';
+	clear:both;
+	display:block;
+}
+.message .left,.right{
+	float:left;
+	height:200px;
+	line-height:200px;
+	text-align:center;
+	margin-bottom:20px;
+}
+.message .left{
+	width:20%;
+}
+.message .right{
+	width:60%;
+}
+.message .right textarea{
+	width:100%;
+	height:100%;
+	resize:none;
+	border:1px solid #000;
+	border-radius:5px;
+}
+.message .limit{
+	clear:both;
+	width:200px;
+	height:20px;
+	ling-height:20px;
+	margin-left:50%;
+}
+.message .button{
+	width:100px;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	border-radius:5px;
+	background:#8B0000;
+	margin-left:20%;
+	margin-top:50px;
+	cursor:pointer;
+	color:#fff;
+	
+}
+.messageRight .title{
+	width:100%;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	font-size:18px;
+}
+.messageRight ul{
+	list-style:none;
+	margin-bottom:10px;
+}
+.messageRight ul li{
+	width:98%;
+	height:auto;
+	border-bottom:1px solid #800000;
+}
+.messageRight ul li .messageId{
+	width:50%;
+	height:30px;
+	line-height:30px;
+	margin-left:2%;
+	color:#800000;
+}
+.messageRight ul li .messageContent{
+	width:100%;
+	line-height:30px;
+	padding:5px;
+	text-indent:10px;
+}
+.messageRight ul li .messageTime{
+	width:50%;
+	margin-left:50%;
+}

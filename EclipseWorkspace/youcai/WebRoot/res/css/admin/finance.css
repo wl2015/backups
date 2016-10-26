@@ -1,0 +1,56 @@
+@charseset 'utf-8';
+*{
+	margin:0;
+	padding:0;
+	border:none;
+}
+.finance{
+	width:60%;
+	margin:0 auto;
+}
+.finance .tools{
+	width:140%;
+	height:50px;
+	/* text-align:center; */
+/* 	background:red; */
+	margin-left:-200px;
+	padding-left:130px;
+}
+.finance .tools input{
+	height:30px;
+	margin-left:10px;
+	border:1px solid #000;
+	border-radius:3px;
+}
+#totalMoney{
+	margin-left:100px;
+	color:#800000;
+	font-size:20px;
+}
+/*#textDate1{
+	width:200px;
+	height:30px;
+}
+*/.finance .tb{
+	clear:both;
+}
+.tb table{
+	width:100%;
+	border:1px solid #8B0000;
+	border-collapse:collapse;
+	text-align:center;
+}
+.tb table th,td{
+	border:1px solid #8B0000;
+}
+#queryFinance{
+	border-radius:5px;
+	color:#fff;
+	width:80px;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	background:#800000;
+	font-size:18px;
+	
+}

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+		
+	<!-- 自动扫描 -->
+	<!-- 默认的注解映射的支持 ,它会自动注册DefaultAnnotationHandlerMapping 与AnnotationMethodHandlerAdapter -->
+	<mvc:annotation-driven/>
+	<!-- 自动扫描注解  base-package:扫描包的父包--> 
+	<context:component-scan base-package="com.h5"></context:component-scan>
+	
+	<!-- c3p0连接池配置 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="user" value="h5dev"></property>
+		<property name="password" value="h5db2o15"></property>
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+		<property name="jdbcUrl" value="jdbc:mysql://114.215.133.50:3306/h5?characterEncoding=UTF-8"></property>
+	
+		<!-- 连接池中保留的最大连接数。默认值: 15 -->
+		<property name="maxPoolSize" value="30"></property>
+		<!-- 连接池中保留的最小连接数。默认值: 15 -->
+		<property name="minPoolSize" value="1"></property>
+		<!-- 初始化连接池中的连接数，取值应在minPoolSize与maxPoolSize之间，默认为3-->
+		<property name="initialPoolSize" value="3"></property>
+		<!--最大空闲时间，60秒内未使用则连接被丢弃。若为0则永不丢弃。默认值: 0 -->
+		<property name="maxIdleTime" value="60"></property>
+		<!-- 当连接池连接耗尽时，客户端调用getConnection()后等待获取新连接的时间，超时后将抛出SQLException，如设为0则无限期等待。单位毫秒。默认: 0 --> 
+		<property name="checkoutTimeout" value="30000"></property>
+		<!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。默认值: 3 -->  
+		<property name="acquireIncrement" value="3"></property>
+		<!--定义在从数据库获取新连接失败后重复尝试的次数。默认值: 30 ；小于等于0表示无限次--> 
+		<property name="acquireRetryAttempts" value="30"></property>
+		<!--重新尝试的时间间隔，默认为：1000毫秒-->
+		<property name="acquireRetryDelay" value="1000"></property>
+		<!--关闭连接时，是否提交未提交的事务，默认为false，即关闭连接，回滚未提交的事务 -->
+		<property name="autoCommitOnClose" value="false"></property>
+		<!--每60秒检查所有连接池中的空闲连接。默认值: 0，不检查 -->
+		<property name="idleConnectionTestPeriod" value="60"></property>
+		<!--c3p0全局的PreparedStatements缓存的大小。如果maxStatements与maxStatementsPerConnection均为0，则缓存不生效，只要有一个不为0，则语句的缓存就能生效。如果默认值: 0-->
+		<property name="maxStatements" value="100"></property>   
+		<!--maxStatementsPerConnection定义了连接池内单个连接所拥有的最大缓存statements数。默认值: 0 -->  
+		<property name="maxStatementsPerConnection" value="0"></property>
+	</bean>
+	
+	<!-- hibernate 需要的信息 -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 扫描映射文件，实体类 -->
+		<property name="packagesToScan">
+			<list>
+				<value>com.h5.entity</value>
+			</list>
+		</property>
+		<!-- hibernate链接配置和链接属性 -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<!-- 启动hibernate自动建表功能 -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="dynamic-insert">true</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="txManager"/>
+	
+	<!-- 声明事务管理 -->
+	<bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="do*"   propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
+			<tx:method name="name" propagation="REQUIRED" read-only="false" rollback-for="java.lang.Exception"/>
+			<tx:method name="get*" propagation="REQUIRED" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+		<aop:pointcut expression="execution(public * com.h5.*.service.impl.*ServiceImpl.*(..))" id="txPointcut"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+	</aop:config>
+	
+	<!-- 全局异常 -->
+	<bean id="exceptionResolver" class="com.h5.basic.exceptions.WholeExceptionHandler"></bean>
+	
+	<!-- 声明资源文件 -->
+	<!-- 配置静态资源，直接映射到对应的文件夹，不被DispatcherServlet处理，3.04新增功能，需要重新设置spring-mvc-3.2.xsd --> 
+	<mvc:resources mapping="/res/**" location="/res/" />
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="com.h5.basic.interceptors.SiteUrlInterceptor"></bean>
+		</mvc:interceptor>
+		
+		<mvc:interceptor>
+			<mvc:mapping path="/**/user/**"/>
+			<bean class="com.h5.basic.interceptors.UserInterceptor">
+				<property name="allowUrls">
+					<list>
+						<value>/login</value>
+						<value>/doLogin</value>
+						<value>/regist</value>
+						<value>/toresetPass</value>
+						<value>/doResetPass</value>
+						<value>/doRegist</value>
+						<value>/registStep1</value>
+						<value>/checkePhone</value>						
+						<value>/getsmsCodeHadRegist</value>
+						<value>/getsmsCode</value>
+						<value>/findpassword</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
+		
+	
+</beans>

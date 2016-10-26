@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<HTML>
+ <HEAD>
+  <TITLE> 页面整合 </TITLE>
+	<META charset=utf-8>
+	<#assign base = springMacroRequestContext.getContextUrl("")>
+	<link rel="stylesheet" type="text/css" href="${base}/res/css/user/navigation-demo.css">
+	<link rel="stylesheet" type="text/css" href="${base}/res/css/user/hot-demo.css">
+	<link rel="stylesheet" type="text/css" href="${base}/res/css/user/designer.css">
+	<link rel="stylesheet" type="text/css" href="${base}/res/css/user/item.css">
+	<link rel="stylesheet" type="text/css" href="${base}/res/css/user/userinfo.css">
+	<link rel="stylesheet" type="text/css" href="${base}/res/css/user/demand-style.css">
+	<script type="text/javascript" charset="utf-8" src="${base}/res/js/jQuery/jquery.js"></script>
+	<script type="text/javascript"  charset="utf-8" src="${base}/res/js/jQuery/jquery.nicescroll.min.js"></script>
+	<script type="text/javascript"  charset="utf-8" src="${base}/res/js/common.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="${base}/res/js/user/designer.js"></script>
+	<script type="text/javascript" charset="utf-8" src="${base}/res/js/user/item.js"></script>
+	<script type="text/javascript" charset="utf-8" src="${base}/res/js/user/userinfoTest.js"></script>
+	<script type="text/javascript" charset="utf-8" src="${base}/res/js/user/demoTest.js"></script>
+	<script type="text/javascript" charset="utf-8" src="${base}/res/js/user/hotDemoTest.js"></script>
+	<script type="text/javascript" charset="utf-8" src="${base}/res/js/user/designerTest.js"></script>
+	<script type="text/javascript" charset="utf-8" src="${base}/res/js/user/itemTest.js"></script>
+	<script type="text/javascript" charset="utf-8" src="${base}/res/js/user/demandTest.js"></script>
+	<script type="text/javascript" charset="utf-8" src="${base}/res/js/user/userinfoTest.js"></script>
+	<script type="text/javascript" charset="utf-8" src="${base}/res/js/user/pageTest.js"></script>
+ </HEAD>
+	
+	
+
+ <BODY>
+
+ <!-- 导航栏部分-->
+	<div class="totalbar">
+		<div class="container header-totalbar-mid">
+			<div class="logo">
+				<img src="${base}/res/img/test/logo.png">
+			</div>
+
+			<div class="nav">
+				<ul>
+					<li class="divider"></li>
+					<li id="program">项目</li>
+					<li id="editor">设计师</li>
+					<li id="demo">模板</li>
+					<li id="hot">热门</li>
+					<li id="notice">通知</li>
+					<li id="userinfo">用户</li>
+					<li class="divider"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div id="common-content">
+		
+	</div>
+
+
+	<!--鼠标悬停显示二维码-->
+ </BODY>
+</HTML>

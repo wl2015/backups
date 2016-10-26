@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yc.dao.MerchantSellDao">
+  <resultMap id="MerchanSellMap" type="com.yc.bean.Advance">
+    <id property="advanceId" column="ad_id" javaType="Integer" jdbcType="INTEGER" />
+    <result property="advanceTime" column="ad_time" javaType="String" jdbcType="DATE" />
+    <result property="advanceStatus" column="ad_status" javaType="Integer" jdbcType="INTEGER" />
+    <result property="refund" column="refund" javaType="Integer" jdbcType="INTEGER" />
+<!-- <result property="userStatus" column="user_status" javaType="Integer" jdbcType="INTEGER" />
+    <association property="order" column="o_id" select="com.yc.dao.OrdersDao.getMoneyByOrderId"  /> -->
+   <result property="orderId" column="o_id" javaType="Integer" jdbcType="INTEGER" />
+   <result property="money" column="money" javaType="double" jdbcType="DOUBLE" /> 
+  </resultMap>
+
+<!-- 商家查询 一定日期范围内（date）不同情况下的销售额情况where+if条件判断 
+param：（Date startDate, Date endDate, String handelStatus, String refundStatus, int merchantId ）-->
+<select id="getMerchantAdvance" resultMap="MerchanSellMap" parameterType="HashMap">
+	select advance.*, orders.money, orders.refund from advance, orders 
+	<where>  
+	 orders.m_id=#{merchantId, jdbcType=INTEGER}
+ 	 and advance.o_id = orders.o_id and advance.ad_time between #{startDate, jdbcType=DATE } and #{endDate, jdbcType=DATE } 
+ 	 <if test="handelStatus != null and  handelStatus != '' and  handelStatus != 'all' ">
+ 	  and advance.ad_status=#{handelStatus, jdbcType=INTEGER}
+ 	 </if>
+ 	 <if test="refundStatus != null and  refundStatus != '' and  refundStatus != 'all' ">
+ 	   and orders.refund=#{refundStatus, jdbcType=INTEGER}
+ 	 </if>
+ 	 </where> 
+ 	    order by advance.ad_time;
+</select>
+<!-- 商家查询总计 param：（Date startDate, Date endDate, String handelStatus, String refundStatus, int merchantId ）-->
+<select id="getMerchantTotalAdvance" resultMap="MerchanSellMap" parameterType="HashMap">
+	select sum(orders.money) as money, count(orders.o_id) as o_id, orders.refund as refund from
+	 orders, advance 
+	<where> 
+ 	orders.o_id = advance.o_id and orders.m_id = #{merchantId, jdbcType=INTEGER}
+	  and advance.ad_time between #{startDate, jdbcType=DATE } and #{endDate, jdbcType=DATE }
+	   <if test="handelStatus != null and  handelStatus != '' and  handelStatus != 'all' ">
+	     and advance.ad_status=#{handelStatus, jdbcType=INTEGER}
+	   </if>
+	   <if test="refundStatus != null and  refundStatus != '' and  refundStatus != 'all' ">
+ 	     and orders.refund=#{refundStatus, jdbcType=INTEGER}
+ 	   </if>
+	</where>
+	group by orders.refund;
+</select>
+</mapper>

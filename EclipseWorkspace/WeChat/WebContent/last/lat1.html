@@ -1,0 +1,75 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../css/menuList.css" />
+ <link rel="stylesheet" type="text/css" href="../css/layout.css" />
+ <script src="../js/jquery-1.4.2.min.js"></script>
+ <script  language="javascript" type="text/javascript" src="../js/order.js"></script>
+</head>
+<body style="Font-size:63%;">
+	<div class="margin">
+	<div class="float-1 pb-1 margin-b-2"><img src="../picture/y1.png" style="width:3.5em"/></div>
+	<div class="pt-1 float-1 color-3 font-s-3 pb-1 margin-b-2">确认菜品并使用优惠券</div>
+	<div style="clear:both"></div>
+	<div>
+		<div class="float-1 margin-r"><img src="../picture/warn.png"/></div>
+		<div class="font-s-2 color-9 pt-3 ">
+			<div class="float-1">离起送价格还差￥</div><div class="float-1" id="left">6.00</div>
+		</div>
+	</div>
+	<div style="clear:both"></div>
+	<table class="table1">
+		<tr class="tr1" id="as">
+			<td class="td1" onclick="delete2('as');">删除</td>
+			<td class="td2 font-s-2 color-10">无骨藤椒兔（还有100份）单价:22.00;小计:22.00</td>
+			<td  id="td3" class="td3">
+			<div id="as">
+					<div class="border-min-1 float-2 margin-l-3" id="add" onclick="add('add','num','left');">+</div>
+					<div  class="border-min-3 float-2 margin-l-3" id="num" >1</div>
+					<div class="border-min-2 float-2"  onclick="jian('num','as','add');">-</div>
+			</div>
+			</td>
+		</tr>
+
+		
+		<tr class="tr1" id="as">
+			<td class="td1" onclick="delete2('as');">删除</td>
+			<td class="td2 font-s-2 color-10">无骨藤椒兔（还有100份）单价:22.00;小计:22.00</td>
+			<td class="td3">
+			<div id="as">
+					<div class="border-min-1 float-2 margin-l-3" id="add" onclick="add('add','num','left');">+</div>
+					<div  class="border-min-3 float-2 margin-l-3" id="num" >1</div>
+					<div class="border-min-2 float-2"  onclick="jian('num','as','add');">-</div>
+			</div>
+			</td>
+		</tr>
+		<tr class="tr1" id="as">
+			<td class="td1" onclick="delete2('as');">删除</td>
+			<td class="td2 font-s-2 color-10">无骨藤椒兔（还有100份）单价:22.00;小计:22.00</td>
+			<td class="td3">
+			<div class="float-2  margin-t-4 border-13" style="display:none" id="over">售罄</div>
+			<div id="as">
+					<div class="border-min-1 float-2 margin-l-3" id="add" onclick="add('add','num','left');">+</div>
+					<div  class="border-min-3 float-2 margin-l-3" id="num" >1</div>
+					<div class="border-min-2 float-2"  onclick="jian('num','as','add');">-</div>
+			</div>
+			</td>
+		</tr>
+		<tr class="tr2 font-s-2 color-10">
+			<td></td>
+			<td>送餐费</td>
+			<td>6.00</td>
+		</tr>
+		<tr class="tr2 font-s-2 color-10">
+			<td></td>
+			<td>共计</td>
+			<td class="color-11">￥28.00</td>
+		</tr>
+	</table>
+
+	<div class="margin-t-3 float-1 pb-1 margin-b-2"><img src="../picture/tuijian.png" style="width:3.5em"/></div>
+	<div class="margin-t-3 float-1 color-3 font-s-3 pb-1 margin-b-2">推荐搭配</div>
+	<div style="clear:both"></div>
+	<div class="border-3"></div>
+
+</body>
+</html>

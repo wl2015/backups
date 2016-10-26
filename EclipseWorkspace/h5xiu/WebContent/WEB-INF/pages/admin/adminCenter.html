@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>管理中心</title>
+<#assign base = springMacroRequestContext.getContextUrl("")>
+<link rel="stylesheet" href="${base}/res/css/admin/admin-center.css">
+<link rel="stylesheet" href="${base}//res/css/admin/admin-common.css">
+<script type="text/javascript" src="${base}//res/js/jQuery/jquery.js"></script>
+<script type="text/javascript" src="${base}//res/js/jQuery/jquery.form.js"></script>
+<script type="text/javascript" src="${base}//res/js/common.min.js"></script>
+<script type="text/javascript" src="${base}//res/js/constants.min.js"></script>
+</head>
+<body>
+	<@p.adminHead base/>
+	<div id="body" class="body page_index">
+		<div id="jsContainerBox" class="container_box cell_layout side_l">
+			<div class="col_side">
+				<div id="menuBar" class="menu_box">
+					<dl class="menu no_extra">
+						<dt class="menu_title">
+							<i class="icon_menu" style="background:url(${base}/res/img/icons/menu/icon_menu_function.png) no-repeat;"></i>快速功能
+						</dt>
+						<dd class="menu_item menu_item_choiced">
+							<a href="javascript:void(0)" id="menuPreview">快速预览</a>
+						</dd>
+						<dd class="menu_item">
+							<a href="javascript:void(0)" id="logs" >日志管理</a>
+						</dd>
+						<dd class="menu_item" title="首页banner图片和链接地址的更换、图片顺序的排列">
+							<a href="javascript:void(0)" id="advertisement" >广告管理</a>
+						</dd>
+						<dd class="menu_item">
+							<a href="javascript:void(0)" id="addAdmin">添加管理员</a>
+						</dd>
+						<dd class="menu_item">
+							<a href="javascript:void(0)" id="addAdmin">站内信</a>
+						</dd>
+					</dl>
+					<dl class="menu ">
+						<dt class="menu_title">
+							<i class="icon_menu" style="background:url(${base}/res/img/icons/menu/icon_menu_management.png) no-repeat;"></i>用户管理
+						</dt>
+						<dd class="menu_item" title="数据统计、列表查看、删除">
+							<a href="javascript:void(0)" id="">管理员管理</a>
+						</dd>
+						<dd class="menu_item" title="数据统计、列表查看、拉黑">
+							<a href="javascript:void(0)" id="">用户管理</a>
+						</dd>
+					</dl>
+					<dl class="menu ">
+						<dt class="menu_title">
+							<i class="icon_menu" style="background:url(${base}/res/img/icons/menu/icon_menu_statistics.png) no-repeat;"></i>内容管理
+						</dt>
+						<dd class="menu_item" title="可将作品设置为模板，或者将作品删除 ；设置模板时：封面、二维码、模板标题、价格（分为限时免费、自定义价格）、类别（管理员可选择或添加类别）">
+							<a href="javascript:void(0)" id="wedderClassroom">作品管理</a>
+						</dd>
+						<dd class="menu_item" title="从后台查看所有模板，并可对模板进行删除和修改 ">
+							<a href="javascript:void(0)" id="articleExamin">模板管理</a>
+						</dd>
+						<dd class="menu_item" title="管理员可以上传并删除底版 ">
+							<a href="javascript:void(0)" id="articleExamin">底板管理</a>
+						</dd>
+					</dl>
+					<dl class="menu ">
+						<dt class="menu_title">
+							<i class="icon_menu" style="background:url(${base}/res/img/icons/menu/icon_menu_statistics.png) no-repeat;"></i>统计分析
+						</dt>
+						<dd class="menu_item" title="网站访客的统计、每天多少人访问、总共多少人访问">
+							<a href="javascript:void(0)" id ="">数据统计</a>
+						</dd>
+					</dl>
+				</div>
+			</div>
+			
+			<div class="col_main" id="col_main">
+			</div>
+		</div>
+	</div>
+</body>
+</html>

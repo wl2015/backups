@@ -1,0 +1,53 @@
+@charset 'utf-8';
+*{
+	margin:0;
+	padding:0;
+	font-family:'微软雅黑';
+	border:none;
+}
+body{
+	background: #F5F5F5;
+}
+.content{
+	width:96%;
+	margin:0 auto;
+}
+#r-result{
+	width:100%;
+	height:40px;
+	line-height:40px;
+}
+#r-result input[type=text]{
+	width:40%;
+	height:25px;
+	line-height:25px;
+	border:1px solid #000;
+	border-radius:3px;
+	padding-left:3px;
+}
+#r-result input[type=button]{
+	width:25%;
+	height:25px;
+	line-height:25px;
+	border-radius:3px;
+	color:#fff;
+	background:#FE4D3D;
+}
+#searchResultPanel{
+	display:none;
+}
+#allmap{
+	width:100%;
+	height:350px;
+}
+.beginOrder{
+	width:100%;
+	height:40px;
+	line-height:40px;
+	text-align:center;
+	color:#fff;
+	background:#FE4D3D;
+	border-radius:5px;
+	margin:20px auto;
+	cursor:pointer;
+}

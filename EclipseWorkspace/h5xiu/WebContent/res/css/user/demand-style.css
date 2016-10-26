@@ -1,0 +1,76 @@
+@charset "UTF-8";
+/*!
+Animate.css - http://daneden.me/animate
+Licensed under the MIT license - http://opensource.org/licenses/MIT
+
+Copyright (c) 2014 Daniel Eden
+*/
+html, body, div, span, h1, h2, h3, h4, p, img, strong, ol, ul, li{
+	margin:0px;
+	padding:0px;
+	border:0px none;
+	font-size:100%;
+	vertical-align:baseline;
+}
+
+.demand-wrapper{
+	width:1000px !important;
+}
+
+.demand-content{
+	margin: 100px auto;
+	background:none repeat scroll 0% 0% #F5F5F5;
+	text-align:center;
+}
+.demand-content .demand-frame{
+	width:930px;
+	margin:0px auto;
+	text-align:left;
+}
+.demand-relative{
+	position:relative;
+}
+.demand-content .demand-title{
+	width:100px;
+	height:35px;
+	line-height:35px;
+	background:none repeat scroll 0% 0% #292929;
+	font-size:14px;
+	color:#E6E6E6;
+	text-align:center;
+	margin-bottom:15px;
+
+}
+.demand-content .demand-nicon{
+	position:absolute;
+	right:-20px;
+	top:10px;
+	cursor:pointer;
+}
+.demand-content .demand-nicon i{
+	position:absolute;
+	right:8px;
+	top:-8px;
+	width: 0px;
+	height:10px;
+	overflow:hidden;
+	border-width:6px;
+	border-style:solid;
+	border-color: #F5F5F5 #F5F5F5 #000000 #F5F5F5;
+}
+.demand-content .demand-notice{
+	padding:15px 0px 30px;
+}
+.demand-content .demand-notice .demand-ntitle{
+	color:#282828;
+	font-weight:bold;
+}
+.demand-content .demand-notice .demand-ncontent{
+	padding-top:10px;
+	color:#323232;
+	line-height:24px;
+	text-align:justify;
+}
+.demand-content .demand-notice .demand-ncontent .demand-paragraph{
+	display:none;
+}

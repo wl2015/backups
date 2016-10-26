@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yc.dao.UserDAO">
+
+<!--   MyBatis的核心是其映射文件,SqlMap文件,里面配置了项目中用到了什么SQL语句,和数据库相关的逻辑都在这个映射文件里.顾名思义,
+  映射文件就是对Java对象和SQL的映射.这里简单介绍一下映射文件中resultMap的用法:
+  resultMap – 它描述如何将结果集映射到Java对象.
+  resultMap属性：type为java实体类；id为此resultMap的标识:<resultMap id="BaseResultMap" type="com.test.mybatis.vo.MybatisOrder" >
+  resultMap的子元素：
+  id – 一般对应到数据库中该行的ID,设置此项可以提高Mybatis性能.
+  result – 映射到JavaBean 的某个"简单类型"属性,String,int等.
+  association – 映射到JavaBean 的某个"复杂类型"属性,其他JavaBean类.
+  collection –复杂类型集合,a collection of complex types -->
+  
+  <resultMap id="userResultMap" type="com.yc.bean.User">
+    <id column="u_id" property="userId" jdbcType="VARCHAR" />
+    <result column="u_phone" property="userPhone" jdbcType="VARCHAR" />
+    <result column="u_name" property="userName" jdbcType="VARCHAR" />
+    <result column="u_sex" property="userSex" jdbcType="VARCHAR" />
+    <result column="u_star" property="star" jdbcType="VARCHAR" />
+    <result column="u_mail" property="userMail" jdbcType="VARCHAR" />
+    <result column="regist_time" property="registTime" jdbcType="VARCHAR" />
+    <result column="vip" property="vip" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap type="com.yc.bean.Dish" id="dishResultMap">
+    <id column="d_id" property="dishId" jdbcType="VARCHAR"/>
+    <result column="d_name" property="dishName" jdbcType="VARCHAR"/>
+    <result column="d_intro" property="dishIntro" jdbcType="VARCHAR"/>
+    <result column="d_pic" property="dishPic" jdbcType="VARCHAR"/>
+    <result column="retail_price" property="retailPrice" jdbcType="VARCHAR"/>
+    <result column="d_taste" property="dishTaste" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  <resultMap type="com.yc.bean.Merchant" id="merchantResultMap">
+    <id column="m_id" property="merchantId" jdbcType="VARCHAR"/>
+    <result column="m_phone" property="merchantPhone" jdbcType="VARCHAR"/>
+    <result column="shop_name" property="shopName" jdbcType="VARCHAR"/>
+    <result column="boss_name" property="bossName" jdbcType="VARCHAR"/>
+    <result column="idcard" property="idCard" jdbcType="VARCHAR"/>
+    <result column="linkphone" property="linkPhone" jdbcType="VARCHAR"/>
+    <result column="bankcard" property="bankCard" jdbcType="VARCHAR"/>
+    <result column="m_address" property="merchantAddress" jdbcType="VARCHAR"/>
+    <result column="m_intro" property="merchantIntro" jdbcType="VARCHAR"/>
+    <result column="m_status" property="merchantStatus" jdbcType="VARCHAR"/>
+    <result column="m_star" property="merchantStar" jdbcType="VARCHAR"/>
+    <result column="m_comment" property="merchantComment" jdbcType="VARCHAR"/>
+    <result column="m_mail" property="merchantMail" jdbcType="VARCHAR"/>
+    <result column="register_time" property="registerTime" jdbcType="VARCHAR"/>
+    <result column="last_login_time" property="lastLoginTime" jdbcType="VARCHAR"/>
+    <result column="last_login_ip" property="lastLoginIp" jdbcType="VARCHAR"/>
+    <result column="m_lng" property="merchantLng" jdbcType="VARCHAR"/>
+    <result column="m_lat" property="merchantLat" jdbcType="VARCHAR"/>
+    <result column="m_logo" property="merchantLogo" jdbcType="VARCHAR"/>
+    <association column="go_id" property="pushOrder" javaType="com.yc.bean.PushOrder" 
+    resultMap="pushOrderResultMap"/>
+  </resultMap>
+  
+  <resultMap type="com.yc.bean.Order" id="orderResultMap">
+    <id column="o_id" property="oId" jdbcType="VARCHAR"/>
+    <result column="u_id" property="userId" jdbcType="VARCHAR"/>
+    <result column="m_id" property="merchant" jdbcType="VARCHAR"/>
+    <result column="address" property="address" jdbcType="VARCHAR"/>
+    <result column="money" property="money" jdbcType="VARCHAR"/>
+    <result column="o_time" property="orderTime" jdbcType="VARCHAR"/>
+    <result column="spend_time" property="spendTime" jdbcType="VARCHAR"/>
+    <result column="pay_status" property="payStatus" jdbcType="VARCHAR"/>
+    <result column="user_status" property="userStatus" jdbcType="VARCHAR"/>
+    <result column="refund" property="refund" jdbcType="VARCHAR"/>
+    <result column="o_lng" property="oLng" jdbcType="VARCHAR"/>
+    <result column="o_lat" property="oLat" jdbcType="VARCHAR"/>
+    <result column="u_evaluate" property="uEvaluate" jdbcType="VARCHAR"/>
+    <result column="delete_u" property="delete_u" jdbcType="VARCHAR"/>
+    <result column="delete_m" property="delete_m" jdbcType="VARCHAR"/>
+    <association column="m_id" property="merchant" javaType="com.yc.bean.Merchant" 
+    resultMap="merchantResultMap"/>
+  </resultMap>
+
+  <resultMap type="com.yc.bean.DishList" id="dishListResultMap">
+    <id column="dishlist_id" property="dishListId" jdbcType="VARCHAR"/>
+    <result column="o_id" property="oId" jdbcType="VARCHAR"/>
+    <result column="dish_id" property="dishId" jdbcType="VARCHAR"/>
+    <result column="price" property="price" jdbcType="VARCHAR"/>
+    <result column="number" property="number" jdbcType="VARCHAR"/>
+    <association column="d_id" property="dish" javaType="com.yc.bean.Dish" 
+    resultMap="dishResultMap"/>
+  </resultMap>
+  
+  <resultMap type="com.yc.bean.PushOrder" id="pushOrderResultMap">
+    <id column="go_id" property="goId" jdbcType="VARCHAR"/>
+    <result column="o_id" property="oId" jdbcType="VARCHAR"/>
+    <result column="m_id" property="mId" jdbcType="VARCHAR"/>
+    <result column="m_sure" property="mSure" jdbcType="VARCHAR"/>
+    <result column="u_sure" property="uSure" jdbcType="VARCHAR"/>
+    <result column="spend_time" property="spendTime" jdbcType="VARCHAR"/>
+    <result column="g_range" property="range" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  <resultMap type="com.yc.bean.Comment" id="commentResultMap">
+    <id column="c_id" property="commentId" jdbcType="VARCHAR"/>
+    <result column="c_intro" property="commentIntro" jdbcType="VARCHAR"/>
+    <result column="c_type" property="commentType" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  <resultMap type="com.yc.bean.MerchantStar" id="merchantStarResultMap">
+    <id column="ms_id" property="merchantStarId" jdbcType="VARCHAR"/>
+    <result column="m_id" property="merchantId" jdbcType="VARCHAR"/>
+    <result column="total_star" property="totalStar" jdbcType="VARCHAR"/>
+    <result column="evalue_number" property="evaluateNumber" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  <resultMap type="com.yc.bean.CommentShow" id="commentShowResultMap">
+    <id column="cs_id" property="commentShowId" jdbcType="VARCHAR"/>
+    <result column="m_id" property="merchantId" jdbcType="VARCHAR"/>
+    <result column="c_id" property="commentId" jdbcType="VARCHAR"/>
+    <result column="c_num" property="commentNum" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  <resultMap type="com.yc.bean.RefundReason" id="refundReasonResultMap">
+    <id column="reason_id" property="reasonId" jdbcType="VARCHAR"/>
+    <result column="o_id" property="orderId" jdbcType="VARCHAR"/>
+    <result column="content" property="content" jdbcType="VARCHAR"/>
+    <result column="time" property="time" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  <resultMap type="com.yc.bean.Advance" id="advanceResultMap">
+    <id column="ad_id" property="advanceId" jdbcType="VARCHAR"/>
+    <result column="o_id" property="orderId" jdbcType="VARCHAR"/>
+    <result column="ad_time" property="advanceTime" jdbcType="VARCHAR"/>
+    <result column="ad_status" property="advanceStatus" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  <resultMap type="com.yc.bean.Star" id="starResultMap">
+    <id column="us_id" property="id" jdbcType="VARCHAR"/>
+    <result column="u_id" property="userId" jdbcType="VARCHAR"/>
+    <result column="total_star" property="totalStar" jdbcType="VARCHAR"/>
+    <result column="evalue_number" property="evalueNumber" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  <resultMap type="com.yc.bean.OperateMode" id="operateModeResultMap">
+    <id column="operate_id" property="operateId" jdbcType="VARCHAR"/>
+    <result column="mode_type" property="modeType" jdbcType="VARCHAR"/> 
+  </resultMap>
+  
+  <resultMap type="com.yc.bean.Type" id="typeResultMap">
+    <id column="type_id" property="typeId" jdbcType="VARCHAR"/>
+    <result column="type_name" property="typeName" jdbcType="VARCHAR"/>
+    <result column="target" property="target" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  <resultMap id="dishGroupResultMap" type="com.yc.bean.DishGroup">
+    <id column="group_id" property="groupId" javaType="Integer" jdbcType="INTEGER" />
+    <result column="group_name" property="groupName" javaType="String" jdbcType="VARCHAR" />
+    <result column="dishes" property="dishes" javaType="String" jdbcType="VARCHAR" />
+    <result column="group_intro" property="groupIntro" javaType="String" jdbcType="VARCHAR" />  
+    <result column="group_pic" property="groupPic" javaType="String" jdbcType="VARCHAR"/>   
+    <result column="original_price" property="originalPrice" javaType="double" jdbcType="DOUBLE" />
+    <result column="retail_price" property="retailPrice" javaType="double" jdbcType="DOUBLE" />   
+  </resultMap>
+  
+  <!-- 用户登录 -->
+  <select id="login" parameterType="com.yc.bean.User"
+    resultMap="userResultMap">
+    SELECT u.u_id, u.u_phone, u.u_name, u.u_sex, u.u_star, u.u_mail, 
+    u.regist_time, u.vip FROM user u WHERE u_phone=#{userPhone} AND
+    u_password=#{userPassword};
+  </select>
+  
+  <!-- 验证该手机号是否已被注册 -->
+  <select id="isPhoneNumExsit" parameterType="String" resultType="int">
+    SELECT count(0) FROM user WHERE u_phone=#{phoneNum};
+  </select>
+
+  <!-- 用户注册 -->
+  <insert id="regist" useGeneratedKeys="true" keyProperty="userId" 
+   parameterType="com.yc.bean.User">
+    INSERT INTO user (u_phone,u_password,u_name,u_sex,regist_time)
+    VALUES (#{userPhone},#{userPassword},#{userName},#{userSex},#{registTime});
+  </insert>
+
+  <!-- 根据userId获取user -->
+  <select id="getUserByUserId" parameterType="int" resultMap="userResultMap">
+    SELECT u.u_id, u.u_phone, u.u_name, u.u_sex, u.u_star, u.u_mail, 
+    u.regist_time, u.vip FROM user u WHERE u.u_id=#{userId}
+  </select>
+  
+  <!-- 用户修改姓名 -->
+  <update id="updateUserName">
+    UPDATE user SET u_name=#{1} WHERE u_id=#{0};
+  </update>
+  
+  <!-- 用户修改邮箱 -->
+  <update id="updateUserMail">
+    UPDATE user SET u_mail=#{1} WHERE u_id=#{0};
+  </update>
+  
+  <!-- 判断用户密码是否正确 -->
+  <select id="isCorrectUserPasswordByUserId" resultType="int">
+    SELECT count(0) FROM user WHERE u_id=#{0} AND u_password=#{1};
+  </select>
+  
+  <!--根据用户Id修改用户密码  -->
+  <update id="changeUserPasswordByUserId">
+    UPDATE user SET u_password=#{1} WHERE u_id=#{0};
+  </update>
+  
+  <!--根据orderId获取用户对象  -->
+  <select id="getUserByOrderId" parameterType="int" resultMap="userResultMap">
+    SELECT user.u_name, user.u_phone FROM user, orders 
+    WHERE user.u_id = orders.u_id and orders.o_id = #{0};
+  </select>
+  <!-- 获取菜单列表 -->
+  <select id="getDishList" resultMap="dishResultMap">
+    SELECT d.d_id, d.d_name, d.d_intro, d.d_pic, d.original_price, 
+    d.retail_price, d.d_taste FROM dish d;
+  </select>
+  <!-- 根据类型获取菜单列表 -->
+  <select id="getDishListByTypeId" parameterType="int" resultMap="dishResultMap">
+    SELECT d.d_id, d.d_name, d.d_intro, d.d_pic, d.original_price, 
+    d.retail_price, d.d_taste FROM dish d, target_type_link t WHERE 
+    d.d_id=t.target_id AND t.type_id=#{0};
+  </select>
+  <!-- 查询范围内的商家 -->
+  <select id="queryMerchantByPoint" parameterType="com.yc.bean.Point" 
+    resultMap="merchantResultMap">
+    <![CDATA[ SELECT m_id,m_lng,m_lat FROM merchant WHERE m_lng>=#{lPointLeft} 
+    AND m_lng<=#{rPointLeft} AND m_lat>=#{upPointRight} AND 
+    m_lat<=#{downPointRight} AND m_status=1;]]>
+  </select>
+  
+  <!-- 查询商家满足的菜品的数量-->
+  <select id="queryDishsCountWhichMerchantMeet" parameterType="map" resultType="int">
+    SELECT count(0) FROM inventory WHERE m_id=#{merchantId} AND (
+    <foreach collection="orderlist" item="item">
+      (dish_id=#{item.dishId} AND i_num>=#{item.number}) OR
+    </foreach>
+    m_id=0)
+  </select>
+  
+  <!-- 生成推送订单不包含菜品返回订单ID -->
+  <insert id="getOrderIdAndSaveOrder" useGeneratedKeys="true" keyProperty="oId" 
+    parameterType="com.yc.bean.Order">
+    INSERT INTO orders(u_id,address,money,o_time,o_lng,o_lat) VALUES(#{userId},
+    #{address},#{money},#{orderTime},#{oLng},#{oLat})
+  </insert>
+  
+  <!-- 记录订单菜品列表 -->
+  <insert id="saveDishList" parameterType="java.util.List">
+    <foreach collection="list" item="item" separator=";">
+      INSERT INTO dishlist(o_id,dish_id,price,number) VALUES(#{item.oId},
+      #{item.dishId},#{item.price},#{item.number})
+    </foreach>
+  </insert>
+  <!-- 记录推送商家 -->
+  <insert id="savePushOrder" parameterType="java.util.List">
+    <foreach collection="list" item="item" separator=";">
+      INSERT INTO pushorder(o_id,m_id,g_range) VALUES(
+      #{item.oId},#{item.mId},#{item.range})
+    </foreach>
+  </insert>
+  <!-- 查询已经已确认的商家信息列表 -->
+  <select id="querySuredMerchantListByOrderId" parameterType="int" resultMap="merchantResultMap">
+    SELECT m.m_id,m.shop_name,m.linkphone,m.m_address,m.m_intro,m.m_star,
+    m.m_comment,m.m_mail,m.m_lng,m.m_lat,m.m_logo,p.g_range From merchant m, pushorder p
+    WHERE p.o_id=#{0} AND p.m_id=m.m_id AND p.m_sure=1
+  </select>
+  <!-- 用户选择商家,不分单的情况 -->
+  <update id="chooseMerchant">
+    UPDATE orders o, pushorder p SET o.m_id=#{1}, p.u_sure=1 WHERE o.o_id=p.o_id 
+    AND o.o_id=#{0} AND p.m_id=#{1}
+  </update>
+  <!-- get未完成订单列表 -->
+  <select id="getUnfinishedOrdersByUserId" parameterType="int" resultMap="orderResultMap">
+    SELECT o.o_id,o.address,o.o_time,o.money,o.refund,m.shop_name,m.linkPhone FROM 
+    orders o, merchant m WHERE o.u_id=#{0} AND o.user_status = 0 AND o.refund!=2
+    AND m.m_id=o.m_id AND o.pay_status=1 ORDER BY o.o_time DESC
+  </select>
+  <!-- get完成的订单列表 -->
+  <select id="getFinishedOrdersByUserId" resultMap="orderResultMap">
+    SELECT o.o_id,o.address,o.o_time,o.money,o.refund,m.m_id,m.shop_name,m.linkPhone FROM 
+    orders o, merchant m WHERE o.u_id=#{0} AND (o.user_status=1 or o.refund=2) AND
+    m.m_id=o.m_id AND o.delete_u=0 ORDER BY o.o_time DESC LIMIT #{1},6
+  </select>
+  <!-- 获取dishlists -->
+  <select id="getDishlistByOrderId" parameterType="int" resultMap="dishListResultMap">
+    SELECT dl.o_id, dl.dish_id, dl.price, dl.number, d.d_name FROM dishlist dl, 
+    dish d WHERE d.d_id=dl.dish_id AND dl.o_id=#{0}
+  </select>
+  <!-- 根据订单ID查询订单信息不含菜品信息 -->
+  <select id="queryOrderByOrderId" parameterType="int" resultMap="orderResultMap">
+    SELECT o.o_id, o.m_id, o.address, o.money, o.o_time, o.spend_time, 
+    m.shop_name, m.linkphone, m.m_address, m.m_intro, m.m_logo FROM orders o, 
+    merchant m WHERE o.m_id=m.m_id AND o.o_id=#{0}
+  </select>
+  <!-- 修改订单为支付状态 -->
+  <update id="changeOrderPayStatus" parameterType="int">
+    UPDATE orders SET pay_status=1 WHERE o_id=#{0}
+  </update>
+  <!-- 获取好评列表 -->
+  <select id="getGoodEvaluations" resultMap="commentResultMap">
+    SELECT c_id,c_intro,c_type FROM comment WHERE c_type=0
+  </select>
+  <!-- 获取差评列表 -->
+  <select id="getBadEvaluations" resultMap="commentResultMap">
+    SELECT c_id,c_intro,c_type FROM comment WHERE c_type=1
+  </select>
+  <!-- 根据订单ID查询商家ID -->
+  <select id="getMerchantIdByOrderId" parameterType="int" resultType="int">
+    SELECT m_id FROM orders WHERE o_id=#{0}
+  </select>
+  <!-- 保存评星 -->
+  <update id="saveEvaluateMarkByMerchantId">
+    UPDATE merchantstar SET total_star=total_star+#{1}, evalue_number=evalue_number+1
+    WHERE m_id=#{0}
+  </update>
+  <!-- 保存评语 -->
+  <update id="saveEvaluateCommentByMerchantId">
+    UPDATE commentshow SET c_num=c_num+1 WHERE m_id=#{0} AND c_id=#{1}
+  </update>
+  <!-- 获取用户总星级和评价次数 -->
+  <select id="getTotalStarAndEvaluateNumByMerchantId" parameterType="int" resultMap="merchantStarResultMap">
+    SELECT total_star,evalue_number FROM merchantstar WHERE m_id=#{0}
+  </select>
+  <!-- 获取对商家次数最多的评论 -->
+  <select id="getMostCommentByMerchantId" parameterType="int" resultType="String">
+    SELECT cm.c_intro FROM commentshow c, comment cm WHERE c.m_id=#{0} AND 
+    c.c_id=cm.c_id ORDER BY c.c_num DESC LIMIT 0,1
+  </select>
+  <!-- 修改商家星级和评语 -->
+  <update id="updateMerchantStarAndCommentByMerchantId">
+    UPDATE merchant SET m_star=#{1}, m_comment=#{2} WHERE m_id=#{0}
+  </update>
+  <!-- 修改订单为用户确认收货 -->
+  <update id="userSureReceivedByOrderId" parameterType="int">
+    UPDATE orders SET user_status=1 WHERE o_id=#{0}
+  </update>
+  <!-- 用户隐藏已完成订单 -->
+  <update id="hideFinishedOrderByOrderId" parameterType="int">
+    UPDATE orders SET delete_u=1 WHERE o_id=#{0}
+  </update>
+  <!-- 修改订单状态为申请退款 -->
+  <update id="applyRefund" parameterType="int">
+    UPDATE orders SET refund=1 WHERE o_id=#{0}
+  </update>
+  <!-- 记录退款理由 -->
+  <insert id="recordRefundInFo" parameterType="com.yc.bean.RefundReason">
+    INSERT INTO refund_reason(o_id,content,time) VALUES(#{orderId},#{content}, 
+    #{time})
+  </insert>
+  <!--根据用户注册电话号码修改用户密码  -->
+  <update id="changeUserPasswordByPhoneNum">
+    UPDATE user SET u_password=#{1} WHERE u_phone=#{0};
+  </update>
+  <!-- 查询该范围内满足该菜品的商家数 -->
+  <select id="getMerchantsCountWhichMeetDish" parameterType="map" resultType="int">
+    SELECT count(0) FROM inventory WHERE dish_id=#{dishId} AND i_num>=#{dishNum} 
+    AND ( 
+    <foreach collection="merchants" item="item">
+    <![CDATA[  m_id=#{item.merchantId} OR ]]>
+    </foreach>
+    m_id=0)
+  </select>
+  <!-- 根据菜品Id查询菜品名 -->
+  <select id="getDishNameByDishId" parameterType="int" resultType="String">
+    SELECT d_name FROM dish WHERE d_id=#{0}
+  </select>
+  <!-- 生成预付款记录 -->
+  <insert id="advanceRecord" parameterType="com.yc.bean.Advance">
+    INSERT INTO advance (o_id,ad_time) VALUES (#{orderId},#{advanceTime})
+  </insert>
+  <!-- 新建用户评星记录 -->
+  <insert id="newUserStarRecordByUserId" parameterType="int">
+    INSERT INTO userstar (u_id) VALUES (#{0})
+  </insert>
+  
+  <!-- 点单成功后修改库存-->
+  <update id="modifyMerchantInventoryByDishLists">
+    UPDATE inventory SET i_num=i_num-#{0} WHERE m_id=#{1} 
+    AND dish_id=#{2}
+  </update> 
+  
+  <!-- 获取运营模式 -->
+  <select id="getOperateMode" resultType="int">
+    SELECT mode_type FROM operate_mode WHERE operate_id=1
+  </select>
+  
+  <!-- 根据菜品Id和商家Id获取库存 -->
+  <select id="getDishCountByDishIdAndMerchantId" resultType="int">
+    SELECT i_num FROM inventory WHERE dish_id=#{0} AND m_id=#{1}
+  </select>
+  
+  <!-- 获取菜品的分类列表 -->
+  <select id="getDishTypeList" resultMap="typeResultMap">
+    SELECT type_id,type_name,target FROM type WHERE target=1
+  </select>
+  
+  <!-- 获取套餐的分类列表 -->
+  <select id="getDishGroupTypeList" resultMap="typeResultMap">
+    SELECT type_id,type_name,target FROM type WHERE target=2
+  </select>
+  
+  <!-- 根据目标Id和目标类型获取目标属于的分类集 -->
+  <select id="getTypesByTargetIdAndTargetType" resultMap="typeResultMap">
+    SELECT t.type_id,t.type_name,t.target FROM type t,target_type_link l WHERE 
+     t.type_id=l.type_id AND l.target_id=#{0} AND l.target=#{1}
+  </select>
+  
+  <!-- 根据类名获取typeId -->
+  <select id="getTypeByTypeName" parameterType="String" resultMap="typeResultMap">
+    SELECT type_id,type_name,target FROM type WHERE type_name=#{0}
+  </select>
+  
+  <!-- 获取套餐列表 -->
+  <select id="getDishGroupList" resultMap="dishGroupResultMap">
+    SELECT * FROM dish_group;
+  </select> 
+  
+  <!-- 通过dish_id获取整个菜品信息 -->
+  <select id="getDishInfoById" parameterType="Integer" resultMap="dishResultMap">
+    SELECT * FROM dish WHERE d_id = #{0};
+  </select>
+  
+  <!-- 根据套餐Id获取套餐信息 -->
+  <select id="getDishGroupByGroupId" parameterType="Integer" resultMap="dishGroupResultMap">
+    SELECT group_id,group_name,dishes,group_intro,group_pic FROM dish_group 
+    WHERE group_id=#{0}
+  </select>
+  
+  <!-- 通过商家id得到商家详情 -->
+  <select id="getMerchantByMerchantId" parameterType="int" resultMap="merchantResultMap">
+    SELECT * FROM merchant WHERE m_id=#{0}
+  </select>
+  
+  <!-- 根据typeID获取套餐列表 -->
+  <select id="getDishGroupListByTypeId" resultMap="dishGroupResultMap">
+    SELECT d.group_id,d.group_name,d.dishes,d.group_intro,d.group_pic FROM 
+    dish_group d,target_type_link t WHERE t.target_id=d.group_id 
+    AND t.type_id=#{0};
+  </select>
+  
+  <!-- 单商家模式修改商家为总店商家ID -->
+  <update id="updateMerchantIdFromOrdersForSingle" parameterType="int">
+    UPDATE orders SET orders.m_id=1 WHERE o_id=#{0}
+  </update>
+</mapper>

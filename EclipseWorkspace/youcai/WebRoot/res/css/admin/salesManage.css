@@ -1,0 +1,178 @@
+@charseset 'utf-8';
+*{
+  margin:0;
+  padding:0;
+  border:none;
+}
+.deliverManage{
+  width:96%;
+  height:auto;
+  margin:0 auto;
+}
+.deliverLeft{
+  width:55%;
+  float:left;
+}
+.deliverRight{
+  width:43%;
+  height:400px;
+  float:left;
+  border:1px solid #800000;
+  border-radius:5px;
+  overflow:auto;
+}
+.deliverManage:after{
+  content:'';
+  clear:both;
+  display:block;
+}
+.deliverManage .dishName,.numId,.search,.num,.date{
+  width:100%;
+  height:40px;
+  margin-bottom:10px;
+}
+div .dishName span{
+  float:left;
+  display:block;
+  width:20%;
+  height:30px;
+  line-height:30px;
+}
+div .dishName select{
+  float:left;
+  width:40%;
+  height:30px;
+  line-height:30px;
+  border:1px solid #000;
+}
+div .numId span{
+  float:left;
+  display:block;
+  width:20%;
+  height:30px;
+  line-height:30px;
+}
+#merchantId{
+  width:40%;
+  background:#eee;
+  text-align:center;
+}
+div .search input{
+  float:left;
+  width:40%;
+  height:30px;
+  line-height:30px;
+  margin-left:20%;
+  _display:inline;
+  border:1px solid #000;
+  border-radius:5px;
+}
+#serachMerchant{
+  width:10%;
+  margin-left:0;
+  background:#8B0000;
+  border:none;
+  color:#fff;
+}
+/*for ��ʾ������*/
+.showResult{
+  width:100%;
+  height:100px;
+  overflow:auto;
+  margin-bottom:20px;
+}
+.showResult table{
+  display:none;
+  width:100%;
+  height:auto;
+  border:1px solid #8B0000;
+  border-collapse:collapse;
+  text-align:center;
+}
+.showResult table .merchantName{
+  width:60%;
+}
+.showResult table th,td{
+  border:1px solid #8B0000;
+  border-collapse:collapse;
+  height:28px; 
+}
+.showResult table td a{
+  text-decoration:none;
+  color:#8B0000;
+}
+.showResult table td a:hover{
+  text-decoration:underline;
+}
+.num span{
+  float:left;
+  display:block;
+  _display:inline;
+  width:20%;
+  height:30px;
+  line-height:30px;
+}
+.num input{
+  width:40%;
+  height:30px;
+  border:1px solid #000;
+  border-radius:5px;
+}
+.date span{
+  float:left;
+  display:block;
+  width:20%;
+  height:30px;
+  line-height:30px;
+  _display:inline;
+}
+.date input{
+  width:40%;
+  height:30px;
+  border:1px solid #000;
+  border-radius:5px;
+}
+#addSales{
+  width:30%;
+  height:30px;
+  line-height:30px;
+  border-radius:5px;
+  background:#8B0000;
+  text-align:center;
+  margin-bottom:50px;
+  margin-left:20%;
+  cursor:pointer;
+  color:#fff;
+}
+.deliverRight .title{
+  width:100%;
+  height:30px;
+  line-height:30px;
+  font-weight:bold;
+}
+.deliverRight .title span{
+  display:block;
+  float:left;
+  width:20%;
+  height:30px;
+  line-height:30px;
+  text-align:center;
+}
+
+.deliverRight ul{
+  clear:both;
+  list-style:none;
+}
+.deliverRight ul li{
+  width:100%;
+  height:30px;
+  line-height:30px;
+}
+.deliverRight ul li span{
+  display:block;
+  float:left;
+  width:20%;
+  height:30px;
+  line-height:30px;
+  text-align:center;
+}

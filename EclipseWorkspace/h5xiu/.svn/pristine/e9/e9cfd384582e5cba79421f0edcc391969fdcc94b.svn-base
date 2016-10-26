@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html> 
+<head> 
+<title>注册</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<#assign base = springMacroRequestContext.getContextUrl("")>
+<link rel="stylesheet" type="text/css" href="${base}/res/css/user/regist.css"/>
+<script type="text/javascript" charset="utf-8" src="${base}/res/js/jQuery/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="${base}/res/js/inputcheck.js"></script>
+<script type="text/javascript" charset="utf-8" src="${base}/res/js/user/regist.js"></script>
+
+</head> 
+
+<body>
+<form id="registForm" action="" method="post">
+	<div id="regist-content" class="regist-content" style="display: none">
+		<div class="regist-title">
+			KUAIDāO
+		</div>
+		
+		<ul id="regist-information" class="regist-information ">
+			<li>
+				<span>
+					昵	称
+				</span>
+				<input id="regist-nickname" name="name" type="text">
+			</li>
+			<li>
+				<span>
+					密	码
+				</span>
+				<input id="regist-password" name="password" type="password">
+			</li>
+			<li>
+				<span>
+					确认密码
+				</span>
+				<input id="regist-checkpassword" name="rePassword" type="password">
+			</li>
+
+			<li id="regist-BTN" class="regist-BTN">
+				注册
+			</li>
+		</ul>
+		
+		<span class="regist-tologin">
+			<a title="登录" href="#" class="gotoLogin">有账号，去登录</a>
+		</span>
+
+	</div>
+
+	<div id="vertify-content" class="regist-content">
+		<div class="regist-title">
+			KUAIDāO
+		</div>
+		
+		<ul id="vertify-information" class="regist-information">
+			<li>
+				<span>
+					电	话
+				</span>
+				<input id="vertify-phone" name="phoneNum" class="vertify-phone" type="text">
+			</li>
+			<li class="vertify-li">
+				<span>
+					验证码
+				</span>
+				<input id="vertify-input" class="vertify-input" name="smsCode" type="text">
+				<span class="vertify-BTN" onclick="clickCheckCode(this)">
+					获取验证码
+				</span>				
+			</li>
+			
+			<li id="next-BTN" class="regist-BTN">
+				下一步
+			</li>
+		</ul>
+		
+
+		<span class="regist-tologin">
+			<a title="登录" href="#" class="gotoLogin">有账号，去登录</a>
+		</span>
+
+	</div>
+</form>
+</body>

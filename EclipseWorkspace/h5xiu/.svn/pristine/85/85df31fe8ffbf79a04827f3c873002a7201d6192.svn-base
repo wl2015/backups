@@ -1,0 +1,16 @@
+package com.h5.service;
+
+
+
+import java.util.List;
+
+import com.h5.entity.Admin;
+import com.h5.entity.User;
+
+
+
+
+public interface AdminService {
+	//验证管理员登录
+	public Admin doAdLogin(String phoneNum, String pass);
+}

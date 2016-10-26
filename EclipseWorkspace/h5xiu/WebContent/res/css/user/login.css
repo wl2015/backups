@@ -1,0 +1,116 @@
+@CHARSET 'utf8';
+
+*{
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+	border: none;
+	z-index: 0;
+}
+
+.clearfix:after{
+ 	clear:both;
+	display:block;
+	visibility:hidden;
+	height:0;
+	line-height:0;
+	content:'';
+}
+.clearfix {
+	zoom: 1;
+}
+
+body {
+	font-size: 13px;
+	color: #575757;
+	background-color: #E6E6E6;
+}
+
+.login-content {
+	width: 420px;
+	height: 420px;
+	margin: 90px auto;
+	padding: 40px;
+	color: #B7B7B7;
+	font-size: 12px;
+	vertical-align: baseline;
+	font-family: "Microsoft-Yahei","微软雅黑";
+	background: #FFFFFF;
+}
+
+.login-title {
+	width: 250px;
+	height: 48px;
+	font-size: 45px;
+	text-align: center;
+	color: #42C2B3;
+	margin: 0px auto 36px;
+}
+
+.login-tip span {
+	display: block;
+	height: 20px;
+}
+
+.login-tip .tip {
+	float: left;
+	color: #42C2B3;
+}
+
+.login-information {
+	display: block;
+	width: 100%;
+	max-width: 420xp;
+}
+
+.login-information li {
+	display: block;
+	position: relative;
+	width: 100%;
+	max-width: 420xp;
+	height: 40px;
+	margin-top: 20px;
+	margin-bottom: 25px;
+	border: 1px solid #F0F0F0;
+}
+
+.login-information span {
+	display: inline-block;
+	width: 160px;
+	height: 40px;
+	line-height: 40px;
+	word-spacing: 15px;
+	font-size: 14px;
+	color: #FFFFFF;
+	text-align: center;
+	background-color: #42C2B3;
+}
+
+.login-information input {
+	display: inline-block;
+	position: absolute;
+	width: 220px;
+	height: 39px;
+	padding-left: 20px;
+	padding-right: 20px;
+	font-size: 20px;
+	text-align: left;
+	ime-mode: disabled;
+}
+
+.login-information .login-BTN {
+	text-align: center;
+	line-height: 40px;
+	font-size: 14px;
+	color: #FFFFFF;
+	background: none repeat scroll 0% 0% #42C2B3;
+	border: 1px solid #42C2B3;
+	border-radius: 3px;
+}
+
+.input-othertip a{
+	font-size: 14px;;
+	margin-right: 15px;
+	color: #42C2B3;
+	text-decoration: none;
+}

@@ -1,0 +1,1046 @@
+@CHARSET 'utf8';
+
+*{
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+	border: none;
+	z-index: 0;
+}
+
+.clearfix:after{
+ 	clear:both;
+	display:block;
+	visibility:hidden;
+	height:0;
+	line-height:0;
+	content:'';
+}
+.clearfix {
+	zoom: 1;
+}
+
+body {
+	background: #E6E6E6;
+	font-family: '微软雅黑';
+}
+
+.user {
+	width: 920px;
+	height: auto;
+	padding: 0px 35px 50px 35px;
+	margin: 40px auto 0px;
+	background: #F5F5F5;
+}
+
+.user-title {
+	display: block;
+	width: 98px;
+	height: 33px;
+	margin: 0 0 15px 0;
+	font-size: 14px;
+	text-align: center;
+	line-height: 33px;
+	color: #E6E6E6;
+	background: #292929;
+}
+
+.user-logo {
+	float: left;
+	width: 100px;
+	height: 100px;
+	background: url(../userpic/1.jpg);
+}
+
+.user-logo-cover {
+	clear: both;
+	position: relative;
+	width: 80px;
+	height: 60px;
+	color: #FFFFFF;
+	cursor: pointer;
+}
+
+.user-logo-trigle {
+	position: absolute;
+	z-index: 5;
+	width: 0px;
+	height: 0px;
+	border-top: 35px solid #41C3B4;
+	border-right: 35px solid transparent;
+}
+
+/*以下为三角形和文字产生的动画*/
+.user-logo-trigle1 {
+            animation: trigle1 200ms forwards;
+    -webkit-animation: trigle1 200ms forwards;
+}
+
+.user-logo-trigle2 {
+            animation: trigle2 200ms forwards;
+    -webkit-animation: trigle2 200ms forwards;
+}
+@keyframes trigle1{
+    0% {
+        border-top: 35px solid #41C3B4;
+		border-right: 35px solid transparent;
+    }
+    100% {
+       border-top: 60px solid #41C3B4;
+		border-right: 60px solid transparent;
+    }
+}
+@-webkit-keyframes trigle1{
+    0% {
+       border-top: 35px solid #41C3B4;
+		border-right: 35px solid transparent;
+    }
+    100% {
+      border-top: 60px solid #41C3B4;
+		border-right: 60px solid transparent;
+    }
+}
+
+@keyframes trigle2{
+    0% {
+        border-top: 60px solid #41C3B4;
+		border-right: 60px solid transparent;
+    }
+    100% {
+       border-top: 35px solid #41C3B4;
+		border-right: 35px solid transparent;
+    }
+}
+@-webkit-keyframes trigle2{
+    0% {
+       border-top: 60px solid #41C3B4;
+		border-right: 60px solid transparent;
+    }
+    100% {
+      border-top: 35px solid #41C3B4;
+		border-right: 35px solid transparent;
+    }
+}
+
+.user-logo-covertext {
+	position: absolute;
+	z-index: 8;
+	font-size: 12px;
+}
+
+.user-information {
+	float: left;
+	width: 770px;
+	margin: 0 0 0 50px;
+}
+
+.user-information table {
+	font-size: 14px;
+}
+
+.user-information td {
+	color: #575757;
+}
+
+.user-information th {
+	position: relative;
+}
+.user-information .th {
+	position: absolute;
+	width: 60px;
+	height: 24px;
+	top: 8px;
+}
+.user-information .num {
+	width: 300px;
+}
+
+.user-information .num p{
+	float: left;
+}
+
+.user-information .num a {
+	float: right;
+	color: #41C3B4;
+	cursor: pointer;
+}
+
+.user-information .num a:hover {
+	text-decoration: underline;
+}
+
+.user-information .data p {
+	float: left;
+}
+
+.user-information .data a {
+	color: #41C3B4;
+	cursor: pointer;
+}
+
+.user-information .data a:hover {
+	text-decoration: underline;
+}
+
+.user-information .border {
+	display: block;
+	width: 100%;
+	margin: 30px 0 30px 0;
+	border-bottom: 1px dashed #D4D4D4;
+}
+
+.user-information .upay {
+	width: 300px;
+	height: 24px;
+	padding: 8px 0 8px 0;
+}
+
+.user-information .upay strong {
+	float: left;
+	color: #41C3B4;
+}
+
+.user-information .upay div{
+	width: 83px;
+	height: 22px;
+	float: right;
+	background:url("../userpic/uinfo-1.jpg") no-repeat scroll 0px 0px transparent;
+	cursor:pointer;
+}
+
+.user-information .upay-choose {
+	display: none;
+	width: 350px;
+	height: 341px;
+	padding: 30px 0 30px 0;
+	margin: 30px 0 30px 0;
+	border-top: 1px dashed #CCCCCC;
+	border-bottom: 1px dashed #CCCCCC;
+}
+
+.upay-choose .title {
+	width: 350px;
+	height: 24px;
+	font-weight: bold;
+}
+.upay-choose .title span{
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	border-radius: 8px;
+	background: none repeat scroll 0% 0% #44C3B4;
+	color: #FFF;
+	line-height: 18px;
+	text-align: center;
+}
+
+.upay-choose .choosepack {
+	width: 350px;
+	height: 121px;
+}
+
+.upay-choose .choosepack li {
+	float: left;
+    width: 76px;
+    height: 80px;
+	margin: 5px;
+    text-align: center;
+    font-size: 10px;
+    color: #969696;
+    cursor: pointer;
+}
+
+.upay-choose .choosepack .card {
+	width: 76px;
+	height: 57px;
+	border: 2px solid #C8C8C8;
+	font-size: 14px;
+	line-height: 57px;
+	background: none repeat scroll 0% 0% #C8C8C8;
+	color: #FFF;
+	font-weight: bold;
+}
+
+.upay-choose .choosepack .card2 {
+	border: 2px solid #44C3B4;
+	background: #F5F5F5;
+	color: #44C3B4;
+}
+
+.upay-choose .othermoney {
+	position: relative;
+	width: 350px;
+}
+
+.upay-choose .othermoney span {
+	position: absolute;
+	right: 155px;
+	top: 3px;
+}
+
+.upay-choose .othermoney div {
+	clear: both;
+	float: right;
+	margin: 3px 5px 0 0;
+	font-size: 12px;
+}
+.upay-choose .othermoney strong {
+	color: #41C3B4;
+}
+.upay-choose .othermoney input{
+	float: right;
+	width: 125px;
+	height: 24px;
+	padding:0px 12px 0px 30px;
+	margin: 0 5px 0 0;
+	font-family: '微软雅黑';
+	font-size: 13px;
+	text-align: right;
+	direction: rtl;
+	border: 1px solid #CCC;
+    border-radius: 4px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+}
+.upay-choose .othermoney input:focus {
+	border-color: #66AFE9;
+    outline: 0px none;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(102, 175, 233, 0.6);
+}
+
+.upay-choose .payway {
+	width: 350px;
+	height: 97px;
+}
+
+.upay-choose .payway li {
+	float: left;
+    width: 76px;
+    height: 80px;
+	margin: 5px;
+    text-align: center;
+    font-size: 10px;
+    color: #969696;
+    cursor: pointer;
+}
+
+.upay-choose .payway .card {
+	width: 76px;
+	height: 57px;
+	border: 2px solid #C8C8C8;
+	font-size: 14px;
+	line-height: 57px;
+	background: none repeat scroll 0% 0% #C8C8C8;
+	color: #FFF;
+	font-weight: bold;
+}
+
+.upay-choose .payway .card2 {
+	border: 2px solid #44C3B4;
+	background: #F5F5F5;
+	color: #44C3B4;
+}
+
+.upay-choose .yesno {
+	width: 350px;
+}
+
+.upay-choose .yesno .yes {
+	display: block;
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: center;
+	line-height: 26px;
+	font-size: 12px;
+	font-family: '微软雅黑';
+	color: white;
+	background: #45C2B3;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.upay-choose .yesno .no {
+	float: left;
+	width: 54px;
+	height: 24px;
+	margin: 0 0 0 5px;
+	text-align: center;
+	line-height: 24px;
+	font-size: 12px;
+	color: #333333;
+	background: white;
+	border: 1px solid #CCCCCC;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.upay-choose .yesno .help a{
+	float: right;
+	height: 26px;
+	padding: 8px 0 0 0;
+	font-size: 10px;
+	color: #45C2B3;
+	text-decoration: none;
+}
+
+
+.upay-choose .yesno .help a:hover {
+	text-decoration: underline;	
+}
+
+.user-information .uchange {
+	width: 300px;
+	height: 24px;
+	padding: 8px 0 8px 0;
+}
+
+.user-information .uchange span {
+	display: block;
+	float: left;
+}
+
+.user-information .uchange div {
+	width: 83px;
+    height: 22px;
+    float: right;
+    cursor: pointer;
+    background: url("../userpic/uinfo-1.jpg") no-repeat scroll -92px 0px transparent;
+}
+
+.user-information .uchange-choose {
+	display: none;
+	width: 350px;
+	height: 163px;
+	padding: 30px 0 30px 0;
+	margin: 30px 0 30px 0;
+	border-top: 1px dashed #CCCCCC;
+	border-bottom: 1px dashed #CCCCCC;
+}
+
+.uchange-choose .title {
+	width: 350px;
+	height: 24px;
+	font-weight: bold;
+}
+
+.uchange-choose .title span {
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	border-radius: 8px;
+	background: none repeat scroll 0% 0% #44C3B4;
+	color: #FFF;
+	line-height: 18px;
+	text-align: center;
+}
+
+.uchange-choose .choosescheme {
+	width: 350px;
+	height: 85px;
+}
+
+.uchange-choose .choosescheme li {
+	float: left;
+    width: 60px;
+    height: 75px;
+	margin: 5px;
+    text-align: center;
+    font-size: 10px;
+    color: #969696;
+    cursor: pointer;
+}
+
+.uchange-choose .choosescheme .scheme {
+	width: 60px;
+	height: 60px;
+}
+
+.uchange-choose .choosescheme .scheme img {
+	width: 55px;
+	height: 55px;
+}
+
+.uchange-choose .choosescheme .card {
+	width: 55px;
+	height: 55px;
+	font-size: 14px;
+	line-height: 57px;
+	color: #FFF;
+	font-weight: bold;
+	border: 2px solid #F5F5F5;
+}
+.uchange-choose .choosescheme .card2 {
+	border: 2px solid #44C3B4;
+	color: #44C3B4;
+}
+
+.uchange-choose .money {
+	width: 350px;
+	height: 26px;
+}
+.uchange-choose .money strong {
+	width: 100px;
+	font-size: 16px;
+	color: #44C3B4;
+}
+
+.uchange-choose .money a {
+	margin: 0 0 0 30px;
+	font-size: 12px;
+	color: #44C3B4;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.uchange-choose .money a:hover {
+	text-decoration: underline;
+}
+
+.uchange-choose .yesno {
+	width: 350px;
+	margin: 10px 0 0 0;
+}
+
+.uchange-choose .yesno .yes {
+	display: block;
+	float: left;
+	width: 110px;
+	height: 26px;
+	text-align: center;
+	line-height: 26px;
+	font-size: 12px;
+	font-family: '微软雅黑';
+	color: white;
+	background: #45C2B3;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.uchange-choose .yesno .no {
+	float: left;
+	width: 54px;
+	height: 24px;
+	margin: 0 0 0 5px;
+	text-align: center;
+	line-height: 24px;
+	font-size: 12px;
+	color: #333333;
+	background: white;
+	border: 1px solid #CCCCCC;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.uchange-choose .yesno .help a{
+	float: right;
+	height: 26px;
+	padding: 8px 0 0 0;
+	font-size: 10px;
+	color: #45C2B3;
+	text-decoration: none;
+}
+
+
+.uchange-choose .yesno .help a:hover {
+	text-decoration: underline;	
+}
+
+
+.user-information .ucheck {
+	width: 300px;
+	height: 24px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.user-information .ucheck a {
+	color: #41C3B4;
+	cursor: pointer;
+}
+.user-information .ucheck a:hover {
+	text-decoration: underline;
+}
+/*以下为隐藏hideed层的css*/
+.user-hide {
+	position: fixed;
+	z-index: 888;
+	display: none;
+	width: 100%;
+	height: 100%;
+	top:0px;
+	bottom:0px;
+	left:0px;
+	right:0px;
+}
+
+.user-hide .bg {
+	position: absolute;
+	width: 1366px;
+	height: 715px;
+	opacity: 0.7;	
+	background: #4A4A4A;
+}
+
+.user-hide-editpsw {
+	position: absolute;
+	display: none;
+	width: 600px;
+	height: 241px;
+	left: 50%;
+	top: 50%;
+	margin: -140px 0 0 -300px;
+	background: #FFFFFF;
+	border-radius: 5px;
+	box-shadow: 1px 1px 10px #4A4A4A,-1px -1px 10px #4A4A4A;
+}
+
+.user-hide-editpsw .header {
+	position: relative;
+	width: 568px;
+	height: 23px;
+	margin: 15px 15px 15px 15px;
+	color: #575757;
+	background: #ffffff;
+}
+
+.user-hide-editpsw .header h4 {
+	font-family: '微软雅黑';
+	float:left;
+}
+
+.user-hide-editpsw .header p {
+	float: right;
+	cursor: pointer;
+}
+
+.user-hide-editpsw .body {
+	width: 570px;
+	height: 96px;
+	padding: 15px;
+	color: #575757;
+	font-size: 12px;
+	border-top: 1px solid #E5E5E5;
+	border-bottom: 1px solid #E5E5E5;
+}
+
+.user-hide-editpsw .body input {
+	width: 335px;
+	height: 25px;
+	margin: 0 0 5px 0;
+	padding: 0 3px 0 3px;
+	font-family: '微软雅黑';
+	font-size: 13px;
+	border: 1px solid #CCCCCC;
+	border-radius: 4px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+}
+
+.user-hide-editpsw .body input:focus {
+	border-color: #66AFE9;
+    outline: 0px none;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(102, 175, 233, 0.6);
+}
+
+.user-hide-editpsw .footer {
+	width: 570px;
+	height: 31px;
+	padding: 15px;
+}
+
+.user-hide-editpsw .footer .sure {
+	float: right;
+	width: 90px;
+	height: 28px;
+	text-align: center;
+	line-height: 28px;
+	font-size: 13px;
+	font-family: '微软雅黑';
+	color: white;
+	background: #45C2B3;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.user-hide-editpsw .footer .cancel {
+	float: right;
+	width: 54px;
+	height: 26px;
+	margin: 0 10px 0 0;
+	text-align: center;
+	line-height:  28px;
+	font-size: 13px;
+	font-family: '微软雅黑';
+	color: #333333;
+	border: 1px solid #CCCCCC;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.user-hide-editpsw .footer .cancel:hover {
+	background: #E0E0E0;
+}
+
+.user-hide-data {
+	position: absolute;
+	display: none;
+	width: 600px;
+	height: auto;
+	left: 50%;
+	top: 50%;
+	margin: -170px 0 0 -300px;
+	background: #FFFFFF;
+	border-radius: 5px;
+	box-shadow: 1px 1px 10px #4A4A4A,-1px -1px 10px #4A4A4A;
+}
+
+.user-hide-data .header {
+	position: relative;
+	width: 568px;
+	height: 23px;
+	margin: 15px;
+	color: #575757;
+	background: #ffffff;
+}
+
+.user-hide-data .header h4{
+	float:left;
+}
+
+.user-hide-data .header p {
+	float: right;
+	cursor: pointer;
+}
+
+.user-hide-data .body {
+	width: 570px;
+	height: 200px;
+	padding: 15px;
+	color: #575757;
+	font-size: 12px;
+	border-top: 1px solid #E5E5E5;
+	border-bottom: 1px solid #E5E5E5;
+}
+
+.user-hide-data .body input {
+	width: 335px;
+	height: 25px;
+	margin: 0 0 5px 0;
+	padding: 0 3px 0 3px;
+	font-family: '微软雅黑';
+	font-size: 13px;
+	border: 1px solid #CCCCCC;
+	border-radius: 4px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+}
+
+.user-hide-data .body select {
+	font-family: '微软雅黑';
+	border: 1px solid #CCCCCC
+}
+
+.user-hide-data .body input:focus {
+	border-color: #66AFE9;
+    outline: 0px none;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(102, 175, 233, 0.6);
+}
+
+.user-hide-data .footer {
+	width: 570px;
+	height: 30px;
+	padding: 15px;
+}
+
+.user-hide-data .footer .sure {
+	float: right;
+	width: 90px;
+	height: 28px;
+	text-align: center;
+	line-height: 28px;
+	font-size: 13px;
+	font-family: '微软雅黑';
+	color: white;
+	background: #45C2B3;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.user-hide-data .footer .cancel {
+	float: right;
+	width: 54px;
+	height: 26px;
+	margin-right: 10px;
+	text-align: center;
+	line-height:  28px;
+	font-size: 13px;
+	font-family: '微软雅黑';
+	color: #333333;
+	border: 1px solid #CCCCCC;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.user-hide-data .footer .cancel:hover {
+	background: #E0E0E0;
+}
+
+.user-hide-bill {
+	position: absolute;
+	display: none;
+	width: 600px;
+	height: auto;
+	left: 50%;
+	top: 50%;
+	margin-left: -300px;
+	margin-top: -120px;
+	background: #FFFFFF;
+	border-radius: 5px;
+	box-shadow: 1px 1px 10px #4A4A4A,-1px -1px 10px #4A4A4A;
+}
+
+.user-hide-bill .header {
+	position: relative;
+	width: 568px;
+	height: 23px;
+	margin: 15px;
+	color: #575757;
+	background: #ffffff;
+}
+
+.user-hide-bill .header h4{
+	float:left;
+}
+
+.user-hide-bill .header p {
+	float: right;
+	cursor: pointer;
+}
+
+.user-hide-bill .body {
+	width: 570px;
+	height: auto;
+	padding: 15px;
+	color: #575757;
+	font-size: 12px;
+	border-top: 1px solid #E5E5E5;
+}
+
+.user-hide-bill .history-change {
+	display: block;
+	width: 100%;
+}
+
+.user-hide-bill .history-change p {
+	float: left;
+	width: 252px;
+	height: 10px;
+	padding: 15px;
+	text-align: center;
+	font-size: 13px;
+}
+
+.user-hide-bill .p1 {
+	color: #428BCA;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+.user-hide-bill .p1:hover {
+	color: blue;
+	background: #E0E0E0;
+}
+
+.user-hide-bill .p2 {
+	color: #575757;
+	border: 1px solid #E5E5E5;
+	border-bottom: 0px solid #E5E5E5;
+	border-radius: 3px;
+}
+
+.user-hide-bill .history-buy {
+	display: block;
+	clear: both;
+}
+.user-hide-bill .history-buy table{
+	border: 1px solid #E5E5E5;
+}
+
+.user-hide-bill .history-bill table{
+	border: 1px solid #E5E5E5;
+}
+.user-hide-bill .borderleft {
+	border-left: 1px solid #E5E5E5;
+}
+.user-hide-bill .history-buy p {
+	width: 568px;
+	height: 18px;
+	margin: 15px 0 0 0;
+	text-align: right;
+	font-weight: bold;
+	color: #428BCA;
+}
+
+.user-hide-bill .get-bill {
+	cursor: pointer;	
+}
+
+.user-hide-bill .get-bill:hover {
+	text-decoration: underline;
+}
+
+.user-hide-bill .bill-message {
+	display:none;
+}
+
+.user-hide-bill .bill-message a {
+	color: #45C2B3;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.user-hide-bill .bill-message a:hover {
+	text-decoration: underline;
+}
+
+.user-hide-bill .history-bill {
+	display:none;
+	clear: both;
+	margin: 0 0 20px 0;
+}
+
+.user-hide-plan {
+	position: absolute;
+	display: none;
+	width: 988px;
+	height: 630px;
+	left: 50%;
+	margin: 0 0 0 -494px;
+	background-color: #FFFFFF;
+	border-radius: 5px;
+	box-shadow: 1px 1px 10px #4A4A4A,-1px -1px 10px #4A4A4A;
+}
+.user-hide-plan .body {
+	padding: 10px;
+	text-align: center;
+}
+
+.user-hide-plan .body img {
+	width: 900px;
+	height: 550px;
+}
+
+.user-hide-plan .footer {
+	width: 958px;
+	height: 30px;
+	padding: 15px;
+	text-align: right;
+	border-top: 1px solid #E5E5E5;
+}
+
+.user-hide-plan .footer input {
+	width: 60px;
+	height: 30px;
+	margin: 0 10px 0 0;
+	text-align: center;
+	line-height: 28px;
+	font-size: 15px;
+	font-family: '微软雅黑';
+	background: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.user-hide-plan .footer input:hover {
+	background: #E5E5E5;
+}
+
+/*以下为更换头像的css*/
+.user-changelogo {
+	position: fixed;
+	z-index: 999;
+	display: none;
+	width: 700px;
+	height: 500px;
+	top: 50%;
+	left: 50%;
+	margin: -250px 0 0 -400px;
+	background: #FFFFFF;
+	border-radius: 5px;
+	box-shadow: 1px 1px 10px #B8B8B8,-1px -1px 10px #B8B8B8;
+	
+}
+
+.user-changelogo .allpic {
+	width: 350px;
+	height: 450px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.user-changelogo .allpic .pic {
+	position: relative;
+	float: left;
+	width: 80px;
+	height: 100px;
+	margin: 10px;
+	padding: 5px;
+	cursor: pointer;
+}
+
+.user-changelogo .allpic .pic:hover {
+	background: #45C2B3;
+}
+
+.user-changelogo .allpic .pic img {
+	width: 80px;
+	max-height: 80px;
+}
+
+.user-changelogo .allpic .pic span {
+	display: block;
+	position: absolute;
+	bottom: 3px;
+	width: 80px;
+	height: 18px;
+	text-align: center;
+	font-size: 13px;
+	color: #575757;
+}
+
+.user-changelogo .button {
+	width: 680px;
+	height: 30px;
+	padding: 10px;
+	background: #E0E0E0;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+.user-changelogo .button input {
+	width: 100px;
+	height: 30px;
+	font-size: 17px;
+	font-family: '微软雅黑';
+	color: #575757;
+	background: #E0E0E0;
+	border: 1px solid #B8B8B8;
+	box-shadow: 1px 1px 3px #B8B8B8,-1px -1px 3px #B8B8B8;
+	cursor: pointer;
+}
+
+.user-changelogo .button input:hover {
+	color: #FFFFFF;
+	box-shadow: 1px 1px 3px #A0A0A0,-1px -1px 3px #A0A0A0;
+}
+
+.user-changelogo .button .left {
+	float: left;
+}
+
+.user-changelogo .button .right {
+	float: right;
+	margin: 0 0 0 10px;
+}

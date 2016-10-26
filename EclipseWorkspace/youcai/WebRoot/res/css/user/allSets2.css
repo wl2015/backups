@@ -1,0 +1,203 @@
+@charset 'utf-8';
+/*重置*/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td{margin:0;padding:0;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img{border:0;}
+address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}
+ol,ul{list-style:none;}
+caption,th{text-align:left;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+q:before,q:after{content: ;}
+abbr,acronym{border:0;}
+.clearfix:after {visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
+body{background-color:#86D2C6;font: 16px/1.5 '微软雅黑',tahoma,arial,'Hiragino Sans GB',宋体,sans-serif;height:100%;}
+.clearfix {zoom:1;}
+html{font-size:16px;color:#fff;height:100%;}
+@media screen and (max-width: 280px){
+  html{
+    font-size: 10px; 
+  }
+}
+@media screen and (min-width: 280px){
+  html{
+    font-size: 12px; 
+  }
+}
+@media screen and (min-width: 328px){
+  html{
+    font-size: 16px; 
+  }
+}
+@media screen and (min-width: 480px){
+  html{
+    font-size: 17px; 
+  }
+}
+@media screen and (min-width: 768px){
+  html{
+    font-size: 18px;
+  }
+}
+@media screen and (min-width: 960px){
+  html{
+    font-size: 19px;
+  }
+}
+@media screen and (min-width: 1200px){
+  html{
+    font-size: 20px;
+  }
+}
+
+
+/*所有套餐*/
+.allSets{
+	width:100%;
+}
+.allSets .oneKindSet{
+	width:96%;
+	padding:10px 0;
+	margin:0 auto;
+	border-bottom:1px solid #6AA79F;
+}
+.allSets .oneKindSet .oneKindSetName{
+	height:30px;
+	line-height:30px;
+	padding:auto 5px;
+	color:#6AA79F;
+	font-size:1.25rem;
+	
+}
+.allSets .oneKindSet .oneKindSetName .belongTo{
+	font-size:1rem;
+}
+.allSets .oneKindSet .oneKindSetName strong{ /**/
+	font-size:1rem;
+}
+.allSets .oneKindSet .oneKindSetName strong .inventoryNum{/**/
+	color:#fff;
+}
+
+.allSets .oneKindSet .group{
+	width:100%;
+	margin-top:5px;
+	color:#715D76;
+}
+.allSets .oneKindSet .group>div{
+	padding:3px;
+	display:inline-block;
+}
+.allSets .oneKindSet .group .oneDishOfGroup{
+	width:25%;
+	/* background:red; */
+	border:1px solid grey;
+	border-radius:3px;
+}
+.allSets .oneKindSet .group .oneDishOfGroup .oneDishOfGroupTop .oneDishOfGroupTopLeft{
+	float:left;
+	width:30%;
+	height:30px;
+	
+}
+.allSets .oneKindSet .group .oneDishOfGroup .oneDishOfGroupTop .oneDishOfGroupTopLeft img{
+	width:100%;
+	min-height:30px;
+}
+.allSets .oneKindSet .group .oneDishOfGroup .oneDishOfGroupTop .oneDishOfGroupTopRight{
+	float:left;
+	width:50%;
+	margin-left:5%;
+}
+
+.allSets .oneKindSet .group .oneDishOfGroup .oneDishOfGroupTop .oneDishOfGroupTopRight .dishTitle a{
+	font-size:0.875rem;
+	text-decoration:none;
+	color:#715D76;
+}
+.allSets .oneKindSet .group .oneDishOfGroup .oneDishOfGroupTop .oneDishOfGroupTopRight  .dishTaste{
+	font-size:0.75rem;
+	color:grey;
+}
+.allSets .oneKindSet .group .oneDishOfGroup .oneDishOfGroupTop .oneDishOfGroupTopRight .dishIntro{
+	font-size:0.75rem;
+	color:#715D76;
+}
+.allSets .oneKindSet .group .oneDishOfGroup .oneDishOfGroupBottom{
+	width:100%;
+	text-align:center;
+	font-size:0.875rem;
+}
+.allSets .oneKindSet .group .multiply{
+	margin-bottom:20px;
+	text-align:center;
+	font-size:1rem;
+	/* background:red; */
+}
+.allSets .oneKindSet .group .dishNum{
+	width:8%;
+	min-height:30px;
+	line-height:30px;
+	text-align:center;
+	font-size:1rem;
+}
+.allSets .oneKindSet .group .dishAdd{
+	min-height:30px;
+	line-height:30px;
+	text-align:center;
+	font-size:1.25rem;
+}
+.allSets .oneKindSet .reduceAdnAddButton{
+	/* width:100%; */
+	width:30%;
+	margin-left:70%;
+	height:1.875rem;
+	line-height:1.875rem;
+}
+.allSets .oneKindSet .reduceAdnAddButton .reduce,.copies,.add{
+	display:block;
+	float:left;
+	width:1.875rem;
+	height:1.875rem;
+	line-height:1.875rem;
+	text-align:center;
+}
+.allSets .oneKindSet .reduceAdnAddButton .reduce,.add{
+	border-radius:100%;
+	border:1px solid #fff; 
+	cursor:pointer;
+	background-color:#715D76;
+	font-size:1.25rem;
+}
+.allSets .oneKindSet .setAllMoney{
+	width:100%;
+	font-size:1.25rem;
+	color:#715D76;
+	margin-top:0.625rem;
+}
+.allSets .oneKindSet .setAllMoney p{
+	width:40%;
+	float:left;
+	color:#fff;
+	margin-left:10%;
+}
+.allSets .oneKindSet .setAllMoney p:nth-child(2){
+	/* background:#715D76; */
+}
+
+.allSets .oneKindSet .mark{
+	width:100%;
+	height:30px;
+	margin-top:10px;
+}
+.allSets .oneKindSet .mark li{
+	float:left;
+	margin-left:3%;
+	padding:2px 3px;
+	background-color:#6AA79F;
+	border-radius:3px;
+	font-size:0.875rem;
+	cursor:default;
+}
+.allSets .oneKindSet .mark li:nth-child(1){
+	margin-left:0;
+}

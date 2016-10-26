@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yc.dao.MerchantDao">
+  <resultMap id="MerchantResultMap" type="com.yc.bean.Merchant">
+    <id property="merchantId" column="m_id" javaType="Integer" jdbcType="INTEGER" />
+    <result property="merchantPhone" column="m_phone" javaType="String" jdbcType="VARCHAR" />
+    <result property="merchantPassword" column="m_password" javaType="String" jdbcType="VARCHAR" />
+    <result property="shopName" column="shop_name" javaType="String" jdbcType="VARCHAR" />
+    <result property="bossName" column="boss_name" javaType="String" jdbcType="VARCHAR" />
+    <result property="idCard" column="id_card" javaType="String" jdbcType="VARCHAR" />
+    <result property="linkPhone" column="linkphone" javaType="String" jdbcType="VARCHAR" />
+    <result property="bankCard" column="bankcard" javaType="String" jdbcType="VARCHAR" />
+    <result property="merchantAddress" column="m_address" javaType="String" jdbcType="VARCHAR" />
+    <result property="merchantIntro" column="m_intro" javaType="String" jdbcType="VARCHAR" />
+   	<result property="merchantStatus" column="m_status" javaType="Integer" jdbcType="INTEGER" />
+    <result property="merchantStar" column="m_star" javaType="float" jdbcType="FLOAT" />
+    <result property="merchantComment" column="m_comment" javaType="String" jdbcType="VARCHAR" />
+    <result property="merchantMail" column="m_mail" javaType="String" jdbcType="VARCHAR" />    
+    <result property="registerTime" column="register_time" javaType="String" jdbcType="VARCHAR" />
+    <result property="lastLoginTime" column="last_login_time" javaType="String" jdbcType="VARCHAR" />
+    <result property="lastLoginIp" column="last_login_ip" javaType="String" jdbcType="VARCHAR" />  
+     <result property="merchantLng" column="m_lng" javaType="double" jdbcType="DOUBLE" />  
+     <result property="merchantLat" column="m_lat" javaType="double" jdbcType="DOUBLE" />  
+      <result property="merchantLogo" column="m_logo" javaType="String" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+<!-- 商户登录 -->
+  
+  
+  <select id="merchantLogin" resultMap="MerchantResultMap">
+    SELECT * FROM merchant WHERE m_phone=#{0} and
+    m_password=#{1} and m_status = 1; 
+  </select>
+ 
+ <!-- 
+ <select id="login" parameterType="com.yc.bean.Merchant" resultMap="MerchantResultMap">
+    SELECT * FROM merchant WHERE m_phone = #{merchantPhone,jdbcType=VARCHAR} and
+    m_password = #{merchantPassword,jdbcType=VARCHAR} and m_status = 1;
+  </select>
+ <select id="getMerchantList" resultMap="MerchantResultMap">
+ select * from merchant;
+ </select> -->
+<!-- 查看手机号是否已注册 --> 
+ <select id="isMerchantREgisted" parameterType="String" resultType="java.lang.Integer">
+    SELECT count(*) FROM merchant WHERE m_phone=#{merchantPhone,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 商户注册 -->
+  <insert id="doRegist" useGeneratedKeys="true" keyProperty="merchantId" parameterType="com.yc.bean.Merchant">  
+        INSERT INTO merchant (m_phone, m_password, shop_name, boss_name, idcard,
+                             linkphone, bankcard, m_mail, register_time,
+                             last_login_time, last_login_ip, m_lng, m_lat,
+                             m_address, m_intro)                                           
+              VALUES (#{merchantPhone}, #{merchantPassword}, #{shopName}, #{bossName},
+                      #{idCard}, #{linkPhone}, #{bankCard}, #{merchantMail},
+                       #{registerTime}, #{lastLoginTime}, #{lastLoginIp},
+                       #{merchantLng}, #{merchantLat}, #{merchantAddress}, #{merchantIntro})  
+</insert>
+
+<!-- 修改密码 -->
+  <update id="updateMerchantPassword"  parameterType="com.yc.bean.Merchant" >
+    UPDATE merchant SET merchant.m_password = #{merchantPassword} 
+    WHERE merchant.m_phone = #{merchantPhone};
+  </update>
+  
+  <!-- 修改简介 -->
+  <update id="updateMerchantIntro">
+    UPDATE merchant SET merchant.m_intro = #{1} 
+    WHERE merchant.m_id = #{0};
+  </update>
+  
+   <!-- 修改图标 -->
+  <update id="updateMerchantLogo">
+    UPDATE merchant SET merchant.m_logo = #{1} 
+    WHERE merchant.m_id = #{0};
+  </update>
+  
+ <!-- 通过商家id得到商家详情 -->
+ <select id="selectMerchantById" parameterType="int" resultMap="MerchantResultMap">
+    SELECT * FROM merchant WHERE m_id=#{0}
+  </select>
+	
+</mapper>

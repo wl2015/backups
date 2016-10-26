@@ -1,0 +1,35 @@
+package com.h5.dao.impl;
+
+import org.apache.log4j.Logger;
+import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
+
+import com.h5.dao.AdminDao;
+import com.h5.dao.BaseDao;
+
+import com.h5.entity.Admin;
+
+@Repository
+public class AdminDaoImpl extends BaseDao<Admin> implements AdminDao {
+	
+	private static final Logger logger = Logger.getLogger(ProductDaoImpl.class);
+
+	private static final int INSERT_OR_UPDATE_SUCCESS = 1;
+	
+	//获取对应的实体类
+	protected Class<Admin> getEntity() {
+		
+		return Admin.class;
+	}
+	
+	
+	//验证管理员登录
+	
+	public Admin doAdLogin(String phoneNum, String pass){
+		String hql="from Admin where phone=? and password=?";
+		Query query=super.createQuery(hql, new Object[]{phoneNum,pass});
+		Admin a=(Admin)query.uniqueResult();
+		return a;		
+	}
+
+}

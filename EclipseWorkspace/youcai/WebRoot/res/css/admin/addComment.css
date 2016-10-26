@@ -1,0 +1,65 @@
+@charset 'utf-8';
+*{
+	margin:0;
+	padding:0;
+	font-family:'微软雅黑';
+	border:none;
+	
+}
+.addComment{
+	width:80%;
+	height:auto;
+	margin:0 auto;
+}
+.commentContent{width:100%;height:120px;line-height:120px;}
+.commentContent span{
+	display:inline-block;
+  width:18%;
+}
+.addComment .back{
+	width:60px;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	color:#fff;
+	background:#800000;
+	border-radius:5px;
+	margin-left:80%;
+}
+
+.commentContent textArea{
+	float:left;
+	display:block;
+	width:50%;
+	height:100px;
+	resize:none;
+	border:1px solid #000;
+}
+.commentType{
+	margin-top:20px;
+	clear:both;
+}
+.commentType select{border:1px solid #000;}
+.commentContent span{
+	float:left;
+	display:block;
+	width:15%;
+	height:100px;
+	line-height:100px;
+	font-weight:bold;
+}
+.commentType span{
+	display:inline-block;
+	width:15%;
+	font-weight:bold;
+}
+.sureAdd{
+	width:100px;
+	height:30px;
+	line-height:30px;
+	color:#fff;
+	background:#800000;
+	text-align:center;
+	border-radius:5px;
+	margin-left:55%;
+}

@@ -1,0 +1,570 @@
+<!DOCTYPE html> 
+<head> 
+<title>账户信息</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<#assign base = springMacroRequestContext.getContextUrl("")>
+<link rel="stylesheet" type="text/css" href="${base}/res/css/user/userInfo.css"/>
+<script type="text/javascript" charset="utf-8" src="${base}/res/js/jQuery/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="${base}/res/js/user/userInfo.js"></script>
+<script type="text/javascript" charset="utf-8" src="${base}/res/js/common.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="${base}/res/js/constants.min.js"></script>
+</head>
+<body>
+	<div class="user">
+		<span class="user-title">
+			账户信息
+		</span>
+
+		<span class="clearfix user-content">
+			<div class="user-logo">
+				<div class="user-logo-cover">
+					<span class="user-logo-trigle"></span>
+					<p class="user-logo-covertext">
+						头像
+					</p>
+				</div>
+			</div>
+			<div class="user-information">
+				<table>
+					<tr>
+						<th width="60" height="40">
+							作者昵称
+						</th>
+						<td width="60" height="40"></td>
+						<td width="650" height="40"> 
+							 ${user.userName}
+						<br></td>
+					</tr>
+					<tr>
+						<th width="60" height="40">
+							用户账号
+						</th>
+						<td width="60" height="40"></td>
+						<td width="650" height="40" class="clearfix">	
+							<div class="num">	
+								<p>
+									${user.phoneNum}
+								</p>
+								<a id="editpsw">
+									修改密码
+								</a>
+							</div>
+						</td>
+					</tr>
+					<tr class="data">
+						<td colspan="3" height="40">
+							<p>完善资料，立即奖励50元代金券</p>
+							<a id="data">马上填写></a>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3"  width="300">
+							<span class="border"></span>
+						</td>
+					</tr>
+				</table>
+				<table>
+					<tr>
+						<th width="60" height="40">
+							<div class="th">用户余额</div>
+						</th>
+						<td width="60" height="40">
+						</td>
+						<td width="650" height="40">
+							<div class="upay">
+								<strong>
+									0
+								</strong>
+								<div id="imgbt1"></div>
+							</div>
+							<div class="upay-choose clearfix">
+								<div class="title">
+									<span>
+										1
+									</span>
+									金额选择
+								</div>
+								<ul class="choosepack">
+									<li data-recharge="500">
+										<div class="card card2">
+											￥500
+										</div>
+										<p></p>
+									</li>
+									<li data-recharge="2000">
+										<div class="card">
+											￥2000
+										</div>
+										<p>
+											赠送300
+										</p>
+									</li>
+									<li data-recharge="5000">
+										<div class="card">
+											￥5000
+										</div>
+										<p>	
+											赠送1200
+										</p>
+									</li>
+									<li data-recharge="10000">
+										<div class="card">
+											￥10000
+										</div>
+										<p>
+											赠送3000
+										</p>
+									</li>
+								</ul>
+								<div class="othermoney clearfix">
+									<span>
+										¥	
+									</span>
+									<input type="text" placeholder="其他金额" name="other"></input>
+									<div></div>
+									<div>
+										额外赠送 
+										<strong>
+											¥<s>0</s>
+										</strong>
+									</div>
+								</div>
+								<div class="title">
+									<span>
+										2
+									</span>
+									支付方式
+								</div>
+								<ul class="payway">
+									<li data-recharge="alipay">
+										<div class="card card2">
+											支付宝
+										</div>
+									</li>
+									<li data-recharge="transfer">
+										<div class="card">
+											银行转账
+										</div>
+									</li>
+								</ul>
+								<div class="yesno">
+									<span class="yes">
+										确认支付
+									</span>
+									<span class="no">
+										取消
+									</span>
+									<span class="help">
+										<a href="#">
+											需要帮助
+										</a>
+									</span>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th width="60" height="40">
+							<div class="th">用户类型</div>
+						</th>
+						<td width="60" height="40">
+						</td>
+						<td width="650" height="40">
+							<div class="uchange">
+								<span>
+									个人免费版
+								</span>
+								<div id="imgbt2"></div>
+							</div>
+							<div class="uchange-choose clearfix">
+								<div class="title">
+									<span>
+										1
+									</span>
+									方案选择
+								</div>
+								<ul class="choosescheme" id="choose">
+									<li data-price="0" data-type="free_user">
+										<div class="card scheme card2">
+											<img title="免费版" src="http://create.maka.mobi/images/free_user.png"></img>
+										</div>
+									</li>
+									<li data-price="98" data-type="experience">
+										<div class="card scheme">
+											<img title="体验版"src="http://create.maka.mobi/images/experience.png"></img>
+										</div>
+									</li>
+									<li  data-price="480" data-type="advanced">
+										<div class="card scheme">
+											<img title="高级版" src="http://create.maka.mobi/images/advanced.png"></img>
+										</div>
+									</li>
+									<li data-price="1800" data-type="professional">
+										<div class="card scheme">
+											<img title="企业版" src="http://create.maka.mobi/images/professional.png"></img>
+										</div>
+									</li>
+								</ul>
+								<span class="money">
+									支付
+									<strong id="money">
+										¥0/月
+									</strong>
+									<a>
+										方案详情
+									</a>
+								</span>
+								<div class="yesno">
+									<span class="yes">
+										确认升级
+									</span>
+									<span class="no">
+										取消
+									</span>
+									<span class="help">
+										<a href="#">
+											需要帮助
+										</a>
+									</span>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th width="60" height="40">
+							<div class="th">
+								账单摘要
+							</div>
+						</th>
+						<td width="60" height="40">
+						</td>
+						<td width="650" height="40">
+							<div class="ucheck">
+								<a>
+									查看详情
+								</a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3"  width="300">
+							<span class="border"></span>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</span>	
+
+		<div class="user-hide">
+			<span class="bg"></span>
+			<div class="user-hide-editpsw">
+				<div class="header">
+					<h4>
+						修改密码 
+					</h4>
+					<p id="editpsw-cancel">
+						x
+					</p>
+				</div>
+				<div class="body">
+					<table>
+						<tr>	
+							<th width="60" height="32">
+								原密码
+							</th>
+							<td width="60" height="32"></td>
+							<td width="335" height="32">
+								<input type="password" placeholder="原密码"/>
+							</td>
+						</tr>
+						<tr>	
+							<th width="60" height="32">
+								新密码
+							</th>
+							<td width="60" height="32"></td>
+							<td width="335" height="32">
+								<input type="password" placeholder="新密码"/>
+							</td>
+						</tr>
+						<tr>	
+							<th>
+								确认密码
+							</th>
+							<td></td>
+							<td>
+								<input type="password" placeholder="确认密码"/>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="footer">
+					<span class="sure">
+						确定
+					</span>
+					<span class="cancel">
+						取消
+					</span>
+				</div>
+			</div>
+			<div class="user-hide-data">
+				<div class="header">
+					<h4>
+						完善信息
+					</h4>
+					<p id="data-cancel">
+						x
+					</p>
+				</div>
+				<div class="body">
+					<table>
+						<tr>	
+							<th width="60" height="32">
+								作者昵称
+							</th>
+							<td width="60" height="32"></td>
+							<td width="335" height="32">
+								<input type="text" placeholder="未设置"/>
+							</td>
+						</tr>
+						<tr>	
+							<th width="60" height="32">
+								机构名称
+							</th>
+							<td width="60" height="32"></td>
+							<td width="335" height="32">
+								<input type="text" placeholder="机构名称"/>
+							</td>
+						</tr>
+						<tr>	
+							<th>
+								姓名
+							</th>
+							<td></td>
+							<td>
+								<input type="text" placeholder="姓名"/>
+							</td>
+						</tr>
+						<tr>	
+							<th>
+								手机
+							</th>
+							<td></td>
+							<td>
+								<input type="text" placeholder="手机"/>
+							</td>
+						</tr>
+						<tr height="32">	
+							<th>
+								城市
+							</th>
+							<td></td>
+							<td>
+								<select>
+									<option value="volvo">
+										选择省份
+									</option>
+									<option value="saab">
+										四川
+									</option>
+									<option value="opel">
+										北京
+									</option>
+									<option value="audi">
+										天津
+									</option>
+								</select>
+								<select>
+									<option value="volvo">
+										
+									</option>
+									<option value="saab">
+										成都
+									</option>
+									<option value="opel">
+										广元
+									</option>
+									<option value="audi">
+										绵阳
+									</option>
+								</select>
+							</td>
+						</tr>
+						<tr height="32">	
+							<th>
+								行业
+							</th>
+							<td></td>
+							<td>
+								<select>
+									<option value="volvo">
+										互联网
+									</option>
+									<option value="saab">
+										汽车
+									</option>
+									<option value="opel">
+										服装
+									</option>
+									<option value="audi">
+										家电
+									</option>
+								</select>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="footer">
+					<span class="sure">
+						确定
+					</span>
+					<span class="cancel">
+						取消
+					</span>
+				</div>
+			</div>
+			<div class="user-hide-bill">
+				<div class="header">
+					<h4>
+						账单明细
+					</h4>
+					<p id="bill-cancel">
+						x
+					</p>
+				</div>
+				<div class="body">
+					<span class="history-change">
+						<p class="p2" id="buy">
+							购买历史
+						</p>
+						<p class="p1" id="recharge">
+							充值历史
+						</p>
+					</span>
+					<div id="history-buy" class="history-buy">
+						<table width="568" height="36">
+							<tr>
+								<td>
+									日期
+								</td>
+								<td class="borderleft">
+									商品
+								</td>
+								<td class="borderleft">
+									单号
+								</td>
+								<td class="borderleft">
+									总计
+								</td>
+							</tr>
+						</table>
+						<p id="get-bill" class="get-bill">
+							索要发票
+						</p>
+						<div id="bill-message" class="bill-message">
+							<strong>
+								联系我们
+							</strong>
+							<br/>
+							请提供以下信息到：
+							<a>
+								aaaa@qq.com
+							</a>
+							<br/>
+							账号邮箱、发票抬头、联系人、电话、地址、开票金额
+							<br/>
+							我们将在3个工作日内为您开具并寄送发票（增值税普通发票）
+						</div>
+					</div>
+					<div id="history-bill" class="history-bill">
+						<table width="568" height="36">
+							<tr >
+								<td>
+									日期
+								</td>
+								<td class="borderleft">
+									时间
+								</td>
+								<td class="borderleft">
+									单号
+								</td>
+								<td class="borderleft">
+									总计
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>		
+			<div class="user-hide-plan">
+				<div class="body">
+					<img src="../userpic/plan.png"></img>
+				</div>
+				<div class="footer">
+					<input type="button" value="关闭"></input>
+				</div>
+			</div>
+		</div>	
+		<div class="user-changelogo">
+			<ul class="allpic">
+				<li class="pic clearfix">
+					<img src="../userpic/1.jpg"></img>
+					<span>dd</span>
+				</li>
+				<li class="pic clearfix">
+					<img src="../userpic/3.jpg"></img>
+					<span>dd</span>
+				</li>
+				
+				<li class="pic clearfix">
+					<img src="../userpic/3.jpg"></img>
+					<span>dd</span>
+				</li>
+				<li class="pic clearfix">
+					<img src="../userpic/3.jpg"></img>
+					<span>dd</span>
+				</li>
+				<li class="pic clearfix">
+					<img src="../userpic/3.jpg"></img>
+					<span>dd</span>
+				</li>
+				<li class="pic clearfix">
+					<img src="../userpic/3.jpg"></img>
+					<span>dd</span>
+				</li>
+				<li class="pic clearfix">
+					<img src="../userpic/3.jpg"></img>
+					<span>dd</span>
+				</li>
+				<li class="pic clearfix">
+					<img src="../userpic/1.jpg"></img>
+					<span>dd</span>
+				</li>
+				<li class="pic clearfix">
+					<img src="../userpic/3.jpg"></img>
+					<span>dd</span>
+				</li>
+				<li class="pic clearfix">
+					<img src="../userpic/3.jpg"></img>
+					<span>dd</span>
+				</li>
+				<li class="pic clearfix">
+					<img src="../userpic/1.jpg"></img>
+					<span>dd</span>
+				</li>
+				<li class="pic clearfix">
+					<img src="../userpic/3.jpg"></img>
+					<span>dd</span>
+				</li>
+				<li class="pic clearfix">
+					<img src="../userpic/3.jpg"></img>
+					<span>dd</span>
+				</li>
+			</ul>
+			<div class="tailor"></div>
+			<div class="button">
+				<input type="button" value="上传" class="left"></input>
+				<input type="button" value="取消" class="right" id="button-cancel"></input>
+				<input type="button" value="确认" class="right"></input>
+			</div>
+		</div>
+</body>

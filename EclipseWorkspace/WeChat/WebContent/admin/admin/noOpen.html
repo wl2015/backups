@@ -1,0 +1,52 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../../css/right.css">
+	</head>
+	<body>
+	<table width="100%" cellspacing="2" cellpadding="4" bgcolor="#fbead0">
+		<tr>
+			<td colspan="15" class="header">不营业期间照片设置</td>
+		</tr>
+		<tr>
+			<td class="td1">图片名</td>
+			<td class="td1">图片</td>
+			<td class="td1">开始日期</td>
+			<td class="td1">截止日期</td>
+			<td class="td1">修改</td>
+			<td class="td1">删除</td>
+		</tr>
+		<tr>
+			<td class="td2">aaa</td>
+			<td class="td2">
+			<div>
+				<img src="../../picture/food1.jpg">
+			</div></td>
+			<td class="td2">2014-8-1</td>
+			<td class="td2">2014-8-4</td>
+			<td class="td2">
+				<INPUT type="submit" value="修改" onclick="javascript:location.href='saveP.html'"/>
+			</td>
+			<td class="td2">
+				<INPUT onClick="return window.confirm('确定要删除吗？')" type="submit" value="删除"/>
+			</td>
+		</tr>
+		<tr>
+			<td align="center" colspan="15"  height="50">
+			<div>
+				<div style="float:right;margin-top:1px">
+					<select> 
+						<option value="t1"selected>第1页</option> 
+						<option value="t2">第2页</option>
+						<option value="t2">第3页</option> 
+						<option value="t3">第4页</option> </select>
+				</div>
+				<div class="turn">转到：</div>
+				<div class="front"><a href="#">下一页</a></div>
+				<div class="numPage">1</div>
+				<div class="front"><a href="#">上一页</a></div>
+			</div>
+			</td>
+		</tr>
+	</table>
+	</body>
+</html>

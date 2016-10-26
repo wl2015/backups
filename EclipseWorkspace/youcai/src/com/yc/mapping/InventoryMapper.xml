@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yc.dao.InventoryDao">
+
+<!--   MyBatis的核心是其映射文件,SqlMap文件,里面配置了项目中用到了什么SQL语句,和数据库相关的逻辑都在这个映射文件里.顾名思义,
+  映射文件就是对Java对象和SQL的映射.这里简单介绍一下映射文件中resultMap的用法:
+  resultMap – 它描述如何将结果集映射到Java对象.
+  resultMap属性：type为java实体类；id为此resultMap的标识:<resultMap id="BaseResultMap" type="com.test.mybatis.vo.MybatisOrder" >
+  resultMap的子元素：
+  id – 一般对应到数据库中该行的ID,设置此项可以提高Mybatis性能.
+  result – 映射到JavaBean 的某个"简单类型"属性,String,int等.
+  association – 映射到JavaBean 的某个"复杂类型"属性,其他JavaBean类.
+  collection –复杂类型集合,a collection of complex types -->
+
+  <resultMap id="InventoryMap" type="com.yc.bean.Inventory">
+    <id column="i_id" property="iId" javaType="Integer" jdbcType="INTEGER" />   
+    <result column="m_id" property="mId" javaType="Integer" jdbcType="INTEGER" />
+    <result column="dish_id" property="dishId" javaType="Integer" jdbcType="INTEGER" />      
+    <result column="i_num" property="iNum" javaType="Integer" jdbcType="INTEGER" />  
+    <result column="limitcount" property="limitCount"  javaType="Integer" jdbcType="INTEGER" />
+    <result column="i_time" property="iTime"  javaType="String" jdbcType="VARCHAR" />   
+    <result column="d_name" property="dishName" javaType="String" jdbcType="INTEGER" /> 
+  </resultMap>
+  
+	<!-- 商家查看库存情况 -->
+	<select id="getInventoryM" parameterType="int" resultMap="InventoryMap">
+		select inventory.*, dish.d_name from inventory, dish where
+		 inventory.m_id = #{0} and inventory.dish_id = dish.d_id;
+	</select>
+
+	 <!-- 商家批量修改库存 -->
+	 <update id="updateInventoryM" parameterType="java.util.List">
+	 	<foreach collection="list" item="item" separator=";" > 
+			 update inventory 
+			 <set> i_num = #{item.iNum}, limitcount = #{item.limitCount}, i_time = #{item.iTime} </set>
+			 where i_id = #{item.iId}
+		</foreach>
+	 </update>
+	 
+	 <!-- 修改商家库存上限量   -->
+  <update id="modifyLimitCount" parameterType="java.util.Map">
+    update inventory set limitcount=limitcount+#{addNum} where m_id=#{merchantId} and dish_id=#{dishId}
+  </update>
+
+	
+</mapper>

@@ -1,0 +1,234 @@
+﻿$(function(){
+	$('#findpassword-vertify-phone').maxLength(11);
+	$('#findpassword-vertify-input').maxLength(6);
+	$('#findpassword-password').maxLength(16);
+	$('#findpassword-checkpassword').maxLength(16);
+	
+	$('#findpassword-vertify-BTN').click(function(){
+		var phone=$('#findpassword-vertify-phone').val();
+		var sms=$('#findpassword-vertify-input').val();
+		if(CHECK.isPhoneNumber(phone) && CHECK.isNumber(sms))
+		{
+			$.ajax ({
+				url: $.WEB_ROOT + '/user/checkeSmsCode',
+				type:'post',
+				data: {
+					phoneNum:phone,
+					smsCode:sms
+				},
+				dataFilter: {
+					s:['phoneNum','smsCode']
+				},
+				dataType:'json',
+				success:function(res){
+					if(res.code== AJAX_SUCCESS_ALERT_CODE){
+						showFindPage();
+					}
+					else{
+						//清空数据并提示错误信息
+						$('#findpassword-vertify-phone').val("");
+						$('#findpassword-vertify-input').val("");
+						alert(res.msg);						
+					}					
+				},
+				error:function(){
+					alert("数据提交失败，请稍后重试");
+				}
+			});	
+			
+		}
+	});
+
+	$('#findpassword-BTN').click(function(){
+		var  pass=$('#findpassword-information li:eq(0) input');
+		var repass=$('#findpassword-information li:eq(1) input');
+		if(CHECK.isPassword(pass.val()) && CHECK.isPassword(repass.val()) && repass.val() == pass.val()){
+			resetPass();
+		}
+	});
+	$(".vertify-BTN").click(function clickCheckCode(){
+		var phoneNode=$("#findpassword-vertify-phone");
+		var phoneNum=$("#findpassword-vertify-phone").val();
+		var buttonVal=$(this).html();
+		var $buttonNode=$(this);
+		if(!CHECK.isPhoneNumber(phoneNum)){
+			alert("请输入正确的手机号");
+			return;
+		}
+		$(this).unbind('click');
+		$buttonNode.css('background-color','#808080');
+		$(this).html("正在发送...");	
+					
+			$.ajax ({
+				url: $.WEB_ROOT + '/getsmsCodeHadRegist',
+				type:'post',
+				data:{
+					p:phoneNum
+				},
+				dataType:'json',
+				dataFilter: {
+					s:['p']
+				},
+				success:function(res) {
+					if(res.code == AJAX_SUCESS_IDENTIFYING_CODE) {
+						//获取成功,执行延迟加载程序
+						successCallback();
+					}else if (res.code == AJAX_FAIL_IDENTIFYING_CODE) {
+						whenErrorCallBack(res.msg);
+					}else {
+						whenErrorCallBack(res.msg);
+					}
+				},
+				error:function() {
+					whenErrorCallBack("连接错误，请重新发送验证码");
+				}		
+			});
+					
+			//发送验证码成功时要调用的函数
+			var successCallback = function() {
+				var waitTime = 60;
+				var timerId = setInterval(timeRun, 1000);
+				function timeRun() {
+					if (waitTime == 0) {
+						clearInterval(timerId);									
+						$buttonNode.html(buttonVal);
+						$buttonNode.click(clickCheckCode);
+						$buttonNode.css('background-color','#42C2B3');
+					} else {
+						waitTime --;
+						$buttonNode.html('短信已发送('+waitTime+')');
+					}
+				}
+			};
+			//发送验证码失败时要调用的函数
+			var whenErrorCallBack = function(msg) {			
+				alert(msg);				
+				$buttonNode.html(buttonVal);
+				$buttonNode.click(clickCheckCode);
+				$buttonNode.css('background-color','#42C2B3');
+			};	
+
+	});
+	
+	
+});
+
+//切换页面
+function showFindPage(){
+	$('#findpassword-content').show();
+	$('#findpassword-vertify-content').hide();
+}
+//repassword-input得到焦点设置
+function repasswordInputFocus(node){
+	var repassword=$(node);
+	var tip =$('#findpassword-information li:eq(1) span');
+	tip.text('确认密码');
+	tip.css('background-color','#42C2B3');
+	repassword.css('border-color','#F0F0F0');
+}
+//repassword-input失去焦点设置
+function repasswordInputBlur(node){
+	var repassword=$(node);
+	if(!CHECK.isPassword(repassword.val())){
+		var tip =$('#findpassword-information li:eq(1) span');
+		tip.text('密码的长度应为6-16位');
+		tip.css('background-color','#FF9FAA');
+		repassword.css('border-color','#FF9FAA');
+	}	
+	if(repassword.val() != $('#findpassword-information li:eq(0) input').val()){
+		var tip =$('#findpassword-information li:eq(1) span');
+		tip.text('密码不一致');
+		tip.css('background-color','#FF9FAA');
+		repassword.css('border-color','#FF9FAA');
+	}
+}
+//password-input得到焦点设置  
+function passwordInputFocus(node){
+	var password=$(node);
+	var tip =$('#findpassword-information li:eq(0) span');
+	tip.text('新密码');
+	tip.css('background-color','#42C2B3');
+	password.css('border-color','#F0F0F0');
+}
+//password-input失去焦点设置
+function passwordInputBlur(node){
+	var password=$(node);
+	if(!CHECK.isPassword(password.val())){
+		var tip =$('#findpassword-information li:eq(0) span');
+		tip.text('新密码的长度应为6-16位');
+		tip.css('background-color','#FF9FAA');
+		password.css('border-color','#FF9FAA');
+	}	
+}
+
+
+//vertify-input验证码得到焦点设置
+function vertifyInputFocus(node){
+	var vertify=$(node);
+	var tip = $('.findpassword-vertify-li span:eq(0)');
+	tip.text('验证码');
+	tip.css('background-color','#42C2B3');
+	vertify.css('border-color','#F0F0F0');
+}
+//vertify-input验证码失去焦点设置
+function vertifyInputBlur(node){
+	var vertify=$(node);
+	if(!CHECK.isNumber(vertify.val())){
+		var tip = $('.findpassword-vertify-li span:eq(0)');
+		tip.text('请输入正确的验证码');
+		tip.css('background-color','#FF9FAA');
+		vertify.css('border-color','#FF9FAA');
+	}	
+}
+// 重置密码电话框得到焦点设置
+function PhoneFocus(node){
+	var phonenum = $(node);
+	var tip = $('#findpassword-vertify-information li:eq(0) span');	
+	tip.text("电    话");
+	tip.css('background-color','#42C2B3');
+	phonenum.css('border-color','#F0F0F0');	
+}
+/**
+ * phone(login)重置密码电话框失去焦点设置
+ * @param node
+ */
+function PhoneBlur(node){
+	var phonenum = $(node);
+	var tip = $('#findpassword-vertify-information li:eq(0) span');	
+	//若电话号码格式正确则提交到数据库检查是否存在该号码
+	if(!CHECK.isPhoneNumber(phonenum.val())){
+		tip.css('background-color','#FF9FAA');
+		phonenum.css('border-color','#FF9FAA');
+		tip.html('请输入正确手机号');
+	}
+}
+
+//重置密码
+function resetPass(){
+	
+	var node=$("#resetPassForm").find("#findpassword-BTN");
+	$(node).unbind('click');
+	$(node).html("正在修改...");
+	//表单合格后提交表单	
+	$.ajax ({
+		url: $.WEB_ROOT + '/user/doResetPass',
+		type:'post',
+		data: $('#resetPassForm'),
+		dataType:'json',
+		success:function(res){
+			$(node).click(resetPass);
+			$(node).html('完成');
+			if(res.code== AJAX_SUCCESS_SKIP_CODE){				
+				window.location.href = $.WEB_ROOT + '/user/login';
+			}
+			else{
+				alert(res.msg);
+			}					
+		},
+		error:function(){
+			$(node).click(resetPass);
+			$(node).html('完成');
+			alert("密码修改失败，请重新修改");
+		}
+	});		
+}

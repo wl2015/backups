@@ -1,0 +1,91 @@
+/* CSS Document */
+@charset 'utf-8';
+
+* {
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+img {
+	border: 0;
+}
+
+body {
+	background:#eee;
+	font-family: '微软雅黑';
+}
+.mlogin {
+	width: 100%;
+	height: auto;
+}
+.left {
+	float: left;
+	width: 25%;
+	height: 400px;
+	margin-top:70px;
+	margin-left:3%;
+}
+.left img {
+	width: 300px;
+	height: 238px;
+}
+
+.right {
+	width: 50%;
+	height: 300px;
+	float: right;
+	margin-right: 18%;
+	_display: inline;/*ie6*/
+	margin-top: 10%;
+
+}
+
+.right .box {
+	margin: 10px auto;
+}
+.box span {
+	display: inline-block;
+	width: 15%;
+	height:30px;
+	line-height:30px;
+	font-size: 20px;
+	
+	
+}
+.box input {
+	width: 30%;
+	height: 30px;
+	font-family: '微软雅黑';
+	border:1px solid ;
+	border-radius:3px;
+	padding-left:5px;
+}
+
+.right .spanL input {
+	width: 20%;
+	height: 30px;
+	margin-left: 15%;
+	margin-top: 5%;
+	_display: inline;
+	background: #800000;
+	font-family: '微软雅黑';
+	border-radius:3px;
+	color:#fff;
+}
+.right .spanA{
+	display: inline-block;
+	margin-left: 5%;
+	_margin-left: 5%;
+}
+.right .spanA a{
+	text-decoration: none;
+	font-size: 14px;
+	color: #800000;
+	cursor: pointer;
+}
+.right span a:hover {
+	text-decoration: underline;
+}
+
+

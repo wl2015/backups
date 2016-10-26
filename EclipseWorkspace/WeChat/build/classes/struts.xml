@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC 
+"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" 
+"http://struts.apache.org/dtds/struts-2.1.7.dtd" >
+<struts>
+  <!-- 前台登录注册 -->
+  <package name="user" extends="struts-default" namespace="/">
+    <action name="LoginAction_*"  class="com.WeChat.login.action.LoginAction" method="{1}"> 
+      <result name="success" type="redirectAction">addressAction_execute</result><!-- 默认的name是success -->
+      <result name="failed">/login.jsp </result>
+    </action>
+    <action name="RegistAction_*"  class="com.WeChat.regist.action.RegistAction" method="{1}"> 
+      <result name="registSuccess">/order/login.jsp </result>
+      <result name="registfailed">/order/regist.jsp </result>
+    </action>
+  </package>
+
+  <!-- 前台菜单展示部分 -->
+  <package name="Dish" extends="struts-default" namespace="/">
+    <action name="FrontDishAction_*"  class="com.WeChat.dishList.action.DishAction" method="{1}">
+      <result name="dishlist">/order/menuList.jsp </result>
+    </action>
+  </package>
+
+  <!-- 地址管理模块 -->
+  <package name="address" extends="struts-default" namespace="/">
+    <!-- 第一个*是方法，第二个*是跳转的页面名字 -->
+    <action name="addressAction_*" class="com.WeChat.selectAddress.action.addressAction" method="{1}">
+      <result name="searchAll">/order/choose_first2.jsp</result><!-- 默认的name是success -->
+      <result name="searchKey">/order/choose_first2.jsp</result><!-- 默认的name是success -->
+      <result name="newAddress">/order/first_information.jsp</result>
+      <result name="update" type="redirectAction">addressAction_execute</result>
+      <result name="delete" type="redirectAction">addressAction_execute</result>
+      <result name="success">/order/first.jsp</result>
+      <result name="userinfo">/order/third.jsp</result>
+      <!--<result name="{2}">/addressInfo.jsp</result>-->
+    </action>
+  </package>
+
+  <!-- 购物车管理模块 -->
+  <package name="orderlist" extends="json-default" namespace="/">
+    <action name="ListAction_*"  class="com.WeChat.list.action.ListAction" method="{1}"> 
+      <result name="listSuccess">/order/order.jsp</result>
+      <result name="updateSuccess" type="json"></result>
+      <!-- 这个是内部跳转，可以实现多个action方法，如果内部跳转的话上一个方法会消失
+        <result name="lastshowSuccess" type="chain">addressAction_getByUserInfo</result>
+       -->
+      <result name="lastshowSuccess" >/last.jsp</result>
+    </action>
+  </package>
+
+  <!-- "我的有菜"信息查询 -->
+  <package name="youcai" extends="struts-default" namespace="/">
+    <action name="MyListAction_*" class="com.WeChat.mymanshao.mylist.action.MyListAction" method="{1}">
+      <result name="loginsuccess">/index.jsp</result>
+      <result>/mine/myOrder1.jsp</result>
+      <result name="isnotdeal">/mine/myOrder3.jsp</result>
+    </action>
+
+    <action name="UserInfoAction_*" class="com.WeChat.mymanshao.mydata.action.UserInfoAction" method="{1}">
+      <result name="infosuccess">/mine/myIF.jsp</result>
+      <result name="success">/mine/myIF2.jsp</result>
+      <result name="updatesuccess" type="redirectAction">UserInfoAction_UserInfo</result>
+      <result name="successpass">/mine/myIF3.jsp</result>
+      <result name="updatepass" type="redirectAction">UserInfoAction_UserInfo</result>
+      <result name="successphone">/mine/myIF1.jsp</result>
+      <result name="updatephone" type="redirectAction">UserInfoAction_UserInfo</result>
+    </action>
+
+    <action name="LoginAction123_*" class="com.WeChat.mymanshao.backtologin.action.LoginAction123" method="{1}">
+      <result name="first" type="redirectAction">MyListAction_MyListDisplay</result>
+      <result name="failed" type="redirect">
+        <param name="location">/order/Login123.jsp</param>
+        <param name="errorMsg">${errorMsg }</param>
+      </result>
+    </action>
+
+    <action name="IntegralAction_*" class="com.WeChat.mymanshao.integral.action.IntegralAction" method="{1}">  
+      <result name="integralsuccess">/mine/myGrade.jsp</result>
+    </action>
+  </package>
+
+  <!-- 后台管理部分 -->
+  <package name="AdminLogin"  extends="struts-default" namespace="/">
+    <!-- 后台管理管登录 -->
+    <action name="AdminLoginAction_*" class="com.WeChat.admin.adLogin.action.AdminLoginAction" method="{1}">
+      <result name="loginsuccess">/admin/total.jsp</result>
+      <result name="loginfailed">/admin/adLogin.jsp </result>
+    </action>
+  </package>
+
+  <package name="Kucun" namespace="/" extends="json-default">
+    <!-- 后台配料库存单 -->
+    <action name="KucunAction_*" class="com.WeChat.admin.kucun.action.KucunAction" method="{1}">
+      <result name="success">/admin/inmana/inmana.jsp</result>
+      <result name="modifyLimit" type="redirectAction">KucunAction_execute</result>
+      <result name="searchSuccess" type="json">
+      <param name="root">kcList</param>
+      </result>
+    </action>
+  </package>
+
+  <!-- 后台配送员出货单 -->
+   <package name="sure"  extends="struts-default" namespace="/">
+
+    <action name="WaiteSureAction_*" class="com.WeChat.admin.waitesure.action.WaiteSureAction" method="{1}">
+      <result name="success">/admin/sure/nosure.jsp</result>
+      <result name="orderinfo">/admin/sure/detailNOS.jsp</result>
+      <result name="deleteorderform" type="redirectAction">WaiteSureAction_execute</result>
+      <result name="updatesuccess" type="redirectAction">WaiteSureAction_execute</result>
+    </action>
+
+    <action name="SuredAction_*" class="com.WeChat.admin.sured.action.SuredAction" method="{1}">
+      <result name="takedsuccess">/admin/sure/sure.jsp</result>
+      <result name="suredinfo">/admin/sure/detailS.jsp</result>
+    </action>
+
+    <action name="TimeOutAction_*" class="com.WeChat.admin.timeout.action.TimeOutAction" method="{1}">
+      <result name="timeoutsuccess">/timeout/timelate.jsp</result>
+      <result name="getinfosuccess">/timeout/timeoutDetail.jsp</result>
+      <result name="deletesuccess" type="redirectAction">TimeOutAction_execute</result>
+    </action>
+
+  </package>
+
+  <!-- 后台订单模块 -->
+  <package name="common" extends="json-default" namespace="/">
+    <action name="CommonAction_*"  class="com.WeChat.admin.Common.action.CommonAction" method="{1}">
+      <result name="getEnsureOrderListSuccess">/admin/sure/sure.jsp</result>
+      <result name="chooseSendPeopleSuccess" type="json"></result>
+      <result name="getDoneOrderListSuccess">/admin/sure/deorder.jsp</result>
+    </action>
+  </package>
+
+  <!--后台添加指定地址 -->
+  <package name="Maddress" extends="json-default" namespace="/">
+    <action name="AddressAction_*" class="com.WeChat.admin.Frontaddress.action.AddressAction" method="{1}">
+      <result name="AddressShowSuccess">/admin/address/address.jsp</result>
+      <result name="UpdateFrontaddressSuccess" type="json"></result>
+      <result name="AddFrontAddressSuccess" type="json"></result>
+      <result name="DeleteFrontAddressSuccess" type="json"></result>
+    </action>
+  </package> 
+
+  <package name="backstage" namespace="/" extends="struts-default">
+    <!-- 后台管理部分_Dish -->
+    <action name="BackDishAction_*" class="com.WeChat.admin.Dish.DishAction" method="{1}">  
+      <result>/admin/food/upload.jsp</result> 
+        <result name="backDishlist">/admin/food/dishlist.jsp</result>
+        <result name="backModifyDish">/admin/food/modifyDish.jsp</result>
+      </action> 
+
+    <!-- 后台管理部分_SendPeople -->
+    <action name="SendPeopleAction_*" class="com.WeChat.admin.sendpeople.SendPeopleAction" method="{1}">  
+        <result name="peopleList">/admin/marki/peopleList.jsp </result>
+        <result name="updatePeople">/admin/marki/updatePeople.jsp </result>        
+        <result name="addPeople">/admin/marki/addpeople.jsp </result>        
+      </action>
+    <!-- 后台管理部分_Profit -->
+    <action name="ProfitAction_*" class="com.WeChat.admin.profit.ProfitAction" method="{1}">
+      <result name="sellStatus">/admin/qosi/sellStatus.jsp</result>
+      <result name="incomeStatus">/admin/qosi/income.jsp</result>
+    </action>
+  </package>
+
+  <!--设置浏览器是否缓存静态内容 (开发阶段最好设为false)，生产阶段可以打开-->
+  <constant name="struts.serve.static.browserCache" value="false"></constant>
+
+  <!--是否允许在action名中使用"/" - -->
+  <constant name="struts.enable.SlasheslnActionNames" value="true"></constant>
+
+  <!-- 是否启用开发模式 (开发阶段最好设为true)，生产阶段可以关闭-->
+  <constant name="struts.devMode" value="true"></constant>
+
+  <!-- 当HTTP每次到达时，重新加载资源文件 (开发阶段最好设为true)，生产阶段可以关闭 -->
+  <constant name="struts.i18n.reload" value="true"></constant>
+
+  <!-- 当struts的配置文件修改后,系统是否自动重新加载该文件,默认值为false(生产环境下使用),开发阶段最好打开 -->
+  <constant name="struts.configuration.xml.reload" value="true"/>
+
+  <!-- 解决struts2的form表单提交乱码(post方式) -->
+  <constant name="struts.i18n.encoding" value="UTF-8"></constant>
+
+  <!--允许访问静态成员 -->
+  <constant name="struts.ognl.allowStaticMethodAccess" value="true"></constant>
+
+  <!-- 设置action的后缀名为.do (不写或者写.do)-->
+  <constant name="struts.action.extension" value=",do"></constant>
+  
+  <!-- 配置struts2的国际化资源文件 -->
+  <constant name="struts.custom.i18n.resources" value="applicationMessage"></constant>
+
+  <!-- 上传的全部图片的最大限制-->  
+  <constant name="struts.multipart.maxSize" value="1024102400" />  
+
+  <!-- 临时存放文件的路径 -->  
+  <constant name="struts.multipart.saveDir" value="d:/test" />
+
+</struts>

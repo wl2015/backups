@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yc.dao.MessageDao">
+<!-- <resultMap id="MessageTextResultMap" type="com.yc.bean.MessageText">
+    <id column="text_id" property="textId" jdbcType="VARCHAR" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="VARCHAR" />
+  </resultMap> -->
+  
+  <resultMap id="MessageResultMap" type="com.yc.bean.Message">
+    <id column="message_id" property="messageId" jdbcType="INTEGER" javaType="int"/>
+    <result column="send_id" property="sendId" jdbcType="INTEGER" javaType="int"/>
+    <result column="rec_id" property="recId" jdbcType="INTEGER" javaType="int"/>
+    <result column="text_id" property="textId" jdbcType="INTEGER" javaType="int"/>
+    <result column="status" property="status" jdbcType="INTEGER" javaType="int"/> 
+    <result column="message" property="message" jdbcType="VARCHAR" javaType="String"/>
+    <result column="createtime" property="createtime" jdbcType="DATE" javaType="String"/>
+  </resultMap>
+  <!-- 获取商家还未读过的站内信 -->
+  <select id = "getMessageForMerchant" parameterType="int" resultMap="MessageResultMap">
+  	select message.message_id, messagetext.message, messagetext.createtime from 
+  	 message, messagetext where message.rec_id = #{0} and message.status = 0
+  	  and message.text_id = messagetext.text_id;
+  </select>
+  
+  <!-- 商家批量标记已度过的站内信 -->
+  <update id="flagMessage" parameterType="java.util.List">
+  	<foreach collection="list" item="item" separator=";" > 
+			 update message 
+			 <set> status = 1 </set>
+			 where message_id = #{item}
+		</foreach>
+  </update>
+  
+  <!-- 通过商家id获取未读过的站内信数量 -->
+  <select id="getMessageCount" parameterType="int" resultType="int">
+  	select count(message_id) from message where message.rec_id = #{0}
+  	 and message.status = 0;
+  </select>
+  </mapper>

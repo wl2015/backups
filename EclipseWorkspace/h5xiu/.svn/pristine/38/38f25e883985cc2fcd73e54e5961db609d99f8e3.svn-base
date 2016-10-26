@@ -1,0 +1,199 @@
+$(function(){
+	//封面三角形、文字的动画变换
+	$('.user-logo-cover').mouseover(function(){
+		var trigle=$(this).children('span');
+		var covertext=$(this).children('p');
+		$(trigle).removeClass('user-logo-trigle2');
+		$(trigle).toggleClass('user-logo-trigle1');
+
+		$(covertext).css({
+			'top':'4px',
+			'left':'2px'
+		});
+		$(covertext).html('更换头像');
+	});
+	$('.user-logo-cover').mouseout(function(){
+		var trigle=$(this).children('span');
+		var covertext=$(this).children('p');
+		$(trigle).removeClass('user-logo-trigle1');
+		$(trigle).toggleClass('user-logo-trigle2');
+
+		$(covertext).css({
+		'top':'0px',
+		'left':'0px'
+		});
+		$(covertext).html('头像');
+	});
+	
+	//‘账户充值’与‘更改方案’的背景图的变换,隐藏与显示
+	$('.user-information #imgbt1').click(function(){
+		if($('.user-information .upay-choose').css('display')=='none'){
+			$('.user-information .upay-choose').show(600);
+			$('.user-information .uchange-choose').hide(600);
+			$('.user-information #imgbt1').css('background','url("../userpic/uinfo-2.jpg") no-repeat scroll right bottom transparent');
+			$('.user-information #imgbt2').css('background','url("../userpic/uinfo-1.jpg") no-repeat scroll -92px 0px transparent');
+		}
+		else{
+			$('.user-information .upay-choose').hide(600);
+			$('.user-information #imgbt1').css('background','url("../userpic/uinfo-1.jpg") no-repeat scroll 0px 0px transparent');
+		}
+	});
+
+	$(".user-information #imgbt2").click(function(){
+		if($('.user-information .uchange-choose').css('display')=='none'){
+			$('.user-information .uchange-choose').show(600);
+			$('.user-information .upay-choose').hide(600);
+			$('.user-information #imgbt1').css('background','url("../userpic/uinfo-1.jpg") no-repeat scroll 0px 0px transparent');
+			$('.user-information #imgbt2').css('background','url("../userpic/uinfo-3.jpg") no-repeat scroll right bottom transparent');
+		}else{
+			$('.user-information .uchange-choose').hide(600);
+			$('.user-information #imgbt2').css('background','url("../userpic/uinfo-1.jpg")no-repeat scroll -92px 0px transparent');
+		
+		}
+	});
+
+	$('.user-information .upay-choose .no').click(function(){
+		$('.user-information .upay-choose').hide(600);
+		$('.user-information #imgbt1').css('background','url("../userpic/uinfo-1.jpg") no-repeat scroll 0px 0px transparent');
+	});
+
+	$('.user-information .uchange-choose .no').click(function(){
+		$('.user-information .uchange-choose').hide(600);
+		$('.user-information #imgbt2').css('background','url("../userpic/uinfo-1.jpg")no-repeat scroll -92px 0px transparent');
+	});
+
+	
+	//‘用户余额’中‘金额选择’与‘支付方式’的颜色变换
+	$('.user-information .choosepack li').click(function(){
+		$(this).children('div').addClass('card2');
+		$(this).children('p').css('color','#44C3B4');
+		$(this).prevAll('li').children('div').removeClass('card2');
+		$(this).prevAll('li').children('p').css('color','#969696');
+		$(this).nextAll('li').children('div').removeClass('card2');
+		$(this).nextAll('li').children('p').css('color','#969696');
+	});
+	
+	$('.user-information .payway li').click(function(){
+		$(this).children('div').addClass('card2');
+		$(this).prevAll('li').children('div').removeClass('card2');
+		$(this).nextAll('li').children('div').removeClass('card2');
+	});
+
+	//‘金额选择’中的‘额外赠送’
+
+	$("input[name='other']").keyup(function(){     
+        var tmptxt=$(this).val();     
+        $(this).val(tmptxt.replace(/\D|^0/g,''));     
+    }).bind("paste",function(){     
+        var tmptxt=$(this).val();     
+        $(this).val(tmptxt.replace(/\D|^0/g,''));     
+    }).css("ime-mode", "disabled");    
+
+	//‘用户类型’中‘方案选择’的颜色变换
+	$('.user-information #choose li').click(function(){
+		$(this).children('div').addClass('card2');
+		$(this).prevAll('li').children('div').removeClass('card2');
+		$(this).nextAll('li').children('div').removeClass('card2');
+		var data_type=$(this).attr("data-type");	
+		if(data_type=='free_user'){
+			$('.user-information #money').html('¥0/月');
+		}
+		else if(data_type=='experience'){
+			$('.user-information #money').html('¥98/月');
+		}
+		else if(data_type=='advanced'){
+			$('.user-information #money').html('¥480/月');
+		}
+		else if(data_type=='professional'){
+			$('.user-information #money').html('¥1800/月');
+		}
+	});
+
+	//更改方案中‘方案详情的显示与隐蔽’
+	$('.user-information .uchange-choose .money a').click(function(){
+		$('.user-hide').css('display','block');
+		$('.user-hide-plan').css('display','block');
+	});
+	
+	$('.user-hide .user-hide-plan input').click(function(){
+		$('.user-hide').css('display','none');
+		$('.user-hide-plan').css('display','none');
+	});
+	//修改密码的显示与隐藏
+	$('.user-information #editpsw').click(function(){
+		$('.user-hide').css('display','block');
+		$('.user-hide-editpsw').css('display','block');
+	});
+
+	$('.user-hide-editpsw .cancel').click(function(){
+		$('.user-hide').css('display','none');
+		$('.user-hide-editpsw').css('display','none');
+	});
+
+	$('#editpsw-cancel').click(function(){
+		$('.user-hide').css('display','none');
+		$('.user-hide-editpsw').css('display','none');
+	});
+
+	//信息完善的隐藏与显示
+	$('.user-information #data').click(function(){
+		$('.user-hide').css('display','block');
+		$('.user-hide-data').css('display','block');
+	});
+	$('.user-hide-data #data-cancel').click(function(){
+		$('.user-hide').css('display','none');
+		$('.user-hide-data').css('display','none');
+	});
+	$('.user-hide-data .cancel').click(function(){
+		$('.user-hide').css('display','none');
+		$('.user-hide-data').css('display','none');
+	});
+
+	//账单明细的显示与隐藏
+	$('.user-information .ucheck').click(function(){
+		$('.user-hide').css('display','block');
+		$('.user-hide-bill').css('display','block');
+	});
+	
+	$('.user-hide-bill #bill-cancel').click(function(){
+		$('.user-hide').css('display','none');
+		$('.user-hide-bill').css('display','none');
+	});
+
+	//‘购买历史’与‘充值历史’交换
+	$('.user-hide-bill #recharge').click(function(){
+		if($(this).is('.p1')){
+			$(this).removeClass('p1');
+			$(this).toggleClass('p2');
+			$('.user-hide-bill #buy').removeClass('p2');
+			$('.user-hide-bill #buy').addClass('p1');
+			$('.user-hide-bill #history-bill').css('display','block');
+			$('.user-hide-bill #history-buy').css('display','none');
+		}
+	});
+
+	$('.user-hide-bill #buy').click(function(){
+		if($(this).is('.p1')){
+			$(this).removeClass('p1');
+			$(this).toggleClass('p2');
+			$('.user-hide-bill #recharge').removeClass('p2');
+			$('.user-hide-bill #recharge').addClass('p1');
+			$('.user-hide-bill #history-bill').css('display','none');
+			$('.user-hide-bill #history-buy').css('display','block');
+		}
+	});
+
+	//点击‘索要发票’，隐藏或显示信息
+	$('.user-hide-bill #get-bill').click(function(){
+		$('.user-hide-bill #bill-message').toggle(300);
+	});
+	
+	//更换头像
+	$('.user-logo .user-logo-cover').click(function(){
+		$('.user-changelogo').css('display','block');
+	});
+	
+	$('.user-changelogo #button-cancel').click(function(){
+		$('.user-changelogo').css('display','none');
+	});
+});

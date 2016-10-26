@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yc.dao.TestUserDAO">
+
+<!--   MyBatis的核心是其映射文件,SqlMap文件,里面配置了项目中用到了什么SQL语句,和数据库相关的逻辑都在这个映射文件里.顾名思义,
+  映射文件就是对Java对象和SQL的映射.这里简单介绍一下映射文件中resultMap的用法:
+  resultMap – 它描述如何将结果集映射到Java对象.
+  resultMap属性：type为java实体类；id为此resultMap的标识:<resultMap id="BaseResultMap" type="com.test.mybatis.vo.MybatisOrder" >
+  resultMap的子元素：
+  id – 一般对应到数据库中该行的ID,设置此项可以提高Mybatis性能.
+  result – 映射到JavaBean 的某个"简单类型"属性,String,int等.
+  association – 映射到JavaBean 的某个"复杂类型"属性,其他JavaBean类.
+  collection –复杂类型集合,a collection of complex types -->
+  
+  <resultMap id="BaseResultMap" type="com.yc.bean.TestUser">
+    <id column="u_id" property="u_id" jdbcType="VARCHAR" />
+    <result column="u_phone" property="u_phone" jdbcType="VARCHAR" />
+    <result column="u_password" property="u_password" jdbcType="VARCHAR" />
+    <result column="u_name" property="u_name" jdbcType="VARCHAR" />
+    <result column="u_sex" property="u_sex" jdbcType="VARCHAR" />
+    <result column="star" property="star" jdbcType="VARCHAR" />
+    <result column="u_mail" property="u_mail" jdbcType="VARCHAR" />
+    <result column="regist_time" property="regist_time" jdbcType="VARCHAR" />
+    <result column="vip" property="vip" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+  <!-- 用户注册 -->
+  <!-- parameterType是传入的参数类型，resultMap是返回参数类型 -->
+  <insert id="regist" parameterType="com.yc.bean.TestUser">
+    insert into user (u_id,u_phone,u_password)
+    values (#{u_id,jdbcType=VARCHAR},
+    #{u_phone,jdbcType=VARCHAR},#{u_password,jdbcType=VARCHAR})
+  </insert>
+  
+  <!-- 用户登录 -->
+  <select id="login" parameterType="com.yc.bean.TestUser" resultMap="BaseResultMap">
+    SELECT * FROM user WHERE u_phone=#{u_phone,jdbcType=VARCHAR} and
+    u_password=#{u_password,jdbcType=VARCHAR}
+  </select>
+  
+
+
+  <!-- 修改用户密码 ， -->
+  <update id="updateUserPwd" parameterType="com.yc.bean.TestUser">
+    update user set u_password=#{u_password,jdbcType=VARCHAR} where id=#{u_id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <!-- 根据用户手机号去查询数据库是否有对应的记录 -->
+  <select id="queryUserForPhone" parameterType="String" resultMap="BaseResultMap">
+    select * from user where u_phone=#{u_phone,jdbcType=VARCHAR}
+  </select>
+ 
+  <!-- 根据用户id查询用户资料 -->
+  <select id="getUserInfoId" parameterType="Integer" resultType="com.yc.bean.TestUser">
+    select * from user where u_id=#{u_id};
+  </select>
+
+</mapper>

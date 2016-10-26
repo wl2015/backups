@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+http://www.springframework.org/schema/context 
+http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+http://www.springframework.org/schema/mvc 
+http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+  
+  <!-- 自动扫描controller包下的所有类，使其认为spring mvc的控制器 -->
+  <context:component-scan base-package="com.yc.controller" />
+  <!-- 默认的注解映射的支持 --> 
+  <mvc:annotation-driven /> 
+  
+  <!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 -->
+  <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/WEB-INF/pages/" p:suffix=".jsp" /><!--可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑  -->  
+  
+  <!-- 文件上传 -->
+  <!-- <bean id="multipartResolver"    
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">    
+        one of the properties available; the maximum file size in bytes 设置图片最大尺寸为5M    
+        <property name="maxUploadSize" value="5400000" />    
+  </bean>   -->  
+  
+ 
+   
+   <!-- 声明资源文件 -->
+  <!-- 配置静态资源，直接映射到对应的文件夹，不被DispatcherServlet处理，3.04新增功能，需要重新设置spring-mvc-3.2.xsd --> 
+  <mvc:resources mapping="/res/**" location="/res/" />
+
+  <mvc:resources mapping="/easyui/**" location="/easyui/" />
+  
+<!--   配置项目首页
+  <mvc:view-controller path="/" view-name="redirect:/index.do" />  -->
+   
+  <!-- 拦截器 -->
+  <mvc:interceptors>
+    <!-- 用户登录的拦截器 -->
+      <mvc:interceptor>
+        <mvc:mapping path="/user/**"/>
+        <bean id="userLoginIntercepter" class="com.yc.basic.interceptors.UserLoginInterceptor"></bean>
+      </mvc:interceptor>
+   </mvc:interceptors>
+
+   
+  <!-- 商家管理的拦截器 链 -->
+  <mvc:interceptors>
+  <mvc:interceptor>
+      <mvc:mapping path="/**/merchant/**"/>
+      <bean class="com.yc.basic.interceptors.MerchantInterceptor">
+        <property name="allowUrls">
+          <list>
+            <value>/toMerchantLogin.do</value>
+            <value>/toMerchantRegist.do</value>
+            <value>/toMerchantRegist2.do</value>
+            <value>/toResetPassword.do</value>
+            <value>/toResetPassword2.do</value>
+            <value>/Login.do</value>
+            <value>/doRegist.do</value>
+            <value>/doResetpassword.do</value>
+            <value>/getsmsCode.do</value>
+            <value>/checkeSmsCode.do</value>                        
+            <value>/getsmsCodeToResetpassword.do</value>
+          </list>
+        </property>
+      </bean>
+    </mvc:interceptor>
+  </mvc:interceptors>
+  
+  <!--后台管理员拦截器 -->
+  <mvc:interceptors>
+    <!--多个拦截器,顺序执行 -->
+    <mvc:interceptor>
+
+      <mvc:mapping path="/admin/**"/>
+      <mvc:mapping path="/manageMer/**"/>
+      <mvc:mapping path="/dish/**"/>
+      <mvc:mapping path="/comment/**"/>
+      <bean class="com.yc.basic.interceptors.AdminLoginIntercept">
+        <property name="allowUrls">
+          <list>
+            <value>/login.do</value>
+            <value>/adminLogin.do</value>
+            <value>/loginOut.do</value>
+            <value>/modifyPassword.do</value>
+            <value>/doModifyPass.do</value>
+            <value>/findPassOne.do</value>
+            <value>/findPassTwo.do</value>
+            <value>/adminLunxunMessage.do</value>
+            <value>/findPassPage.do</value>
+            <value>/findPassTwo.do</value>
+            <value>/checkeSmsCode.do</value>
+            <value>/doRepeatPass.do</value>
+          </list>
+        </property>
+      </bean>
+    </mvc:interceptor>
+  </mvc:interceptors>
+
+
+  <!-- 这句的意思是：访问项目时，首先走默认的 web.xml 配置的servlet，没有的话才找对应controller  -->
+  <!--<mvc:default-servlet-handler /> -->
+  
+  <!-- 全局异常处理器 
+    只要实现HandlerExceptionResolver接口就是全局异常处理器
+  -->
+  <!-- <bean class="com.yc.basic.exceptions.WholeExceptionHandler"></bean> -->
+</beans>

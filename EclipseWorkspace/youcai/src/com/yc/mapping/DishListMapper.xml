@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ <mapper namespace="com.yc.dao.DishListDao">
+ <resultMap id="dishlistMap" type="com.yc.bean.DishList">
+		<id column="dishList_id" property="dishListId" javaType="Integer" jdbcType="INTEGER" />
+		<result column="o_id" property="oId" javaType="Integer" jdbcType="INTEGER" />		
+		<result column="price" property="price" javaType="double" jdbcType="DOUBLE" />
+		<result column="number" property="number" javaType="Integer" jdbcType="INTEGER" />
+		<result column="d_name" property="dishName" javaType="String" jdbcType="VARCHAR" />
+		<result column="totalmoney" property="totalMoney" javaType="float" jdbcType="DOUBLE" />
+		<!-- <association property="dish" column="dish_id" select="getDishById"/>  -->
+ </resultMap>
+ 
+<!-- 通过dishlist_id获取dishlist对象 -->
+	<select id="getDishlistByO_Id" parameterType="int" resultMap ="dishlistMap">
+		SELECT dishlist.number, dish.retail_price as price, dish.d_name, dish.retail_price*dishlist.number as totalmoney
+		 FROM dishlist, dish where dishlist.dish_id = dish.d_id and dishlist.o_id = #{0};
+	</select>
+</mapper>
+

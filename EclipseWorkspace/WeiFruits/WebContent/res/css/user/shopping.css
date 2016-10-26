@@ -1,0 +1,178 @@
+@CHARSET "UTF-8";
+
+h4{
+	text-align: center;
+	padding-top: 5px;
+}
+ul li{
+	list-style-type: none;
+}
+a{
+	text-decoration: none;
+}
+.product{
+	border-bottom: 1px solid #EB974E;
+	background: white;
+	width: auto;
+	line-height: 2em;
+	padding-top: 0;
+	min-height: 70px;
+	color: black;
+}
+ul.product > li{
+	margin-bottom: 2px;
+  position: relative;
+  border-bottom: 1px solid #EB974E;
+  padding-top: 1px;
+  padding-bottom: 15px;
+}
+button.remove{
+	position: absolute;
+  top: 0;
+  right: 8px;
+  box-shadow: none;
+  margin: 0;
+  width: 35px;
+  height: 35px;
+  background: url(../../images/button_close.png) no-repeat;
+}
+ul.product > li .icon{
+	width: 80px;
+	height: 80px;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	float: left;
+}
+ul.product > li .details{
+	min-height: 80px;
+	padding-left: 0.5em;
+	margin-left: 95px;
+	line-height: 1.5em;
+}
+ul.product > li .details .name{
+	font-weight: bold;
+	border-bottom: white 1px solid;
+	cursor: pointer;
+	color: black;
+}
+ul.product > li ul.rule{
+	margin: 10px 10px 0 10px;
+}
+ul.product  > li ul.rule li{
+	border-bottom: white 2px solid;
+  line-height: 40px;
+  position: relative;
+}
+.order_input{
+  position: absolute;
+  right: 0;
+  bottom: 3px;
+}
+.numberbox{
+  width: 125px;
+  text-align: center;
+  height: 35px;
+}
+.numberbox button{
+  width: 35px;
+  height: 35px;
+  margin: 0;
+  padding: 0;
+  float: left;
+}
+.number {
+  width: 45px;
+  color: #fe6565;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: rgb(153, 153, 153) 0px 1px 1px;
+  height: 35px;
+  padding: 0;
+  margin: 0 0.2em;
+  border: 1px solid;
+  float: left;
+}
+.money_icon{
+	display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  background: black;
+  color: white;
+  text-align: center;
+  line-height: 24px;
+}
+
+.total{
+	color: #fe6565;
+  font-weight: bold;
+  line-height: 38px;
+  height: 38px;
+  position: relative;
+  margin: 5px 0;
+  /* padding: 5px 0; */
+  padding-left: 45px;
+  border-bottom: #FCBDBC 1px solid;
+}
+.total .icon{
+	background: #fe6565 url(../../images/icon_buyfruit.png) no-repeat;
+  background-position: center center;
+  width: 38px;
+  height: 38px;
+  border-radius: 19px;
+  position: absolute;
+  left: 0;
+}
+.total .prices{
+	position: absolute;
+  right: 10px;
+  top: 5px;
+}
+ul.select{
+	background: #F7F7F7;
+  border: #DDDDDD 1px solid;
+  border-radius: 6px;
+}
+ul.select li{
+  cursor: pointer;
+  padding: 5px 5px 5px 24px;
+  border-bottom: #DDDDDD 1px solid;
+  border-left: #F7F7F7 2px solid;
+  position: relative;
+}
+ul.select li.checked{
+	border-left: #FE6565 2px solid;
+  color: #FD6565;
+}
+
+#new_address table th{
+	width: 20%;
+  min-width: 5em;
+  font-weight: normal;
+  text-align: right;
+}
+form label{
+	line-height: 1em;
+	width: 70px;
+}
+select{
+	color: #444;
+  padding: 7px;
+  border-radius: 8px;
+  border: #ddd 1px solid;
+}
+.ext{
+	color: #444;
+  background-color: white;
+  background-size: auto 15px;
+  padding: 8px;
+  border-radius: 8px;
+  border: #ddd 1px solid;
+  width: 158px;
+}
+#note{
+  font-size: 10px;
+  color: #EF4836;
+}

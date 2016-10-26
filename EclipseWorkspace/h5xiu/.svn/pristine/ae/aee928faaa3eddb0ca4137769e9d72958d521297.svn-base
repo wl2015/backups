@@ -1,0 +1,19 @@
+package com.h5.service;
+
+import java.util.List;
+
+import com.h5.entity.Model;
+
+public interface ModelService {
+
+	public List<Model> doGetAllModel();
+
+	public Model doGetModelById(String modelId);
+
+	public Model doEditModel(String modelId);
+
+	public boolean doSaveModel(Model model);
+
+	public boolean doDeleteModel(String id);
+
+}

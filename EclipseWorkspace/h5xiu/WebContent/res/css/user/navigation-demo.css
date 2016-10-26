@@ -1,0 +1,239 @@
+/*初始化*/
+html, body, span, ul, li, div, h1, h2, h3, h4, p, img, strong, a{
+	padding: 0px;
+	margin: 0px;
+	border: 0px none;
+	font-family: "Microsoft-Yahei", "微软雅黑";
+	
+}
+
+body{
+	background: none repeat scroll 0% 0% #E6E6E6;
+	color: #575757;
+	overflow: auto;
+	width:100%;
+}
+
+/*导航栏整体布局*/
+.totalbar{
+	width: 100%;
+	height: 55px;
+	background: none repeat scroll 0% 0% #292929;
+	position: absolute;
+	top: 0px;
+	margin: 0 auto;
+	float: clear;
+}
+
+/*中间部分（logo、选项）*/
+.container{
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.header-totalbar-mid{
+	width: 1000px;
+	height: 55px;
+	padding: 0px;
+	position: relative;
+	background: none repeat scroll 0% 0% #292929; 
+}
+
+/*Logo部分*/
+.logo{
+	width: 177px;
+	text-align: center;
+	height: 55px;
+	background: none repeat scroll 0% 0% #1F1F1F;
+}
+
+.logo img{
+	width:106px;
+	padding-top: 16px;
+}
+
+/*选项部分*/
+.nav{
+	position: absolute;
+	right: 75px;
+	top: 0px;
+	width: auto;
+	z-index: 2;
+}
+
+.nav ul li.divider{
+	background-color: #353535;
+	width: 1px;
+	overflow: hidden;
+	height: 25px;
+	margin-top: 0px;
+	list-style-type: none;	/*去掉li前面的点*/
+}
+
+.nav ul li{
+	color: #F5F5F5;
+	cursor: pointer;
+	float: left;
+	font-size: 16px;
+	line-height: 25px;
+	padding: 15px 0px;
+	text-align: center;
+	width: 75px;
+	height: 25px;
+	list-style-type: none;
+}
+
+.nav ul li:hover{
+	background: none repeat scroll 0% 0% #1E1F1F;
+}
+
+.clickdown{
+	background-color: #1E1F1F;
+}
+
+/*模板-左侧*/
+.demo-left{
+	position: absolute;
+	top: 80px;
+	left: 173px;
+	width: 180px;
+	min-height: 1000px;
+	background: none no-repeat scroll 0% 0% #000000;
+}
+
+/*文字*/
+.demo-left-font{
+	position: relative;
+	top: 0px;
+	left: 0px;
+	margin: 0px;
+	width: 180px;
+	height: 130px;
+	background: none no-repeat scroll 0% 0% #1F1F1F
+}
+
+.font-area{
+	position: absolute;
+	left: 50%;
+	margin: 0 -55px;
+	top: 40px;
+	width: 100px;
+	height: 60px;
+}
+
+div span.font1{
+	color: white;
+	font-size: 20px;
+}
+
+div span.font2{	
+	font-size:24px;
+	color: rgb(53,192,168);
+}
+
+/*模板展示部分*/
+.demo-area{
+	position: absolute;
+	top: 80px;
+	left: 353px;
+	width: 780px;
+	height: auto;
+	min-height: 1000px;
+	background: none no-repeat scroll 0% 0% #FFF;
+}
+
+.demo-area-content{
+	position: relative;
+	top: 30px;
+	left: 10px;
+	bottom: 30px;
+	width: 770px;
+	height: auto;
+	float: left;
+	z-index: 999;
+	background: none no-repeat scroll 0% 0% #FFF;
+}
+
+/*各种模板*/
+section{
+	display: block;
+}
+
+.demo-block{
+	position: relative;
+	width: 160px;
+	margin: 0px auto;
+	height: 220px;
+	border: 1px solid #D2D2D2;
+	float: left;
+	opacity: 1;
+}
+
+.demo-block-content{
+	width: 160px;
+	margin: 10px 15px;
+	height: 220px;
+	float: left;
+}
+
+.demo-block-content img{
+	position: relative;
+	width: 100%;
+	float: left;
+}
+
+section span{
+	position: relative;
+	float: left;
+	display: block;
+	height: 10px;
+	padding: 20px 0px;
+	font-size: 12px;
+	text-align: center;
+	width: 100%;
+}
+
+/*二维码*/
+.demo-block-cover{
+	position: absolute;
+	width: 160px;
+	margin: 0px auto;
+	height: 220px;
+	background: none repeat scroll 0% 0% rgba(0,0,0,0.7);
+	box-shadow: 0px 0px 5px 5px #D2D2D2;
+	float: left;
+	z-index: 9;
+	opacity: 0;
+}
+
+/*添加、预览按钮*/
+.btn-content{
+	position: absolute;
+	bottom: 0px;
+	height: 60px;
+	width: 161px;
+	font-family: "微软雅黑";
+	padding-left: 0px;
+	opacity: 0;
+}
+
+.btn-content >span{
+	text-align: right;
+	cursor: pointer;
+	float: left;
+	height: 20px;
+	color: #FFF;
+	font-size: 12px;
+}
+
+.btn-add{
+	width: 60px;
+	padding-left: -30px;
+}
+
+.btn-preview{
+	width: 60px;
+	padding-left: -30px;
+}

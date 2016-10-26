@@ -1,0 +1,60 @@
+@charset 'utf-8';
+
+*{
+	margin:0;
+	padding:0;
+	border:none;
+	font-family:'微软雅黑';
+}
+
+.authorization{
+	width:80%;
+	margin:0 auto;
+}
+.authorization .newButton{
+	float:right;
+	width:10%;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	color:#fff;
+	background:#800000;
+	margin-bottom:20px;
+	border-radius:5px;
+	cursor:pointer;
+}
+.authorization table{
+	clear:both;  /*注意清除浮动*/
+	width:100%;
+	border:1px solid #800000;
+	border-collapse:collapse;
+	text-align:center;
+}
+.authorization table th,td{
+	border:1px solid #800000;
+}
+.authorization table td a{
+	color:#800000;
+	text-decoration:none;
+}
+authorization table td a:hover{
+	text-decoration:underline;
+}
+
+.fenye{
+  width:30%;
+  margin:20px auto;
+}
+.fenye a{
+  color:black;
+}
+.fenye a:hover{
+  color:#8B0000;
+}
+.fenye font{
+  font-size:16px;
+}
+.FirsAndLast{
+  text-decoration:none;
+
+}

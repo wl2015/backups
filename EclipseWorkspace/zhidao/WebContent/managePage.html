@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>显示会议详情</title>
+    <link rel="stylesheet" href="../assets/lib/bootstrap/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+    <div class="row clearfix">
+    <div class="col-md-12 column">
+    <ul class="nav nav-tabs">
+        <li id="MY" class="active">
+            <a href="javascript:void(0)" onclick="getMYRooms();">绵阳</a>
+        </li>
+        <li id="CD">
+            <a href="javascript:void(0)" onclick="getCDRooms();">成都</a>
+        </li>
+        <li id="SZ">
+            <a href="javascript:void(0)" onclick="getSZRooms();">深圳</a>
+        </li>
+        <li class="dropdown pull-right"></li>
+    </ul>
+
+    <div style="height: 20px;"></div>
+
+    <div class="btn-group">
+        <button class="btn btn-default">选择会议室</button> <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
+        <ul class="dropdown-menu" id="room">
+            <li onclick="alert('aaa')">操作</li>
+        </ul>
+    </div>
+
+    <div style="height: 20px;"></div>
+
+    <div>
+        <div id="roomName" style="display: none">a</div>
+        <div id="roomAddress" style="display: none">b</div>
+        <div id="roomType" style="display: none">c</div>
+    </div>
+    <div style="height: 20px;"></div>
+    <div id="roomS" style="display: none">会议室的预定情况：</div>
+    <table class="table table-hover table-bordered table-condensed" id="morning" style="display: none">
+        <!--<thead>-->
+        <tr>
+            <th rowspan="2">上午</th>
+            <th>8:30-8:45</th>
+            <th>8:45-9:00</th>
+            <th>9:00-9:15</th>
+            <th>9:15-9:30</th>
+            <th>9:30-9:45</th>
+            <th>9:45-10:00</th>
+            <th>10:00-10:15</th>
+            <th>10:15-10:30</th>
+            <th>10:30-10:45</th>
+            <th>10:45-11:00</th>
+            <th>11:00-11:15</th>
+            <th>11:15-11:30</th>
+            <th>11:30-11:45</th>
+            <th>11:45-12:00</th>
+        </tr>
+        <tr>
+            <td id="83"></td>
+            <td id="84"></td>
+            <td id="91"></td>
+            <td id="92"></td>
+            <td id="93"></td>
+            <td id="94"></td>
+            <td id="101"></td>
+            <td id="102"></td>
+            <td id="103"></td>
+            <td id="104"></td>
+            <td id="111"></td>
+            <td id="112"></td>
+            <td id="113"></td>
+            <td id="114"></td>
+        </tr>
+    </table>
+    <table class="table table-hover table-bordered table-condensed" id="afternoon" style="display: none">
+        <tr>
+            <th rowspan="2">下午</th>
+            <th>1:00-1:15</th>
+            <th>1:15-1:30</th>
+            <th>1:30-1:45</th>
+            <th>1:45-2:00</th>
+            <th>2:00-2:15</th>
+            <th>2:15-2:30</th>
+            <th>2:30-2:45</th>
+            <th>2:45-3:00</th>
+            <th>3:00-3:15</th>
+            <th>3:15-3:30</th>
+            <th>3:30-3:45</th>
+            <th>3:45-4:00</th>
+            <th>4:00-4:15</th>
+            <th>4:15-4:30</th>
+            <th>4:30-4:45</th>
+            <th>4:45-5:00</th>
+            <th>5:00-5:15</th>
+            <th>5:15-5:30</th>
+        </tr>
+        <tr class="success">
+            <td id="131"></td>
+            <td id="132"></td>
+            <td id="133"></td>
+            <td id="134"></td>
+            <td id="141"></td>
+            <td id="142"></td>
+            <td id="143"></td>
+            <td id="144"></td>
+            <td id="151"></td>
+            <td id="152"></td>
+            <td id="153"></td>
+            <td id="154"></td>
+            <td id="161"></td>
+            <td id="162"></td>
+            <td id="163"></td>
+            <td id="164"></td>
+            <td id="171"></td>
+            <td id="172"></td>
+        </tr>
+    </table>
+    </div>
+    </div>
+    </div>
+</body>
+<!-- jQuery -->
+<script src="../assets/lib/jquery/jquery.min.js"></script>
+<!--bootstarp 3.3.5-->
+<script src="../assets/lib/bootstrap/js/bootstrap.min.js"></script>
+<!-- datepicker -->
+<script src="../assets/lib/datepicker/bootstrap-datepicker.js"></script>
+<script src="../assets/lib/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
+
+<!--others-->
+<script src="../js/manage.js"></script>
+</html>

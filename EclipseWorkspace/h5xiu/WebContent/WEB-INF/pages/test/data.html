@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<#assign base = springMacroRequestContext.getContextUrl("")>
+<link rel="stylesheet" type="text/css" href="${base}/res/css/test/myanimation.css">
+<script type="text/javascript" charset="utf-8" src="${base}/res/js/jQuery/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="${base}/res/js/test/card.js"></script>
+<script type="text/javascript" charset="utf-8" src="${base}/res/js/test/page.js"></script>
+<title>DATA</title>
+<style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	.main{
+		margin: 10px auto;
+		position: relative;
+		width: 70%;
+	}
+	.bg{
+		position: relative;
+		background-image: url("${base}/res/img/bg.png");
+		background-repeat: no-repeat;
+		height: 600px;
+		width: 35%;
+		margin:0 auto;
+	}
+	.bg .element{
+		position: absolute;
+		top:100px;
+		left: 50px;
+		width: 200px;
+		height: 300px;
+		opacity: 1;
+	}
+	.bg .element img{
+		width: 100%;
+		height: 100%;
+	}
+</style>
+</head>
+<body>
+	<section class="main">
+		<div class="bg" id="bg">
+			<!-- <div class="element moveDown">
+				<img src="${base}/res/img/head.jpg">	
+			</div> -->
+		</div>
+	</section>
+	<button onclick="getData()">获取数据</button>
+</body>
+<script type="text/javascript">
+
+function getData(){
+	$.ajax({
+		url: $.WEB_ROOT + "/getData",
+		type:"post",
+		dataType:"json",
+		success:function(res){
+			var data = JSON.parse(res.data);
+			console.log(data.length);
+			var card = new card(data, $("#bg"));
+		}
+	});
+}
+
+function picture(data, page){
+	
+}
+	
+</script>
+</html>

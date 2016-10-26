@@ -1,0 +1,222 @@
+package com.h5.dao.impl;
+
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
+
+import com.h5.dao.BaseDao;
+import com.h5.dao.ProductDao;
+import com.h5.entity.Music;
+import com.h5.entity.Product;
+
+@Repository
+public class ProductDaoImpl extends BaseDao<Product> implements ProductDao {
+
+	private static final Logger logger = Logger.getLogger(ProductDaoImpl.class);
+
+	private static final int INSERT_OR_UPDATE_SUCCESS = 1;
+	@Override
+	protected Class<Product> getEntity() {
+		return Product.class;
+	}
+
+	/**
+	 * 根据用户id查询所有作品
+	 * */
+	public List<Product> getAllProductById(String userId) {
+//		String hql = "SELECT id, title, describe, surface_addr, last_revise_time, create_time FROM Product WHERE author_id=? GROUP BY create_time desc";
+		//String hql = "SELECT new Product(id, title, describe, surfaceAddr, lastReviseTime, createTime) FROM Product WHERE authorId=? ORDER BY createTime desc";
+		/*String hql = "SELECT p.id, p.title, p.describe, p.surfaceAddr, p.lastReviseTime, p.createTime FROM Product p WHERE p.authorId=? ORDER BY p.createTime desc";
+		Query query = super.getSession().createQuery(hql);
+		query.setParameter("id", sql);
+		List<Product> productList = query.list();
+		List<Product> productList = super.createQuery(hql,userId).list();*/
+		String hql = "SELECT new Product(p.id, p.title, p.describe, p.surfaceAddr, p.lastReviseTime, p.createTime) FROM Product p WHERE p.authorId=? ORDER BY p.createTime desc";
+
+		
+		Query query = super.createQuery(hql);
+		query.setInteger(0, Integer.parseInt(userId));
+		
+		List<Product> productList = query.list();
+		
+		
+		for (Product product : productList){
+			logger.debug("\n\n作品的标题为："+product.getTitle()+"\n\n");
+		}
+		
+		return productList;
+	}
+
+	/**
+	 * 根据作品id查询作品信息
+	 * */
+	public Product previewProduct(String id) {
+		String hql = "SELECT new Product(p.id, p.musicId, p.content, p.qrCodeAddr) FROM Product p WHERE p.id=?";
+		
+		Query query = super.createQuery(hql);
+		query.setInteger(0, Integer.parseInt(id));
+		List<Product> productList = query.list();
+		
+		logger.debug("\n\n"+productList.size()+"\n\n");
+		
+		return productList.get(0);
+	}
+
+	/**
+	 * 根据作品id查询所属的音乐信息
+	 * */
+	public Music getMusicById(String id) {
+		String hql = "SELECT new Music(m.id, m.name, m.musicAddr) FROM Music m WHERE m.id=?";
+		
+		Query query = super.createQuery(hql);
+		query.setInteger(0, Integer.parseInt(id));
+		List<Music> musicList = query.list();
+		
+		return musicList.get(0);
+	}
+
+	/**
+	 * 编辑作品：获取作品部分信息
+	 * */
+	public Product editProduct(String id) {
+		String hql = "SELECT new Product(p.id, p.musicId, p.content) FROM Product p WHERE p.id=?";
+		
+		Query query = super.createQuery(hql);
+		query.setInteger(0, Integer.parseInt(id));
+		List<Product> productList = query.list();
+		
+		logger.debug("\n\n"+productList.size()+"\n\n");
+		
+		return productList.get(0);
+	}
+
+	/**
+	 * 保存编辑后的作品信息
+	 * */
+	public boolean saveProduct(Product product) {
+		String hql = "UPDATE Product p SET p.content=?, p.lastReviseTime=?, p.lastReviseIp=? WHERE p.id=?";
+		Query query = createQuery(hql);
+		
+		query.setString(0, product.getContent());
+		query.setInteger(1, product.getLastReviseTime());
+		query.setString(2, product.getLastReviseIp());
+		query.setInteger(3, Integer.parseInt(product.getId()));
+		
+		int result = query.executeUpdate();
+		
+		if (result == INSERT_OR_UPDATE_SUCCESS){
+			return true;
+		}
+		
+		return false;
+	}
+
+	/**
+	 * 保存音乐信息
+	 * */
+	public boolean saveMusic(Music music) {
+		if (music.getId().equals("0")){
+			try {
+				//待测试
+				add(music);
+			} catch (Exception e) {
+				return false;
+			}
+		}
+		else{
+			try {
+				update(music);
+			} catch (Exception e) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * 根据作品id删除该作品
+	 * */
+	public boolean deleteProduct(String id) {
+		try{
+			delete(Integer.parseInt(id));
+		}
+		catch(Exception e){
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 根据作品id获取所有作品信息
+	 * */
+	public Product getProductById(String id) {
+		Product product = (Product)super.getById(Integer.parseInt(id));
+		
+		return product;
+	}
+
+	/**
+	 * 复制新作品
+	 * */
+	public String copyProduct(Product newProduct) {
+		try{
+			add(newProduct);
+		}
+		catch(Exception e){
+			return "-1";
+		}
+		return newProduct.getId();
+	}
+
+	/**
+	 * 对作品进行下线处理
+	 * */
+	public boolean offLineProduct(String id) {
+		String hql = "UPDATE Product p SET p.status=2 WHERE p.id=?";
+		
+		Query query = createQuery(hql);
+		query.setInteger(0, Integer.parseInt(id));
+		int result = query.executeUpdate();
+		
+		if (result == INSERT_OR_UPDATE_SUCCESS){
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 用户新建作品
+	 * */
+	public String addProduct(Product product) {
+		try{
+			add(product);
+			logger.debug("\n\n"+product.getId()+"\n\n");
+		}
+		catch(Exception ex){
+			return "-1";
+		}
+		return product.getId();
+	}
+
+	/**
+	 * 用户创建成功新的作品之后，生成相对应的作品的永久二维码
+	 * */
+	public boolean serQrCodeAddrById(String productId, String qrCodeAddr) {
+		String hql = "UPDATE Product p SET p.qrCodeAddr=? WHERE p.id=?";
+		
+		Query query = super.createQuery(hql);
+		
+		query.setString(0, qrCodeAddr);
+		query.setInteger(1, Integer.parseInt(productId));
+		
+		int result = query.executeUpdate();
+		
+		if (result == INSERT_OR_UPDATE_SUCCESS){
+			return true;
+		}
+		return false;
+	}
+	
+}

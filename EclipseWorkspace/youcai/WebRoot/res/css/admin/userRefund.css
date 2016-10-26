@@ -1,0 +1,31 @@
+@charset 'utf-8';
+
+*{
+	margin:0;
+	padding:0;
+	border:none;
+	font-family:'微软雅黑';
+}
+.userRefund{
+	width:80%;
+	margin:0 auto;
+}
+.userRefund table{
+	width:100%;
+	border-collapse:collapse;
+	border:1px solid #800000;
+	text-align:center;
+}
+.userRefund table th,td{
+	border:1px solid #800000;
+}
+.userRefund table th:nth-of-type(3){
+	width:35%;
+}
+.userRefund table td a{
+	color:#800000;
+	text-decoration:none;
+}
+.userRefund table td a:hover{
+	text-decoration:underline;
+}

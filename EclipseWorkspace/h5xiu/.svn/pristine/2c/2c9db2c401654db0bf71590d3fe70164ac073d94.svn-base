@@ -1,0 +1,30 @@
+var WEBROOT = function(){
+	var url = window.location.href;
+	var webroot = "/" +url.split("/")[3];
+	return webroot;
+}();
+//前台加密密钥
+var HEX = "0101101010010001";
+//ajax处理成功,提示成功
+var AJAX_SUCCESS_ALERT_CODE = 2001;
+/**
+ * ajax处理失败,提示
+ * */
+var AJAX_FAIL_ALERT_CODE = 2003;
+/**
+ * ajax处理成功,跳转页面
+ * */
+var AJAX_SUCCESS_SKIP_CODE = 2005;
+/**
+ *ajax判断是否发送了验证码，成功发送 
+ * */
+var AJAX_SUCESS_IDENTIFYING_CODE=1003;
+/**
+ *ajax判断是否发送了验证码，未发送 
+ * */
+var AJAX_FAIL_IDENTIFYING_CODE=1004;
+
+var UPLOAD_URL_ROOT = "/wedding321_uploads";
+var UPLOAD_EDITOR_PATH = "/upload_editor_file.jsp";
+var UPLOAD_URL_CUT_IMG = "/create_logo_image.jsp";
+var UPLOAD_URL_IMG = "/upload_json.jsp";

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yc.dao.ManageMerDAO">
+
+<!--   MyBatis的核心是其映射文件,SqlMap文件,里面配置了项目中用到了什么SQL语句,和数据库相关的逻辑都在这个映射文件里.顾名思义,
+  映射文件就是对Java对象和SQL的映射.这里简单介绍一下映射文件中resultMap的用法:
+  resultMap – 它描述如何将结果集映射到Java对象.
+  resultMap属性：type为java实体类；id为此resultMap的标识:<resultMap id="BaseResultMap" type="com.test.mybatis.vo.MybatisOrder" >
+  resultMap的子元素：
+  id – 一般对应到数据库中该行的ID,设置此项可以提高Mybatis性能.
+  result – 映射到JavaBean 的某个"简单类型"属性,String,int等.
+  association – 映射到JavaBean 的某个"复杂类型"属性,其他JavaBean类.
+  collection –复杂类型集合,a collection of complex types --> 
+  
+  <resultMap id="VerifyMerchantResultMap" type="com.yc.bean.Merchant">
+    <id property="merchantId" column="m_id" javaType="Integer" jdbcType="INTEGER" />
+    <result property="merchantPhone" column="m_phone" javaType="String" jdbcType="VARCHAR" />
+    <result property="merchantPassword" column="m_password" javaType="String" jdbcType="VARCHAR" />
+    <result property="shopName" column="shop_name" javaType="String" jdbcType="VARCHAR" />
+    <result property="bossName" column="boss_name" javaType="String" jdbcType="VARCHAR" />
+    <result property="idCard" column="idcard" javaType="String" jdbcType="VARCHAR" />
+    <result property="linkPhone" column="linkphone" javaType="String" jdbcType="VARCHAR" />
+    <result property="bankCard" column="bankcard" javaType="String" jdbcType="VARCHAR" />
+    <result property="merchantAddress" column="m_address" javaType="String" jdbcType="VARCHAR" />
+    <result property="merchantIntro" column="m_intro" javaType="String" jdbcType="VARCHAR" />
+    
+    <result property="merchantStatus" column="m_status" javaType="Integer" jdbcType="INTEGER" />
+    <result property="merchantStar" column="m_star" javaType="float" jdbcType="FLOAT" />
+    <result property="merchantComment" column="m_comment" javaType="String" jdbcType="VARCHAR" />
+    <result property="merchantMail" column="m_mail" javaType="String" jdbcType="VARCHAR" />
+    
+    <result property="registerTime" column="register_time" javaType="String" jdbcType="VARCHAR" />
+    <result property="lastLoginTime" column="last_login_time" javaType="String" jdbcType="VARCHAR" />
+    <result property="lastLoginIp" column="last_login_ip" javaType="String" jdbcType="VARCHAR" />  
+    
+     <result column="m_lng" property="merchantLng" javaType="float" jdbcType="FLOAT" />  
+     <result column="m_lat" property="merchantLat" javaType="float" jdbcType="FLOAT" />    
+  </resultMap>
+  
+  
+  <resultMap type="com.yc.bean.RejectReason" id="RejectReasonMap">
+    <id column="reject_id" property="rejectId" jdbcType="INTEGER" />
+    <result column="m_id" property="merchantId" jdbcType="VARCHAR"/>
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="VARCHAR" />
+  </resultMap>
+  
+<!-- 获得商家总数量 -->
+  <select id="getAllMerchantCount" resultType="long">
+    SELECT COUNT(*) FROM  merchant where m_status = 1
+  </select>
+<!-- 获得未审核商家总数量 -->
+  <select id="getAllVerifyMerchantCount" resultType="long">
+    SELECT COUNT(*) FROM  merchant where m_status = 0 
+  </select>
+  <!-- 获得符合关键词搜索的商家总数量 -->
+  <select id="getMerchantByKeywordsCount" resultType="long" parameterType="String">
+    SELECT COUNT(*) FROM  merchant WHERE  shop_name LIKE CONCAT(CONCAT('%', #{keywords}), '%') 
+              OR m_address LIKE  CONCAT(CONCAT('%', #{keywords}), '%')
+              OR boss_name LIKE  CONCAT(CONCAT('%', #{keywords}), '%')  
+  </select>
+  
+  
+ <!-- 查看审核通过的商家列表 --> 
+<select id="queryMerchants"  resultMap="VerifyMerchantResultMap">
+    SELECT * FROM merchant where m_status = 1
+</select> 
+ <!-- 查看未审核的商家列表 --> 
+ <select id="queryVerifyMerchants"  resultMap="VerifyMerchantResultMap">
+    SELECT * FROM merchant where m_status = 0 OR m_status = 2
+ </select>
+
+
+ <!-- 查看审核通过的商家列表（分页） --> 
+ <select id="getMerchants"  parameterType="page" resultMap="VerifyMerchantResultMap">
+   SELECT * FROM merchant where m_status = 1 limit #{startPos}, #{pageSize}
+ </select>
+ <!-- 查看未审核的商家列表（分页） --> 
+ <select id="getVerifyMerchants"  parameterType="page" resultMap="VerifyMerchantResultMap">
+   SELECT * FROM merchant where m_status = 0 OR m_status = 2 limit #{startPos}, #{pageSize}
+ </select>
+ <!-- 关键词搜索审核通过的商家列表 (商家管理)(分页)--> 
+ <select id="queryMerchantsByKeyWords" parameterType="java.util.Map" resultMap="VerifyMerchantResultMap">
+    SELECT * FROM merchant WHERE  shop_name LIKE CONCAT(CONCAT('%', #{keywords}), '%') 
+              OR m_address LIKE  CONCAT(CONCAT('%', #{keywords}), '%')
+              OR boss_name LIKE  CONCAT(CONCAT('%', #{keywords}), '%')   
+              limit #{page.startPos}, #{page.pageSize}   
+ </select>
+
+  <!-- 关键词搜索审核通过的商家列表 （出货单）--> 
+ <select id="queryMerchantsByKey" parameterType="String"  resultMap="VerifyMerchantResultMap">
+    SELECT * FROM merchant where m_status = 1 AND shop_name LIKE CONCAT(CONCAT('%', #{0}), '%')
+ </select>
+  
+ <!-- 删除商家 -->
+  <delete id="deleteMerchant" parameterType="Integer">
+    delete from merchant where m_id=#{merchantId}
+  </delete>
+  <!-- 删除商家库存 -->
+  <delete id="deleteMerchantInventory" parameterType="Integer">
+    delete from inventory where m_id=#{merchantId}
+  </delete>
+  <!-- 删除商家评语-->
+  <delete id="deleteMerchantComment" parameterType="Integer">
+    delete from commentshow where m_id=#{merchantId}
+  </delete>
+  
+  <!-- 根据id获取商家信息 -->
+  <select id="getMerchantById" parameterType="Integer" resultMap="VerifyMerchantResultMap">
+    select * from merchant where m_id=#{merchantId}
+  </select>
+  
+  <!-- 根据m_id获取驳回商家理由 -->
+  <select id="getRejectReason" parameterType="Integer" resultMap="RejectReasonMap">
+    select * from reject_reason where m_id=#{0}
+  </select>
+  
+  <!-- 通过审核 -->
+  <update id="verifyPass" parameterType="Integer">
+    update merchant set m_status = 1 where m_id=#{merchantId}
+  </update>
+  
+  <!-- 驳回审核 -->
+  <update id="verifyReject" parameterType="Integer">
+    update merchant set m_status = 2 where m_id=#{merchantId}
+  </update>
+  <!-- 添加驳回审核理由 -->
+  <insert id="addRejectReson" parameterType="com.yc.bean.RejectReason">
+      INSERT INTO reject_reason (m_id,content,time) VALUES (#{merchantId},#{content},#{time})
+  </insert>
+  
+  
+  <!-- 新商家生成库存 -->
+  <insert id="addInventory" parameterType="java.util.Map">
+    insert into inventory (m_id,dish_id,i_num,limitcount)  values
+    <foreach collection="dishList" item="item" index="index" separator=",">
+       (#{merchantId}, #{item.dishId}, 0, 0)
+    </foreach>
+  </insert>
+  
+  <!-- 新商家初始化评语-->
+  <insert id="addComments" parameterType="java.util.Map">
+    insert into commentshow (m_id,c_id,c_num)  values
+    <foreach collection="commentList" item="item" index="index" separator=",">
+       (#{merchantId}, #{item.commentId}, 0)
+    </foreach>
+  </insert>
+  
+  <!-- 获取商家模式 -->
+  <select id="getModeType" resultType="Integer">
+    SELECT mode_type FROM operate_mode
+  </select>
+  <!-- 修改商家模式 -->
+  <update id="modifyMode" parameterType="Integer">
+    UPDATE operate_mode SET mode_type = #{0}  WHERE operate_id = 1
+  </update>
+</mapper>

@@ -1,0 +1,49 @@
+div{
+	font-family:"Microsoft YaHei","微软雅黑","SimSun","宋体";	
+}
+body{
+    background-color:#BB825B;
+}
+.f1{
+	font-size:16px;
+	color: white;
+	height:40px;
+	padding:5px 0px 5px 10px;
+	line-height:35px;
+}
+.f2{
+	font-size:16px;
+	color: white;
+	padding-top:12px;
+	font-weight:bold;
+}
+.p1{
+	font-size:15px;	
+	padding-left:35px;
+}
+span{display:none;}
+a{	/*初始状态*/
+	color:#8b3c05;
+	text-decoration: underline;
+}
+a:link { /* 未访问的链接 */
+	color:#8b3c05;
+	text-decoration: underline;
+}
+a:visited {/* 已访问的链接 */
+	color:#8b3c05;
+	text-decoration: underline;
+}
+a:active{ /* 被选择的链接 */
+	color:red;
+	text-decoration: underline;
+}
+a:hover {/* 当有鼠标悬停在链接上 */
+	color:red; 
+	text-decoration: underline;
+}
+table{
+	border-style:solid;
+	border-width:0 0 1px 0;
+	border-color:#9b633d;
+}

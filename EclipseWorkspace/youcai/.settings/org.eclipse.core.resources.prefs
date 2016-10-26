@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+encoding//WebRoot/WEB-INF/pages/admin/adminIndex.jsp=UTF-8
+encoding//WebRoot/WEB-INF/pages/admin/adminLogin.jsp=UTF-8
+encoding//WebRoot/res/css/admin/adminLogin.css=gb2312
+encoding//WebRoot/res/css/user/waiting.css=UTF-8
+encoding//src/log4j.properties=UTF-8

@@ -1,0 +1,95 @@
+@charset 'utf-8';
+.dishOrSetManage{
+	width:50%;
+	margin:0 auto;
+	border:none;
+}
+
+.dishOrSetManage .dishOrSetManageUl{
+	list-style:none;
+}
+.dishOrSetManage .dishOrSetManageUl li{
+	width:100%;
+	height:40px;
+}
+.dishOrSetManage .dishOrSetManageUl li:after{
+	content:'';
+	display:block;
+	clear:both;
+}
+.dishOrSetManage .dishOrSetManageUl li .sp1{
+	display:block;
+	float:left;
+	width:20%;
+	height:30px;
+	line-height:30px;
+}
+.dishOrSetManage .dishOrSetManageUl li input[type=text]{
+	display:block;
+	float:left;
+	width:50%;
+	height:30px;
+	border:1px solid #000;
+	border-radius:3px;
+}
+.dishOrSetManage .dishOrSetManageUl li select{
+	display:block;
+	float:left;
+	width:50%;
+	height:30px;
+	border:1px solid #000;
+	border-radius:3px;
+}
+.dishOrSetManage .dishOrSetManageUl li select option{
+	height:30px;
+	border:1px solid #000;
+}
+.dishOrSetManage .dishOrSetManageUl li .button{
+	display:block;
+	float:left;
+	width:20%;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	background-color:#800000;
+	border-radius:3px;
+	color:#fff;
+	font-size:16px;
+	cursor:pointer;
+}
+.dishOrSetManage .dishOrSetManageUl li:nth-child(3){
+	margin-top:20px;
+}
+.dishOrSetManage .dishOrSetManageUl li a{
+	display:block;
+	float:left;
+	width:100px;
+	height:30px;
+	line-height:30px;
+	text-decoration:none;
+	color:#fff;
+	font-size:20px;
+	text-align:center;
+	background:#800000;
+	border-radius:3px;
+	margin-left:20%;
+}
+.dishOrSetManage .dishOrSetManageUl li a:nth-child(1){
+	background:grey;
+}
+.dishOrSetManage table{
+	width:100%;
+	border:1px solid #80000;
+	border-collapse:collapse;
+	text-align:center;
+}
+.dishOrSetManage table th,td{
+	border:1px solid #800000;
+}
+.dishOrSetManage table td a{
+	text-decoration:none;
+	color:#800000;
+}
+.dishOrSetManage table td a:hover{
+	text-decoration:underline;
+}

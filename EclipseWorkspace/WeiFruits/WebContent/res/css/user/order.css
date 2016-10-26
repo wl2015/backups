@@ -1,0 +1,52 @@
+@CHARSET "UTF-8";
+
+h3, h4{
+	text-align: center;
+}
+.row{
+	background: #fff;
+}
+
+#col{
+	box-shadow: inset 1px -1px 1px #6C7A89, inset -1px 1px 1px #6C7A89;
+}
+#content{
+	box-shadow: inset 1px -1px 1px #6C7A89, inset -1px 1px 1px #6C7A89;
+	height: 110px;
+}
+#myTabcontent{
+	width: auto;
+	padding-bottom: 53px;
+}
+ul li{
+	list-style-type: none;
+}
+ul{
+	margin-top: 10px;
+}
+ul .goodname{
+	text-align: center;
+	font-size: 14px;
+	font-weight: bold;
+}
+ul .details{
+	text-align: center;
+	font-size: 12px;
+	color: #95A5A6;
+	padding-top: 3px;
+}
+ul.action{
+	margin-top: 8px;
+}
+ul .actionlist{
+	text-align: center;
+	color: #D91E18;
+	font-size: 14px;
+	padding-top: 5px;
+}
+a:HOVER{
+	text-decoration: none;
+}
+ul .actionlist a{
+	color: inherit;
+}

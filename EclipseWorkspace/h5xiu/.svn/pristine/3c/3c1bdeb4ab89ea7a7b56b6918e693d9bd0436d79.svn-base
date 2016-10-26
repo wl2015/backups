@@ -1,0 +1,277 @@
+package com.h5.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.h5.entity.Music;
+import com.h5.entity.Product;
+import com.h5.service.ProductService;
+import com.h5.util.Constants;
+import com.h5.util.CryptogramUtil;
+import com.h5.util.DateUtil;
+import com.h5.util.SystemUtil;
+import com.h5.util.ValidateUtil;
+
+@Controller
+public class ProductController {
+
+	@Inject
+	private ProductService productService;
+	
+	private static final Logger logger = Logger.getLogger(ProductController.class);
+	
+	/**
+	 * 根据用户id获取所有作品信息
+	 * */
+	@RequestMapping("/findAllProduct")
+	@ResponseBody
+	public Map<String, Object> findAllProduct(HttpServletRequest request){
+		Map<String, Object> result = new HashMap<String, Object>();
+		//数据未加密时
+//		User user = (User)request.getSession().getAttribute(Constants.LOGINUSER_SESSION_NAME_USER);
+		String userId = "1";
+		List<Product> productList = productService.doGetAllProductById(userId);
+		
+		if (productList.size() != 0){
+			result.put("code", Constants.AJAX_SUCCESS_ALERT_CODE);
+			result.put("productList", productList);
+		}
+		else{
+			result.put("code", Constants.AJAX_FAIL_ALERT_CODE);
+		}
+		return result;
+	}
+	
+	/**
+	 * 测试页面
+	 * */
+	@RequestMapping("/intoTest")
+	public String intoTest(){
+		return "test";
+	}
+	@RequestMapping("/intoCreate")
+	public String intoCreate(){
+		return "createProduct";
+	}
+	
+	/**
+	 * 预览作品
+	 * */
+	@RequestMapping("/previewProduct")
+	public String previewProduct(HttpServletRequest request, ModelMap map){
+		//未做加密处理
+//		String id = request.getParameter("id");
+		String id = "1";
+		Product product = productService.doPreviewProduct(id);
+		
+		map.put("product", product);
+		
+		return "product";
+	}
+	
+	
+	/**
+	 * 编辑作品
+	 * */
+	@RequestMapping("/editProduct")
+	public String deitProduct(HttpServletRequest request, ModelMap map){
+		//未做加解密处理
+		String id = request.getParameter("id");
+		
+		Product product = productService.doEditProduct(id);
+		
+		map.put("product", product);
+		
+		return "edit";
+	}
+	
+	/**
+	 * 保存编辑的作品
+	 * */
+	@RequestMapping("/saveProduct")
+	@ResponseBody
+	public Map<String, Object> saveProduct(HttpServletRequest request){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		Product product = new Product();
+		
+		String id = request.getParameter("id");
+		String content = request.getParameter("content");
+		int lastReviseTime = DateUtil.convertCurrentDTTMtoInt();
+		String lastReviseIp = SystemUtil.getRequestIp(request);
+		//注：前端请求必须给musicId赋值，-1表示无音乐，0表示在此以前无背景音乐
+		String musicId = request.getParameter("musicId");
+		product.setId(id);
+		product.setContent(content);
+		product.setLastReviseTime(lastReviseTime);
+		product.setLastReviseIp(lastReviseIp);
+		
+		if (!musicId.equals("-1")){
+			Music music = new Music();
+			
+			String musicName = request.getParameter("musicName");
+			String musicAddr = request.getParameter("musicAddr");
+			
+			music.setId(musicId);
+			music.setName(musicName);
+			music.setMusicAddr(musicAddr);
+			music.setCreateTime(lastReviseTime);
+			music.setCreateIp(lastReviseIp);
+			
+			product.setMusic(music);
+		}
+		boolean result = productService.doSaveProduct(product);
+		
+		if(result){
+			resultMap.put("code", Constants.AJAX_SUCCESS_ALERT_CODE);
+		}
+		else{
+			resultMap.put("code", Constants.AJAX_FAIL_ALERT_CODE);
+		}
+		
+		return resultMap;
+	}
+	
+	/**
+	 * 根据作品id删除作品
+	 * @throws Exception 
+	 * */
+	@RequestMapping("/deleteProduct")
+	@ResponseBody
+	public Map<String, Object> deleteProduct(HttpServletRequest request) throws Exception{
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		String id = ValidateUtil.valiStrIsEmpty(request.getParameter("id"));
+		String key = (String)request.getSession().getAttribute(Constants.ENCRYPT_CODE);
+		id = CryptogramUtil.decrypt(id, key);
+		
+		if (productService.doDeleteProduct(id)){
+			resultMap.put("code", Constants.AJAX_SUCCESS_ALERT_CODE);
+		}
+		else{
+			resultMap.put("code", Constants.AJAX_FAIL_ALERT_CODE);
+		}
+		
+		return resultMap;
+	}
+	
+	/**
+	 * 根据作品id复制出一个新的作品
+	 * @throws Exception 
+	 * */
+	@RequestMapping("/copyProduct")
+	@ResponseBody
+	public Map<String, Object> copyProduct(HttpServletRequest request) throws Exception{
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		String id = ValidateUtil.valiStrIsEmpty(request.getParameter("id"));
+		String key = (String)request.getSession().getAttribute(Constants.ENCRYPT_CODE);
+		id = CryptogramUtil.decrypt(id, key);
+		
+		Product product = productService.doCopyProduct(id);
+		
+		if (product != null){
+			resultMap.put("product", product);
+			resultMap.put("code", Constants.AJAX_SUCCESS_ALERT_CODE);
+		}
+		else{
+			resultMap.put("code", Constants.AJAX_FAIL_ALERT_CODE);
+		}
+		
+		return resultMap;
+	}
+	
+	/**
+	 * 对作品做下线处理
+	 * @throws Exception 
+	 * */
+	@RequestMapping("/offLineProduct")
+	@ResponseBody
+	public Map<String, Object> offLineProduct(HttpServletRequest request) throws Exception{
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		String id = ValidateUtil.valiStrIsEmpty(request.getParameter("id"));
+		String key = (String)request.getSession().getAttribute(Constants.ENCRYPT_CODE);
+		id = CryptogramUtil.decrypt(id, key);
+		
+		boolean result = productService.doOffLineProduct(id);
+		
+		if (result){
+			resultMap.put("code", Constants.AJAX_SUCCESS_ALERT_CODE);
+		}
+		else{
+			resultMap.put("code", Constants.AJAX_FAIL_ALERT_CODE);
+		}
+		return resultMap;
+	}
+	
+	/**
+	 * 用户创建新的作品
+	 * @throws Exception 
+	 * */
+	@RequestMapping("/createProduct")
+	@ResponseBody
+	public Map<String, Object> createProduct(HttpServletRequest request) throws Exception{
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		String key = (String)request.getSession().getAttribute(Constants.ENCRYPT_CODE);
+//		User user = (User)request.getSession().getAttribute(Constants.LOGINUSER_SESSION_NAME_USER);
+//		String userId = CryptogramUtil.decrypt(user.getUserId(), key);
+		
+		String userId = "38";
+		Product product = getCreateProduct(request);
+		product.setAuthorId(userId);
+		
+		String productId = productService.doAddProduct(product);
+		
+		if (!productId.equals("-1")){
+			//存放二维码的访问链接
+			String uploadUrl = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort() + "/wedding321_uploads/upload_json.jsp";
+			//二维码中存入的作品的url
+//			String QrCodeUrl = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort() + "/intoProduct?id="+CryptogramUtil.encrypt(productId, key);
+			String QrCodeUrl = "HTTP://192.168.191.1:8080/h5xiu/intoProduct?id="+CryptogramUtil.encrypt(productId, key);
+			//返回二维码的存放地址
+			String qrCodeAddr = SystemUtil.getQrcode(uploadUrl, QrCodeUrl);
+			//将二维码存入数据库
+			if (productService.doSetQrCodeAddrById(productId, qrCodeAddr)){
+				resultMap.put("code", Constants.AJAX_SUCCESS_ALERT_CODE);
+			}
+			else{
+				resultMap.put("code", Constants.AJAX_FAIL_ALERT_CODE);
+			}
+		}
+		else{
+			resultMap.put("code", Constants.AJAX_FAIL_ALERT_CODE);
+		}
+		
+		return resultMap;
+	}
+	
+	/**
+	 * 获取新建作品的信息
+	 * */
+	private Product getCreateProduct(HttpServletRequest request){
+		Product product = new Product();
+		//暂时未过滤脚本
+		String title = ValidateUtil.valiStrIsEmpty(request.getParameter("title"));
+		String describe = ValidateUtil.valiStrIsEmpty(request.getParameter("describe"));
+		String surfaceAddr = ValidateUtil.valiStrIsEmpty(request.getParameter("surfaceAddr"));
+		int createTime = DateUtil.convertCurrentDTTMtoInt();
+		String createIp = SystemUtil.getRequestIp(request);
+		
+		logger.debug("\n\ntitle:"+title+"    describe:"+describe+"\n\n");
+		
+		product.setTitle(title);
+		product.setDescribe(describe);
+		product.setSurfaceAddr(surfaceAddr);
+		product.setCreateIp(createIp);
+		product.setCreateTime(createTime);
+		
+		return product;
+	}
+}

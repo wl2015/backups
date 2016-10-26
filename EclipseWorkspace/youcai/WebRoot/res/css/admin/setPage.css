@@ -1,0 +1,61 @@
+@charset 'utf-8';
+*{
+	margin:0;
+	padding:0;
+	border:none;
+}
+img{
+	border:0;
+}
+ul{
+	list-style:none;
+}
+
+.setPage{
+	width:80%;
+	margin:0 auto;
+}
+.setPage .addSet{
+	width:80px;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	color:#fff;
+	border-radius:5px;
+	background-color:#800000;
+	float:right;
+	cursor:pointer;
+}
+.setPage .setPageUl{
+	clear:both;
+	margin-top:20px;
+}
+.setPage .setPageUl .oneSet{
+	height:50px;
+	line-height:50px;
+}
+.setPage .setPageUl .oneSet:after{
+	content:'';
+	display:block;
+	clear:both;
+}
+.setPage .setPageUl .oneSet span,a{
+	display:block;
+	float:left;
+	font-size:20px;
+}
+.setPage .setPageUl .oneSet .setName{
+	width:20%;
+	height:50px;
+	line-height:50px;
+	font-size:26px;
+}
+.setPage .setPageUl .oneSet a{
+	float:right;
+	margin-right:5%;
+	color:#800000;
+	text-decoration:none;
+}
+.setPage .setPageUl .oneSet a:hover{
+	text-decoration:underline;
+}

@@ -1,0 +1,31 @@
+package com.h5.service.impl;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.h5.dao.AdminDao;
+import com.h5.entity.Admin;
+import com.h5.entity.User;
+import com.h5.service.AdminService;
+
+@Service
+@Transactional
+public class AdminServiceImpl implements AdminService {
+	
+	@Inject
+	private AdminDao admindao;
+
+	public Admin doAdLogin(String phoneNum, String pass) {
+		
+		return admindao.doAdLogin(phoneNum, pass);
+	}
+
+	public List<User> getUserList() {
+		return admindao.getUserList();
+	}
+
+}	

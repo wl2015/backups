@@ -1,0 +1,20 @@
+@CHARSET "UTF-8";
+
+.addnew{
+	line-height: 1em;
+	text-align: center;
+	font-size: 15px;
+	border-bottom: 1px solid #ccc;
+}
+.addtable{
+	margin-left: 100px;
+}
+#word{
+	color: #6C7A89;
+}
+#upload{
+	margin-left: 400px;
+}
+
+
+

@@ -1,0 +1,12 @@
+package com.cn.changhong;
+
+import java.util.Random;
+
+public class Test {
+  public static void main(String[] args) {
+    String pageNum = "23";
+    int num = 22;
+    PageBean bean  = new PageBean();
+    bean.setPageNum(pageNum);
+  }
+}

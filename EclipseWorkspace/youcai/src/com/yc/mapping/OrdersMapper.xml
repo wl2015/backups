@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yc.dao.OrdersDao">
+
+<!--   MyBatis的核心是其映射文件,SqlMap文件,里面配置了项目中用到了什么SQL语句,和数据库相关的逻辑都在这个映射文件里.顾名思义,
+  映射文件就是对Java对象和SQL的映射.这里简单介绍一下映射文件中resultMap的用法:
+  resultMap – 它描述如何将结果集映射到Java对象.
+  resultMap属性：type为java实体类；id为此resultMap的标识:<resultMap id="BaseResultMap" type="com.test.mybatis.vo.MybatisOrder" >
+  resultMap的子元素：
+  id – 一般对应到数据库中该行的ID,设置此项可以提高Mybatis性能.
+  result – 映射到JavaBean 的某个"简单类型"属性,String,int等.
+  association – 映射到JavaBean 的某个"复杂类型"属性,其他JavaBean类.
+  collection –复杂类型集合,a collection of complex types -->
+  
+ 
+  <resultMap id="OrdersMap" type="com.yc.bean.Order">
+    <id column="o_id" property="oId" javaType="Integer" jdbcType="INTEGER" />   
+    <result column="address" property="address" javaType="String" jdbcType="VARCHAR" />
+    <result column="o_lng" property="oLng" javaType="float" jdbcType="FLOAT" />
+    <result column="o_lat" property="oLat" javaType="float" jdbcType="FLOAT" />  
+    <result column="money" property="money"  javaType="double" jdbcType="DOUBLE" />
+    <result column="o_time" property="orderTime"  javaType="String" jdbcType="VARCHAR" />
+    <result column="spend_time" property="spendTime"  javaType="Integer" jdbcType="INTEGER" />
+    <result column="pay_status" property="payStatus"  javaType="Integer" jdbcType="INTEGER" />
+    <result column="user_status" property="userStatus"  javaType="Integer" jdbcType="INTEGER" />
+    <result column="refund" property="refund"  javaType="Integer" jdbcType="INTEGER" />
+    <result column="u_evaluate" property="uEvaluate"  javaType="Integer" jdbcType="INTEGER" />
+    <!-- <result column="u_name" property="user.userName"  javaType="String" jdbcType="VARCHAR" />  for test 可以这样用-->
+    <association column="m_id" property="merchant"  javaType="com.yc.bean.Merchant" resultMap="com.yc.dao.MerchantDao.MerchantResultMap" />
+    <association column="u_id" property="user" javaType="com.yc.bean.User" resultMap="com.yc.dao.UserDAO.userResultMap"/>
+	    
+   <collection property="dishlist" column="o_id" javaType="ArrayList" ofType="DishList" select="com.yc.dao.DishListDao.getDishlistByO_Id"/> 
+     <!-- <association column="u_id" property="user"  resultMap="selectUserNameById" /> -->
+    <!--   dish_id = #{item.mid} and i_num >=  #{item.spendTime} and  -->
+  </resultMap>
+   <select id="test" resultMap="com.yc.dao.InventoryDao.InventoryMap" parameterType="java.util.Map">
+   	select dish_id, i_num from inventory where m_id = #{merchantId} and
+   	<foreach collection="querylist" item="item" index="index" open="(" close=")" separator="or"> <!-- open="(" close=")" -->
+		(dish_id = #{item.mid} and i_num >=  #{item.spendTime}) 
+	</foreach>
+  </select> 
+   <!-- 根据orderid（订单id）获取user对象 -->
+  <!--<select id="selectUserByOrderId" parameterType="int" resultMap="com.yc.dao.UserDAO.userResultMap">
+  	 SELECT user.u_name, user.u_phone FROM user, orders 
+     WHERE user.u_id = orders.u_id and orders.o_id = #{0}; 
+  </select> -->
+ <!--  根据根据orderid（订单id）获取merchant（商家）对象 -->
+  <!-- <select id="selectMerchantByOrderId" parameterType="int" resultMap="com.yc.dao.MerchantDao.MerchantResultMap">
+  	select merchant.linkphone, merchant.shop_name, merchant.m_comment, merchant.m_star
+  	 from merchant, orders where merchant.m_id = orders.m_id and orders.o_id = #{0};
+  </select> -->
+  
+	<!-- 商家查看历史订单 -->
+	<!-- <select id="mSelectHistoryOrders" parameterType="int" resultMap="OrdersMap">
+		SELECT * from orders where m_id = #{0} and user_status = 1 and delete_m = 0
+	</select> -->
+<!-- 商家查看历史订单数量 -->
+<select id="selectHistoryOrderCount"  resultType="int">
+	SELECT count(orders.o_id) FROM
+		orders where orders.m_id = #{0} and orders.user_status = 1 and orders.delete_m = 0;
+</select>
+<!-- 商家查看历史订单 -->
+	<select id="mSelectHistoryOrders"  resultMap="OrdersMap"><!--  parameterType="int" -->
+		SELECT orders.o_id, orders.address, orders.o_time, orders.money, orders.u_evaluate, user.u_name, user.u_phone FROM
+		 user, orders where orders.m_id = #{0} and user.u_id = orders.u_id and orders.user_status = 1 and orders.delete_m = 0 
+		   order by orders.o_id LIMIT #{1}, #{2};
+	</select>
+	 <!-- 商家批量删除历史订单 -->
+	 <update id="deleteOrderM" parameterType="java.util.List">
+	 	<foreach collection="list" item="item" separator=";" > 
+			 update orders 
+			 <set> delete_m = 1 </set>
+			 where o_id = #{item} 
+		</foreach>
+	 </update>
+
+	<!-- 商家查看未完成订单 -->
+	<select id="selectProceOrderM" parameterType="int" resultMap="OrdersMap">
+		select orders.o_id, orders.address, orders.o_time, orders.money, orders.spend_time,
+		 user.u_name, user.u_phone from orders, user where orders.m_id = #{0} and orders.user_status = 0 and
+		  user.u_id = orders.u_id and orders.pay_status = 1 ; 
+	</select>
+	
+	<!-- 商家根据订单id给用户打分 -->
+	<!-- 商家将打分（评价）标记为已评价 -->
+	<!-- <update id="flagEvaluate" parameterType="java.util.List">
+		<foreach collection="list" item="item" separator=";" > 
+			 update orders 
+			 <set> u_evaluate = 1 </set>
+			 where o_id = #{item.orderId}
+		</foreach>
+	</update> -->
+	
+	<!-- 通过商家id获取未读过的退单信息数量 -->
+  <select id="getRefundMessageCount" parameterType="int" resultType="int">
+  	select count(orders.o_id) from orders, refund_message where orders.m_id = #{0} and 
+  	refund_message.order_id = orders.o_id and refund_message.read_flag = 0;
+  </select>
+</mapper>

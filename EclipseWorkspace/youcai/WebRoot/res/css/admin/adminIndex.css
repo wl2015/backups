@@ -1,0 +1,304 @@
+/* CSS Document */
+
+@charseset 'utf-8';
+*{
+	margin:0;
+	padding:0;
+
+	
+}
+body{
+	background:#eee;
+	width:1349px;
+	 z-index:0;
+}
+img{border:0;}
+
+.header{
+	width:100%;
+	height:auto;
+}
+.headerInfo{
+	width:100%;
+	height:30px;
+	line-height:30px;
+	background:#333333;
+	color:#FFFFFF;
+}
+#welcome{
+	float:left;
+	color:#CCCCCC;
+	font-size:12px;
+	margin-left:1%;
+}
+.account{
+	float:left;
+	position:relative;
+	width:15%;
+	height:30px;
+	margin-left:65%;
+	
+}
+#personalInfo{
+	position:absolute;
+	display:block;
+	color:#CCCCCC;
+	font-size:12px;
+	cursor:pointer;
+	width:100%;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	left:0;
+	top:0;
+	z-index:100;
+	
+	
+}
+#personalInfo:hover{
+	color:#fff;
+	background:black;
+}
+
+.personalInfo{
+	display:none;
+	font-size:12px;
+	width:100%;
+	min-height:160px;
+	background:black;
+	z-index:100;
+	position:absolute;
+	left:0;
+	top:30px;
+	background:#000;
+}
+.personalInfo:hover #personalInfo{
+	background:#8B0000;
+}
+.personalInfo ul{
+	list-style:none;
+}
+.personalInfo ul .li1,.li2,.li3{
+	padding-left:5%;
+	width:95%;
+	height:30px;
+	line-height:30px;
+	cursor:default;
+	color:#eee;
+}
+.personalInfo ul li:hover{
+	background:#8B0000;
+}
+.personalInfo ul .li4{
+	width:95%;
+	line-height:30px; 
+	cursor:default;
+	padding-left:5%;
+	color:#eee;
+}
+.personalInfo ul .li4 p{
+	width:80%;
+	margin-left:20%;
+	
+}
+.personalInfo ul .li4 p:before{
+	content:'✔';
+}
+.personalInfo ul .li5{
+	height:30px;
+	line-height:30px;
+	cursor:default;
+	padding-left:5%;
+	color:#eee;
+	width:35%;
+	margin-left:50%;
+}
+.personalInfo ul .li5:hover{
+	background:black;
+}
+.personalInfo ul li a{
+	color:#eee;
+	text-decoration:none;
+}
+.personalInfo ul li a:hover{
+	color:#fff;
+	text-decoration:underline;
+} 
+#exit{
+	float:right;
+	margin-right:5%;
+}
+#exit a{
+	font-size:12px;
+	text-decoration:none;
+	color:#CCCCCC;
+}
+#exit a:hover{
+	color:#fff;
+}
+
+.logo{
+	width:100%;
+	height:150px;
+}
+
+.logo img{
+	margin:10px 20% auto;
+	max-width:200px;
+	max-height:120px;
+}
+
+.boxNav{
+	width:80%;
+	height:40px;
+	background:#000000;
+	margin:0 auto;
+}
+.boxNav ul{
+	width:100%;
+	height:40px;
+	line-height:40px;
+	list-style:none;
+	text-align:center;
+	
+}
+
+.boxNav ul li{
+	/* width:%; */
+	height:40px;
+	line-height:40px;
+	display:inline-block;
+	zoom:1;
+	*display:inline;
+	float:none;
+	margin-right:3%;
+	font-size:16px;
+	padding-left:5px;
+	padding-right:5px;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0){.boxNav ul li{/* width:10%;font-size:20px; */}}{}/*chrome and safari*/
+.boxNav ul li:hover{
+	
+	background:#8B0000;
+	box-shadow: 0 0 5px #8B0000;
+	border-radius:5px;
+	cursor:pointer;
+}
+
+.boxNav ul li a{
+	text-decoration:none;
+	color:#fff;
+}
+.boxNav ul li a:hover{
+	text-decoration:underline;
+}
+.hasChild{
+	position:relative;
+}
+
+/*子菜单*/
+.boxNav .child{
+	display:none;
+	position:absolute;
+	left:-40%;
+	top:40px;
+	width:180%;
+	background:#000;
+	z-index:10;
+	padding-bottom:10px;
+}
+.boxNav .child ul{
+	list-style:none;
+	height:auto;
+}
+.boxNav .child ul li{
+	display:block;
+	width:90%;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	margin-top:5px;
+	font-size:14px;
+}
+.boxNav .child ul li a{
+	color:#fff;
+	text-decoration:none;
+}
+.boxNav .child ul li a:hover{
+	text-decoration:underline;
+}
+
+
+
+
+.current{
+	background:#8B0000;
+}
+
+
+.content{
+	width:80%;
+	height:auto;
+	background:white;
+	margin:0 auto;
+	padding-top:50px;
+	padding-bottom:50px;
+}
+
+.content .inner {
+	width:100%;
+	height:auto;
+	
+}
+
+.content .inner table{
+	width:80%;
+	margin:0 auto;
+	border-collapse:collapse;
+	table-layout:fixed;
+	border:1px solid #8B0000;
+	text-align:center;
+}
+.inner table caption{
+	font-size:30px;
+	margin-bottom:10px;
+}
+.inner table th,td{
+	word-wrap:break-word;
+	border:1px solid #8B0000;
+}
+.inner table .address{
+	text-align:left;
+	width:30%;
+	overflow:hidden;
+}
+.inner table td a{
+	text-decoration:none;
+	color:#8B0000;
+	cursor:pointer;
+}
+.inner table td a:hover{
+	text-decoration:underline;
+}
+.footer{
+	clear:both;
+	width:80%;
+	height:50px;
+	margin:0 auto;
+	padding:20px;
+	background:
+}
+/*提示框*/
+.tips{
+	position:absolute;
+	left:31%;
+	top:50px;
+	width:58%;
+	height:50px;
+	font-size:20px;
+	z-index:1;
+/* 	background:red; */
+}
+.contentstyle{
+	height:200px;
+}

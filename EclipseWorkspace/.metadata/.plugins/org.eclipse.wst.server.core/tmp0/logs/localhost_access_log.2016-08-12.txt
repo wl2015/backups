@@ -1,0 +1,8 @@
+127.0.0.1 - - [12/Aug/2016:15:50:58 +0800] "GET / HTTP/1.1" 404 951
+0:0:0:0:0:0:0:1 - - [12/Aug/2016:15:51:14 +0800] "GET /FreeMall HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [12/Aug/2016:15:51:14 +0800] "GET /FreeMall/ HTTP/1.1" 404 949
+0:0:0:0:0:0:0:1 - - [12/Aug/2016:15:51:33 +0800] "GET /FreeMall/user/toLogin HTTP/1.1" 200 1489
+0:0:0:0:0:0:0:1 - - [12/Aug/2016:15:51:33 +0800] "GET /FreeMall/res/css/user/userLogin.css HTTP/1.1" 200 1600
+0:0:0:0:0:0:0:1 - - [12/Aug/2016:15:51:33 +0800] "GET /FreeMall/res/js/user/userLogin.js HTTP/1.1" 200 887
+0:0:0:0:0:0:0:1 - - [12/Aug/2016:15:51:33 +0800] "GET /FreeMall/res/img/user/a1.jpg HTTP/1.1" 200 96795
+0:0:0:0:0:0:0:1 - - [12/Aug/2016:15:51:33 +0800] "GET /FreeMall/res/css/user/overlay.png HTTP/1.1" 404 949

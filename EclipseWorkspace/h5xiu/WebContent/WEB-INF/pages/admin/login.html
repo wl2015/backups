@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="<@s.url relativeUrl='res/js/jQuery/jquery.js'/>"></script>
+<!-- <script type="text/javascript" src="${path}/res/js/jQuery/jquery.js"></script> -->
+<title>管理员登录</title>
+</head>
+<body>
+	<section style="width:900px;margin:10px auto">
+		<input type="text" name="p" id="p"/>
+		<input type="password" name="w" id="w"/>
+		<input type="button" value="登录" id="submit"/>
+	</section>
+	<script type="text/javascript">
+	//$(function(){
+		$("#submit").click(function(){
+			console.log("sssssss");
+			var phone = $("#p").val();
+			var passw = $("#w").val();
+			$.ajax({
+				url: $.WEB_ROOT + "/admin/relogin",
+				type: "post",
+				dataType: "json",
+				data:{
+					phone: phone,
+					passw: passw
+				},
+				dataFilter: {
+					s:['phone', 'passw']
+				},
+				success: function(res){
+					console.log(res.msg);
+				}
+			});
+		});
+	//});
+	</script>
+	
+	
+
+</body>
+</html>

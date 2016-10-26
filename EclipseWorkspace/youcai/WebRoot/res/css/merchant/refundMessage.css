@@ -1,0 +1,90 @@
+@charset 'utf-8';
+* {
+	margin: 0;
+	padding: 0;
+	font-family:'微软雅黑';
+	border:none;
+}
+img {
+	border: 0;
+}
+#refundMessage {
+	width: 100%;
+	height: 100%;
+}
+
+.back {
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	background: #eee;
+	margin-bottom: 50px;
+}
+.back a {
+	margin-left: 90%;
+	text-decoration: none;
+	color: #800000;
+}
+.back a:hover {
+	text-decoration:underline;
+}
+#tt {
+	width: 95%;
+	margin:0 auto;
+	border: 1px solid #800000;
+	border-collapse: collapse;
+	table-layout: fixed;
+}
+#tt th,td {
+	height: 28px;
+	border: 1px solid #800000;
+	text-align: center;
+}
+caption {
+	font-size:30px;
+}
+tr .checkbox {
+	width: 5%;
+}
+tr span {
+	cursor: pointer;
+}
+#tt th{
+	background:#B0C4DE;
+}
+#tt th:nth-of-type(1){
+	width:10%;
+}
+#tt th:nth-of-type(4){
+	width:16%;
+}
+#tt th:nth-of-type(5){
+	width:16%;
+}
+.newCol {
+	text-align: center;
+}
+.newCol table {
+	width: 80%;
+	margin-left: 10%;
+	border:1px solid #800000;
+	border-collapse:collapse;
+	background:#fff;
+	
+}
+.new {
+	display: none;
+}
+.signRead {
+	width: 100%;
+	height: 80px;
+	padding-top: 20px;
+}
+.signRead input {
+	width: 20%;
+	height: 30px;
+	background: #800000;
+	margin-left: 77%;
+	border-radius: 3px;
+	color:#fff;
+}

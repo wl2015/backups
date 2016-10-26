@@ -1,0 +1,307 @@
+@charset 'utf-8';
+/*重置*/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td{margin:0;padding:0;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img{border:0;}
+address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}
+ol,ul{list-style:none;}
+caption,th{text-align:left;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+q:before,q:after{content: ;}
+abbr,acronym{border:0;}
+.clearfix:after {visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
+body{background-color:#86D2C6;font: 16px/1.5 '微软雅黑',tahoma,arial,'Hiragino Sans GB',宋体,sans-serif;}
+.clearfix {zoom:1;}
+html{font-size:16px;color:#fff;}
+@media screen and (max-width: 280px){
+  html{
+    font-size: 10px; 
+  }
+}
+@media screen and (min-width: 280px){
+  html{
+    font-size: 12px; 
+  }
+}
+@media screen and (min-width: 328px){
+  html{
+    font-size: 16px; 
+  }
+}
+@media screen and (min-width: 480px){
+  html{
+    font-size: 17px; 
+  }
+}
+@media screen and (min-width: 768px){
+  html{
+    font-size: 18px;
+  }
+}
+@media screen and (min-width: 960px){
+  html{
+    font-size: 19px;
+  }
+}
+@media screen and (min-width: 1200px){
+  html{
+    font-size: 20px;
+  }
+}
+
+.orderDish{
+	width:100%;
+	height:100%;
+	background-color:#86D2C6;
+}
+.orderDish .backImg{
+	z-index:1;
+	position:fixed;
+	left:0;
+	top:0;
+	width:100%;
+	/* height:30px;
+	line-height:30px; */
+	height:1.875rem;
+	line-height:1.875rem;
+	background:#6AA79F;
+	filter:alpha(opacity:0.7);
+	opacity:70;
+	border-top:1px solid grey;
+	border-bottom:1px solid grey;
+}
+.orderDish .backImg img{
+	cursor:pointer;
+	display:block;
+	float:left;
+	height:1.125rem;
+	width:auto;
+	margin-top:0.3125rem;
+	margin-left:1rem;
+}
+.orderDish .backImg span{
+	display:block;
+	float:left;
+	height:1.875rem;
+	line-height:1.875rem;
+	letter-spacing:3px;
+	/* font-size:20px; */
+	font-size:1.25rem;
+	/* margin-left:15px; */
+	margin-left:1rem;
+	/* background:green; */
+}
+.orderDish .orderNav{
+	/* margin-top:32px; */
+	margin-top:2rem;
+	width:100%;
+	height:30px;
+	line-height:30px;
+	background-color:#6AA79F;
+}
+.orderDish .orderNav .oneSelect{
+	font-size:1rem;
+	width:25%;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	float:left;
+	color:#fff;
+	position:relative;
+	cursor:pointer;
+	border-radius:5px 5px 0 0;
+}
+.orderDish .orderNav .oneSelect.navActive{
+	background-color:#86D2C6;
+}
+/*显示下拉列表*/
+.orderDish .orderNav .oneSelect .select{
+	position:absolute;
+	left:0;
+	top:30px;
+	background-color:#79B1A8;
+	width:100%;
+	height:auto;
+	display:none;
+	z-index:1;
+}
+.orderDish .orderNav .oneSelect .select li{
+	width:80%;
+	height:25px;
+	line-height:25px;
+	text-align:center;
+	padding:0 10%;
+	color:#fff;
+}
+.orderDish .orderNav .oneSelect .select li:hover{
+	background-color:#fff;
+	color:#000;
+}
+/*三角形*/
+.orderDish .orderNav .oneSelect .trangle{
+	width:0;
+	height:0;
+	border-left:7px solid transparent;
+	border-right:7px solid transparent;
+	border-top:7px solid #fff;
+	font-size:0;
+	line-height:0;
+	
+}
+/*全部菜品*/
+.allDishes{
+	width:100%;
+	padding-bottom:80px;
+}
+.allDishesUl{
+	width:100%;
+}
+.allDishesUl .oneDish{
+	width:90%;
+	margin:0 auto;
+	padding:10px 0;
+	border-bottom:1px solid #6AA79F;
+}
+.allDishesUl .oneDish .oneDishTop{
+	width:100%;
+	height:70px;
+}
+.allDishesUl .oneDish .oneDishTop .oneDishTopLeft{
+	float:left;
+	width:40%;
+	height:60px;
+}
+.allDishesUl .oneDish .oneDishTop .oneDishTopLeft img{
+	width:60px;
+	height:60px;
+}
+.allDishesUl .oneDish .oneDishTop .oneDishTopRight{
+	float:right;
+	width:60%;
+	height:60px;
+}
+.allDishesUl .oneDish .oneDishTop .oneDishTopRight .dishTitle,.dishIntro,.inventory{  /*modify*/
+	width:100%;
+	height:20px;
+	line-height:20px;
+	
+}
+.allDishesUl .oneDish .oneDishTop .oneDishTopRight .dishTitle a{
+	text-decoration:none;
+	color:#715D76;
+	font-size:1.25rem;
+}
+.allDishesUl .oneDish .oneDishTop .oneDishTopRight .dishTitle .dishTaste{
+	color:grey;
+	font-size:0.875rem;
+	margin-left:5px;
+}
+.allDishesUl .oneDish .oneDishTop .oneDishTopRight .inventory{/*modify*/
+	color:#715D76;
+	font-size:0.875rem;
+}
+.allDishesUl .oneDish .oneDishTop .oneDishTopRight .inventory .inventoryNum{/*modify*/
+	color:#fff;
+}
+.allDishesUl .oneDish .oneDishTop .oneDishTopRight .dishIntro{
+	color:#715D76;
+	font-size:0.875rem;
+}
+.allDishesUl .oneDish .oneDishBottom{
+	width:100%;
+	font-size:1rem;
+	
+}
+.allDishesUl .oneDish .oneDishBottom .dishPrice{
+	float:left;
+	width:40%;
+	height:50px;
+	line-height:50px;
+	font-size:0.875rem;
+}
+.allDishesUl .oneDish .oneDishBottom .dishPrice p{
+	height:25px;
+	line-height:15px;
+}
+.allDishesUl .oneDish .oneDishBottom .dishOperate{
+	float:left;
+	width:60%;
+	/* height:30px;
+	line-height:30px; */
+	height:1.875rem;
+	line-height:1.875rem;
+}
+.allDishesUl .oneDish .oneDishBottom .dishOperate .reduce,.add,.copies{
+	display:block;
+	float:left;
+	width:1.875rem;;
+	height:1.875rem;;
+	line-height:1.875rem;
+	text-align:center;
+	
+}
+.allDishesUl .oneDish .oneDishBottom .dishOperate .reduce,.add{
+	border-radius:100%;
+	border:1px solid #fff;
+	cursor:pointer;
+	background-color:#715D76;
+}
+.allDishesUl .oneDish .mark{
+	width:100%;
+	height:30px;
+}
+.allDishesUl .oneDish .mark li{
+	float:left;
+	margin-left:3%;
+	padding:2px 3px;
+	background-color:#6AA79F;
+	border-radius:3px;
+	font-size:0.875rem;
+	cursor:default;
+}
+.allDishesUl .oneDish .mark li:nth-child(1){
+	margin-left:0;
+}
+
+/*购物车*/
+.myCar{
+	width:100%;
+	height:50px;
+	line-height:50px;
+	position:fixed;
+	bottom:0;
+	left:0;
+	background:#6AA79F;
+	filter:alpha(opacity:0.7);
+	opacity:70;
+	font-size:1.25rem;
+}
+.myCar .allMoney,.goOrder,.clearCar{
+	display:block;
+	float:left;
+	margin-top:5px;
+}
+.myCar .allMoney{
+	width:30%;
+	height:40px;
+	line-height:40px;
+}
+.myCar .clearCar{
+	width:30%;
+	height:40px;
+	line-height:40px;
+	text-align:center;
+	border-radius:5px;
+	background-color:#715D76;
+	cursor:pointer;
+}
+.myCar .goOrder{
+	width:30%;
+	height:40px;
+	line-height:40px;
+	text-align:center;
+	border-radius:5px;
+	background-color:#715D76;
+	cursor:pointer;
+	margin-left:10%;
+}

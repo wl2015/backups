@@ -1,0 +1,32 @@
+@CHARSET 'utf8';
+
+* {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  border: none;
+  z-index: 0;
+}
+
+body {
+  width: 100%;
+  background: #F5F5F5;
+  font-family: '微软雅黑';
+}
+
+.content {
+  margin: 20px 10px 20px 10px;
+}
+
+.button {
+  width: 80%;
+  height: 50px;
+  margin: 30px 10% 30px 10%;
+  text-align: center;
+  line-height: 50px;
+  color: white;
+  font-size: 18px;
+  background: #E94E3D;
+  border-radius: 20px;
+  cursor:pointer;
+}

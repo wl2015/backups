@@ -1,0 +1,72 @@
+@charset 'utf-8';
+*{
+	margin:0;
+	padding:0;
+}
+body{
+	background: #F5F5F5;
+}
+.orderInfo{
+	width:98%;
+	margin:5px auto 40px auto;
+	background:#fff;
+	
+}
+.orderInfoList{
+	list-style:none;
+}
+.orderInfoList li{
+	width:100%;
+	line-height:30px;
+}
+.orderInfoList li strong{
+	/*font-weight:normal;
+	*/color:#696969;
+}
+.orderInfoList li span{
+	font-size:14px;
+	color:#808080;
+}
+.orderInfoList .dishesInfo{
+	list-style:none;
+	border:1px solid #FE4D3D;
+	border-radius:5px;
+}
+.orderInfoList .dishesInfo .line span{
+	display:block;
+	float:left;
+	width:30%;
+	text-align:center;
+	height:25px;
+	line-height:25px;
+}
+.orderInfoList .dishesInfo li .name{
+	width:40%;
+}
+.orderInfoList .dishesInfo .line{
+	clear:both;
+	line-height:25px;
+}
+.toPay{
+	width:30%;
+	/*height:30px;
+	line-height:30px;
+	*/color:#fff;
+	background:#FE4D3D;
+	border-radius:5px;
+	text-align:center;
+	margin:20px auto;
+	cursor:pointer;
+}
+.backIndex{
+	position:fixed;
+	width:100%;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	bottom:0;
+	background-color:#E94E3D;
+	cursor:pointer;
+	color:#fff;
+}
+

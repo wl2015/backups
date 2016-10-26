@@ -1,0 +1,189 @@
+﻿$(function(){
+	$('.onlyNum').onlyNum();
+	$('#input-phone').maxLength(11);
+	$('.login-BTN').click(function(){
+		inputPhoneNumber();
+		inputPassword();
+		var phonenum = $('.login-information li:eq(0) input');
+		var password = $('.login-information li:eq(1) input');
+		var isMobile = /^(?:13\d|15\d|18\d)\d{5}(\d{3}|\*{3})$/; //手机号码验证规则
+		
+		if(isMobile.test(phonenum.val()) && password.val().length >= 6 && !isEmpty(password.val()) && !isEmpty(phonenum.val())){
+			$.ajax ({
+				url: $.WEB_ROOT + '/user/doLogin',
+				type:'post',
+				dataType:'json',
+				data: $('#loginForm'),
+				success:function(res){
+					if(res.code== 2005){
+						window.location = $.WEB_ROOT + '/user/userInfo';
+					}
+					else{
+						alert(res.msg);
+					}					
+				},
+				error:function(){
+					alert("系统繁忙，请重新登录");
+				}
+			});
+		}
+		
+	});
+});
+
+/**
+ * 去注册页面
+ * @return
+ */
+function gotoRegist(){
+	$("#goRegist").attr("href",$.WEB_ROOT + '/user/regist');
+} 
+
+
+/**
+ * 找回密码时，提交手机号码到‘找回密码’页面
+ * @return
+ */
+function toresetPass(node){
+	
+	var $phoneNode=$("#input-phone");
+	var isMobile = /^(?:13\d|15\d|18\d)\d{5}(\d{3}|\*{3})$/; //手机号码验证规则
+	if(isEmpty($phoneNode.val())|| !isMobile.test($phoneNode.val())){
+		alert("请输入正确的电话号码");
+		return false;
+	}
+	/*var formNode="<form id='reserPass' action='"+$.WEB_ROOT +"/user/toresetPass' method='post'></form>"
+	$phoneNode.wrap(formNode);
+	setTimeout(function(){$("#reserPass").submit()},2000);
+	$phoneNode.unwrap(); 	
+	return true;*/
+	setTimeout(function(){$.ajax({
+		url: $.WEB_ROOT + '/user/toresetPass',
+		type:'post',
+		data:{
+			phoneNum:$phoneNode.val()
+		},
+		dataType:'json',
+		/*dataFilter: {
+			s:['phoneNum']
+		},*/
+	});},2000);
+}
+
+/*判断输入框内容是否为空*/
+function inputPhoneNumber(){
+	var phonenum = $('.login-information li:eq(0) input');
+	var tip = $('.login-information li:eq(0) span');
+	var isMobile = /^(?:13\d|15\d|18\d)\d{5}(\d{3}|\*{3})$/; //手机号码验证规则
+	var mobile =  phonenum.val();
+	if(mobile==='' || !isMobile.test(mobile)){
+		tip.css('background-color','#FF9FAA');
+		$('.login-information li:eq(0)').css('border-color','#FF9FAA');
+		tip.text('请输入正确电话');		
+	}
+	phonenum.bind('input propertychange', function(){
+		if(mobile!=''){
+			tip.css('background-color','#42C2B3');
+			$('.login-information li:eq(0)').css('border-color','#F0F0F0');
+			tip.html('电	话');
+		}
+	});
+
+}
+
+function inputPassword(){
+	var password = $('.login-information li:eq(1) input');
+	var tip = $('.login-information li:eq(1) span');
+
+	if(password.val()===''){
+		tip.css('background-color','#FF9FAA');
+		$('.login-information li:eq(1)').css('border-color','#FF9FAA');
+		tip.text('请输密码');
+	}
+	password.bind('input propertychange', function(){
+		if(password.val()!=''){
+			if(password.val().length < 6){
+				tip.css('background-color','#FF9FAA');
+				$('.login-information li:eq(1)').css('border-color','#FF9FAA');
+				tip.text('密码长度不足');				
+			}else{
+				tip.css('background-color','#42C2B3');
+				$('.login-information li:eq(1)').css('border-color','#F0F0F0');
+				tip.html('密	码');
+			}
+		}
+	});
+}
+/**
+ * 判断为空
+ */
+var isEmpty = function(obj) {
+	if (obj == null || obj == undefined || jQuery.trim(obj).length == 0 || obj == "" || obj === "null") {
+		return true;
+	}
+	return false;
+};
+
+/**
+ * password密码框得到焦点设置
+ */
+function PassFocus(node){	
+	var tip = $('.login-information li:eq(1) span');
+	tip.text("密    码");
+}
+
+/**
+ * password密码框失去焦点设置
+ */
+function passBlur(node){
+	var tip = $('.login-information li:eq(1) span');
+	if($(node).val().length < 6  || isEmpty($(node).val())){
+		tip.text('密码长度不足');				
+		return false;
+	}
+	return true;
+}
+/**
+ * phone(login)登录电话框得到焦点设置
+ * @param node
+ */
+function loginPhoneFocus(node){
+	var tip = $('.login-information li:eq(0) span');
+	tip.text("电    话");
+}
+/**
+ * phone(login)登录电话框失去焦点设置
+ * @param node
+ */
+function loginPhoneBlur(node){
+	var $this = $(node);	
+	var isMobile = /^(?:13\d|15\d|18\d)\d{5}(\d{3}|\*{3})$/; //手机号码验证规则
+	var tip = $('.login-information li:eq(0) span');
+	//alert(tip.text()+"tip.text(),"+$this.val()+"$this.val(),"+isMobile.test($this.val())+"isMobile.test($this.val())");
+	//若电话号码格式正确则提交到数据库检查是否存在该号码
+	if(isMobile.test($this.val())){
+		//从数据库中检查该号码是否存在
+		$.ajax({
+			url: $.WEB_ROOT + '/user/checkePhone',
+			type:'post',
+			data:{
+				phoneNum:$this.val()
+			},
+			dataType:'json',
+			dataFilter: {
+				s:['phoneNum']
+			},
+			success:function(res) {				
+				if(res.code == 2003){
+					tip.text(res.msg);
+					return false;
+				}
+				return true;
+			},
+			error:function() {
+				alert("系统繁忙，请重新登录");
+			}
+		});
+	}		
+	return true;
+}

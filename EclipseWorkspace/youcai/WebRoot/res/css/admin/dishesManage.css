@@ -1,0 +1,335 @@
+@charseset 'utf-8';
+*{
+	margin:0;
+	padding:0;
+	border:none;
+}
+img{
+	border:0;
+}
+ul{
+	list-style:none;
+}
+.dishesManage{
+	width:80%;
+	height:auto;
+	margin:0 auto;
+}
+.dishesManage .newDish{
+	width:10%;
+	height:30px;
+	line-height:30px;
+	border-radius:5px;
+	background:#8B0000;
+	text-align:center;
+	margin-left:90%;
+	margin-bottom:20px;
+	cursor:pointer;
+	color:#fff;
+}
+
+.dishesManage .dishList{
+	width:100%;
+}
+.dishesManage .dishList .oneDish{
+	width:100%;
+	height:350px;
+	border-bottom:1px solid #8B0000;
+	margin:10px auto;
+}
+.dishesManage .dishLeft{
+	float:left;
+	width:30%;
+	height:295px;
+	_display:inline;/*ie6*/
+}
+.dishesManage .dishLeft img{
+	max-width:100%;
+	height:100%;
+	border-radius:5px;
+}
+.dishesManage .contentRight{
+	float:left;
+	width:58%;
+	height:295px;
+	margin-left:5%;
+	background:green;
+	border-radius:5px;
+	_display:inline;/*ie6*/
+}
+.dishesManage .contentRight ul li{
+	width:100%;
+	height:30px;
+	line-height:30px;
+	margin-bottom:10px;
+}
+.dishesManage .contentRight ul li .leixing{
+	margin-left:10%;
+}
+.dishesManage .dishList .oneDish .operate{
+	clear:both;
+	width:100%;
+	height:40px;
+	line-height:40px;
+	margin-top:10px;
+}
+.dishesManage .dishList .oneDish .operate div{
+	float:left;
+	width:10%;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	border-radius:5px;
+	background:#8B0000;
+	margin-left:20%;
+	margin-top:10px;
+	cursor:pointer;
+	_display:inline;
+	color:#fff;
+}
+
+.dishesManage .fenye{
+	width:30%;
+  margin:20px auto;
+}
+.dishesManage .fenye a{
+  color:black;
+}
+.dishesManage .fenye a:hover{
+  color:#8B0000;
+}
+.dishesManage font{
+	font-size:16px;
+}
+
+/*for ������Ʒ*/
+.addDishes{
+	display:none;
+	position:absolute;
+	z-index:2;
+	left:30%;
+	top:50%;
+	width:600px;
+	height:550px;
+	background:pink;
+	color:#fff;
+}
+.addDishes ul{
+	width:500px;
+	height:450px;
+	margin:10px auto;
+	margin-top:20px;
+}
+.addDishes ul li{
+	width:100%;
+	height:30px;
+	line-height:30px;
+	margin-bottom:20px;
+	clear:both;
+}
+.addDishes ul .textA{
+	height:100px;
+	margin-bottom:20px;
+}
+.addDishes ul .imgShow{
+	height:100px;
+	margin-bottom:20px;
+}
+
+.addDishes ul li strong{
+	display:block;
+	float:left;
+	width:20%;
+	height:30px;
+	line-height:30px;
+}
+#pic{
+	display:block;
+	border-radius:5px;
+}
+.addDishes ul li input,textArea,#pic{
+	float:left;
+	width:60%;
+	height:30px;
+}
+#pic{
+	width:30%;
+	height:100px;
+}
+#viewFiles{
+	width:30%;
+	height:30px;
+}
+/* .addDishes ul li textArea{
+	height:100px;
+	resize:none;
+}
+.addDishes div{
+	float:left;
+	width:20%;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	background:#8B0000;
+	border-radius:5px;
+	cursor:pointer;
+	color:#fff;
+}
+#cancelAdd{
+	margin-left:10%;
+	margin-top:30px;
+	
+}
+#sureAdd{
+	margin-left:40%;
+	margin-top:30px;
+} */
+
+/*for �༭��Ʒ*/
+.editDishes{
+	display:none;
+	position:fixed;
+	z-index:-2000;
+	left:30%;
+	top:5%;
+	width:600px;
+	height:580px;
+	background:pink;
+}
+.editDishes ul{
+	width:500px;
+	height:450px;
+	margin:10px auto;
+	margin-top:20px;
+}
+.editDishes ul li{
+	width:100%;
+	height:30px;
+	line-height:30px;
+	margin-bottom:20px;
+	clear:both;
+}
+.editDishes ul .textA{
+	height:100px;
+	margin-bottom:20px;
+}
+.editDishes ul .imgShow{
+	height:100px;
+	margin-bottom:20px;
+}
+
+.editDishes ul li strong{
+	display:block;
+	float:left;
+	width:20%;
+	height:30px;
+	line-height:30px;
+}
+#pic2{
+	display:block;
+	border-radius:5px;
+}
+.editDishes ul li input,textArea,#pic2{
+	float:left;
+	width:60%;
+	height:30px;
+}
+#pic2{
+	width:30%;
+	height:100px;
+}
+#preview{
+	width:30%;
+	height:30px;
+}
+.editDishes ul li textArea{
+	height:100px;
+	resize:none;
+}
+.editDishes ul .twoInline strong{
+	display:block;
+	float:left;
+	width:10%;
+	height:30px;
+	line-height:30px;
+}
+
+.editDishes ul .twoInline input,select{
+	display:block;
+	float:left;
+	width:25%;
+	height:30px;
+}
+.editDishes ul .twoInline .two{
+	margin-left:10%;
+}
+.editDishes ul li:after{
+	content:'';
+	display:block;
+	clear:both;
+}
+.editDishes .twoButton{
+	width:100%;
+	height:30px;
+	margin-top:70px;
+}
+ #cancelEdit,#sureEdit{
+	float:left;
+	width:20%;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	background:#800000;
+	border-radius:5px;
+	cursor:pointer;
+	color:#fff;
+	
+}
+#cancelEdit{
+	margin-left:8%;
+}
+#sureEdit{
+	margin-left:27%;
+}
+.dishesManage .search{
+  width:100%;
+  height:50px;
+}
+.dishesManage .search span{
+  display:inline-block;
+  width:25%;
+  text-align:center;
+  margin-left:5%;
+}
+.dishesManage .search input[type=text]{
+  width:30%;
+  height:30px;
+}
+.dishesManage .search input[type=button]{
+  width:10%;
+  height:30px;
+  background:#8B0000;
+  color:#fff;
+  font-size:16px;
+  margin-left:0;
+}
+#key{
+	width:200px;
+	height:30px;
+	line-height:30px;
+	border:1px solid #000;
+	border-radius:3px;
+}
+#serachDishByKeywords{
+	border-radius:5px;
+}
+.introInfo{
+	display:block;
+	width:95%;
+	height:18px;
+	line-height:20px;
+	text-overflow:ellipsis;
+	white-space:normal;
+	overflow:hidden;
+	padding:5px;
+}

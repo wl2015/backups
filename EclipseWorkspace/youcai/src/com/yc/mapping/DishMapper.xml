@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yc.dao.DishDAO">
+
+<!--   MyBatis的核心是其映射文件,SqlMap文件,里面配置了项目中用到了什么SQL语句,和数据库相关的逻辑都在这个映射文件里.顾名思义,
+  映射文件就是对Java对象和SQL的映射.这里简单介绍一下映射文件中resultMap的用法:
+  resultMap – 它描述如何将结果集映射到Java对象.
+  resultMap属性：type为java实体类；id为此resultMap的标识:<resultMap id="dishMap" type="com.test.mybatis.vo.MybatisOrder" >
+  resultMap的子元素：
+  id – 一般对应到数据库中该行的ID,设置此项可以提高Mybatis性能.
+  result – 映射到JavaBean 的某个"简单类型"属性,String,int等.
+  association – 映射到JavaBean 的某个"复杂类型"属性,其他JavaBean类.
+  collection –复杂类型集合,a collection of complex types -->
+  
+  <resultMap id="dishMap" type="com.yc.bean.Dish">
+    <id column="d_id" property="dishId" jdbcType="VARCHAR" />
+    <result column="d_name" property="dishName" jdbcType="VARCHAR" />
+    <result column="d_intro" property="dishIntro" jdbcType="VARCHAR" />
+    <result column="d_detail" property="dishDetail" jdbcType="VARCHAR" />
+    <result column="d_pic" property="dishPic" jdbcType="VARCHAR" />
+    <result column="cost_price" property="costPrice" jdbcType="VARCHAR" />
+    <result column="original_price" property="originalPrice" jdbcType="VARCHAR" />
+    <result column="retail_price" property="retailPrice" jdbcType="VARCHAR" />
+    <result column="d_taste" property="dishTaste" jdbcType="VARCHAR" />
+  </resultMap>
+  
+   <resultMap id="dishGroupMap" type="com.yc.bean.DishGroup">
+    <id column="group_id" property="groupId" javaType="Integer" jdbcType="INTEGER" />
+    <result column="group_name" property="groupName" javaType="String" jdbcType="VARCHAR" />
+    <result column="dishes" property="dishes" javaType="String" jdbcType="VARCHAR" />
+    <result column="group_intro" property="groupIntro" javaType="String" jdbcType="VARCHAR" />  
+    <result column="group_pic" property="groupPic" javaType="String" jdbcType="VARCHAR"/>   
+  </resultMap>
+  
+  
+	
+  <resultMap id="TypeMap" type="com.yc.bean.Type" >
+    <id column="type_id" property="typeId" jdbcType="VARCHAR"/>
+    <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+    <result column="target" property="target" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="TargetTypeLinkMap" type="com.yc.bean.TargetTypeLink" >
+    <id column="link_id" property="linkId" jdbcType="VARCHAR"/>
+    <result column="target_id" property="targetId" jdbcType="VARCHAR" />
+    <result column="type_id" property="typeId" jdbcType="VARCHAR" />
+    <result column="target" property="target" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <!-- 获得菜品总数量 -->
+  <select id="getAllDishCount" resultType="long">
+    SELECT COUNT(*) FROM  dish 
+  </select>
+  <!-- 获得符合关键词搜索的菜品总数量 -->
+  <select id="getDishByKeywordsCount" resultType="long" parameterType="String">
+    SELECT COUNT(*) FROM dish WHERE  d_name LIKE CONCAT(CONCAT('%', #{keywords}), '%') 
+  </select>
+  
+  <!-- 查询所有菜品 -->
+  <select id="showAllDishs" resultMap="dishMap" >
+    select * from dish 
+  </select>
+  <!-- 查询所有菜品（分页） -->
+  <select id="getAllDishs" parameterType="page" resultMap="dishMap" >
+    select * from dish limit #{startPos}, #{pageSize}
+  </select>
+  
+  <!-- 关键词搜索菜品列表 (分页)--> 
+ <select id="queryDishByKeyWords" parameterType="java.util.Map" resultMap="dishMap">
+    SELECT * FROM dish WHERE  d_name LIKE CONCAT(CONCAT('%', #{keywords}), '%') 
+              limit #{page.startPos}, #{page.pageSize}   
+ </select>
+  
+  
+   <!-- 增加菜品 -->
+  <insert id="addDish" useGeneratedKeys="true" keyProperty="dishId" parameterType="com.yc.bean.Dish">
+    insert into dish (d_name,d_intro,d_detail,d_pic,cost_price,original_price,retail_price,d_taste)
+    values (#{dishName,jdbcType=VARCHAR},#{dishIntro,jdbcType=VARCHAR},#{dishDetail,jdbcType=VARCHAR},#{dishPic,jdbcType=VARCHAR},
+            #{costPrice,jdbcType=VARCHAR},#{originalPrice,jdbcType=VARCHAR},#{retailPrice,jdbcType=VARCHAR},#{dishTaste,jdbcType=VARCHAR})
+  </insert>
+  
+   <!-- 新菜品生成库存 -->
+  <insert id="addInventoryByDish" parameterType="java.util.Map">
+    insert into inventory (m_id,dish_id,i_num,limitcount)  values
+    <foreach collection="merchantList" item="item" index="index" separator=",">
+       (#{item.merchantId}, #{dishId}, 0, 0)
+    </foreach>
+  </insert>
+ 
+  <!-- 删除菜品 -->
+  <delete id="deleteDish" parameterType="Integer">
+    delete from dish where d_id=#{dishId}
+  </delete>
+   <!-- 删除菜品库存 -->
+  <delete id="deleteDishInventory" parameterType="Integer">
+    delete from inventory where dish_id=#{dishId}
+  </delete>
+  
+
+   <!-- 通过dish_id获取dishName -->
+  <select id="getDishById" parameterType="Integer" resultMap="dishMap">
+    SELECT d_name, retail_price FROM dish where d_id = #{0};
+  </select>
+  
+  <!-- 通过dish_id获取整个菜品信息 -->
+  <select id="getDishInfoById" parameterType="Integer" resultMap="dishMap">
+    SELECT * FROM dish where d_id = #{0};
+  </select>
+
+  <!-- 修改菜品信息 -->
+  <update id="updateDish" parameterType="com.yc.bean.Dish">
+    update dish set
+    d_name=#{dishName},d_intro=#{dishIntro},d_detail=#{dishDetail},d_pic=#{dishPic},cost_price=#{costPrice},
+    original_price=#{originalPrice},retail_price=#{retailPrice},d_taste=#{dishTaste}
+    where d_id=#{dishId}
+  </update>
+  
+  
+  <!-- 添加菜品/套餐类别 -->
+  <insert id="addTypeForDish" parameterType="com.yc.bean.Type">
+      INSERT INTO type(type_name,target) VALUES (#{typeName},#{target})
+  </insert>
+  <!-- 删除菜品/套餐类别 -->
+  <delete id="deleteTypeForDish" parameterType="Integer">
+      DELETE FROM type WHERE type_id = #{0}
+  </delete>
+  
+  <!-- 查询所有菜品类别 (分页)-->
+  <select id="showAllDishType"  resultMap="TypeMap">
+    SELECT * FROM type WHERE target = 1 limit #{startPos}, #{pageSize}
+  </select>
+  <!-- 查询所有菜品类别-->
+  <select id="showDishType"  resultMap="TypeMap">
+    SELECT * FROM type WHERE target = 1 
+  </select>
+  
+  <!-- 查询所有套餐类别 (分页)-->
+  <select id="showAllPackageType"  resultMap="TypeMap">
+    SELECT * FROM type WHERE target = 2 limit #{startPos}, #{pageSize}
+  </select>
+  
+  <!-- 获得菜品类别总数量 -->
+  <select id="getDishTypeCount" resultType="long">
+    SELECT COUNT(*) FROM type WHERE target = 1
+  </select>
+  <!-- 获得套餐类别总数量 -->
+  <select id="getPackageTypeCount" resultType="long">
+    SELECT COUNT(*) FROM type WHERE target = 2 
+  </select>
+  
+  
+  <!-- 添加菜品类别链接 -->
+  <insert id="addTargetTypeLink" parameterType="com.yc.bean.TargetTypeLink">
+     INSERT INTO target_type_link(target_id,type_id,target) VALUES (#{targetId},#{typeId},#{target})
+  </insert>
+  <!-- 修改菜品类别链接 -->
+  <update id="modifyTargetTypeLink" parameterType="com.yc.bean.TargetTypeLink">
+     UPDATE target_type_link SET type_id = #{typeId} WHERE target_id = #{targetId}
+  </update>
+  
+  <!-- 根据菜品Id查找相应类别名 -->
+  <select id="getTypeByDishId" parameterType="Integer" resultType="String">
+      SELECT type_name FROM type AS t,target_type_link AS l WHERE t.type_id = l.type_id AND l.target_id = #{0}
+  </select>
+  
+ <!--  获取菜品种类用于添加套餐 -->
+  <select id="getDishForAddGroup" resultMap="dishMap">
+  	select * from dish
+  </select>
+  
+   <!-- 查询所有套餐类别-->
+  <select id="selectAllGroupType"  resultMap="TypeMap">
+    SELECT * FROM type WHERE target = 2 
+  </select>
+  
+ <!--  <result column="group_name" property="groupName" javaType="String" jdbcType="VARCHAR" />
+    <result column="dishes" property="dishes" javaType="String" jdbcType="VARCHAR" />
+    <result column="group_intro" property="groupIntro" javaType="String" jdbcType="VARCHAR" />  
+    <result column="group_pic" property="groupPic" javaType="String" jdbcType="VARCHAR"/>   
+    <result column="original_price" property="originalPrice" javaType="double" jdbcType="DOUBLE" />
+    <result column="retail_price" property="retailPrice" javaType="double" jdbcType="DOUBLE" />  -->
+  <!--  添加套餐 --> 
+   <insert  id="addDishGroup" useGeneratedKeys="true" keyProperty="groupId" parameterType="com.yc.bean.DishGroup">
+     INSERT INTO dish_group(group_name, dishes, group_intro, group_pic)
+      VALUES (#{groupName}, #{dishes}, #{groupIntro}, #{groupPic});
+  </insert> 
+  
+  <!-- 获取套餐列表 -->
+  <select id="getDishGroupList" resultMap="dishGroupMap" resultType="Integer">
+  	select * from dish_group;
+  </select> 
+  
+  <!-- 删除套餐 -->
+  <delete id="deleteDishGroup" parameterType="Integer" >
+  	delete from dish_group where group_id = #{0};
+  </delete>
+  
+</mapper>

@@ -1,0 +1,45 @@
+/* CSS Document */
+@CHARSET 'utf8';
+*{
+	margin:0;
+	padding:0;
+	font-family:"微软雅黑";
+}
+body{
+	background: #F5F5F5;
+}
+.waiting{
+	width:96%;
+	margin:0 auto;
+}
+#content{
+	margin-top:10px;
+	font-size:30px;
+}
+
+#content .span1{
+	display:block;
+	
+}
+
+#content div{
+	width:50%;
+	border-radius:100%;
+	border:5px solid black;
+	color:#E94E3D;
+	text-align:center;
+	margin:10% auto;
+}
+
+.button{
+	width:100%;
+	margin-top:30%;
+	background:#E94E3D;
+	color:#fff;
+	text-align:center;
+	border-radius:5px;
+	height:40px;
+	line-height:40px;
+	cursor:pointer;
+	
+}

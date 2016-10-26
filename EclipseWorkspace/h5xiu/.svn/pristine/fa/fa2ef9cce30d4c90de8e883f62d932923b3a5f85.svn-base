@@ -1,0 +1,63 @@
+$(document).ready(function(){
+	$("#input-body").find("input[name='phone']").blur(valiPhone);
+	$("#input-body").find("input[name='password']").blur(valiPassword);
+	$(".footer").find("button").click(checkAndSubmit);
+});
+
+/**
+ * 验证邮箱是否符合格式
+ * @returns {Boolean}
+ */
+function valiPhone() {
+	var _phone = $("#input-body").find("input[name='phone']").val();
+	if (!CHECK.isPhoneNumber(_phone)) {
+		$("#input-body").find("input[name='phone']").addClass("border_showdown");
+		return false;
+	} else {
+		$("#input-body").find("input[name='phone']").removeClass("border_showdown");
+		return true;
+	}
+	
+}
+
+/**
+ * 验证密码是否符合规定格式
+ * @returns {Boolean}
+ */
+function valiPassword() {
+	var _password = $("#input-body").find("input[name='password']").val();
+	if (!CHECK.isPassword(_password)) {
+		$("#input-body").find("input[name='password']").addClass("border_showdown");
+		return false;
+	} else {
+		$("#input-body").find("input[name='password']").removeClass("border_showdown");
+		return true;
+	}
+}
+
+/**
+ * 提交登录表单
+ */
+function checkAndSubmit() {
+	if (valiPhone() && valiPassword()) {
+		/*$.ajax({
+			url : $.WEB_ROOT + "/admin/doLogin",
+			type: "post",
+			dataType: "json",
+			data : $("#login-box").find("form"),
+			dataFilter : {
+				s : ['phone', 'password']
+			},
+			success : function(){
+				window.href = $.WEB_ROOT + "/admin/login";
+			}
+		});*/
+		var _password = $("#input-body").find("input[name='password']").val();
+		var _phone = $("#input-body").find("input[name='phone']").val();
+		_password = $.Zencrypt(_password, $.HEX_CODE);
+		_phone = $.Zencrypt(_phone, $.HEX_CODE);
+		$("#input-body").find("input[name='encryptPwd']").val(_password);
+		$("#input-body").find("input[name='encryptPhone']").val(_phone);
+		$("#login-box").find("form").submit();
+	}
+}

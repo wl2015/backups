@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yc.dao.MerchantStarDao">
+
+<!--   MyBatis的核心是其映射文件,SqlMap文件,里面配置了项目中用到了什么SQL语句,和数据库相关的逻辑都在这个映射文件里.顾名思义,
+  映射文件就是对Java对象和SQL的映射.这里简单介绍一下映射文件中resultMap的用法:
+  resultMap – 它描述如何将结果集映射到Java对象.
+  resultMap属性：type为java实体类；id为此resultMap的标识:<resultMap id="BaseResultMap" type="com.test.mybatis.vo.MybatisOrder" >
+  resultMap的子元素：
+  id – 一般对应到数据库中该行的ID,设置此项可以提高Mybatis性能.
+  result – 映射到JavaBean 的某个"简单类型"属性,String,int等.
+  association – 映射到JavaBean 的某个"复杂类型"属性,其他JavaBean类.
+  collection –复杂类型集合,a collection of complex types -->
+
+	<resultMap id="MerchantScoreMap" type="com.yc.bean.Star">
+		<id column="m_id" property="id" javaType="Integer" jdbcType="INTEGER" />
+		<result column="total_star" property="totalStar" javaType="Integer" jdbcType="INTEGER" />
+		<result column="evalue_number" property="evalueNumber" javaType="Integer" jdbcType="INTEGER" />
+		<result column="ave_star" property="aveStar" javaType="float" jdbcType="FLOAT" />
+	</resultMap>
+ <!-- 初始化商家星级得分 -->
+ <insert id="initMerchantStar" parameterType='int'>
+   INSERT INTO merchantstar 
+    VALUES (0, #{0}, 0, 0);
+ </insert>
+ 
+ <!-- 删除商家星级得分 -->
+<delete id="deleteMerchantStar" parameterType="Integer">
+  delete from merchantstar where m_id=#{0}
+</delete> 
+<!--  用户就某一个订单给商家打分 -->
+	<!-- <update id='updateUserStar' parameterType="java.util.List">
+		<foreach collection="list" item="item" separator=";" > 
+			 update userstar, orders 
+			 <set> userstar.total_star = userstar.total_star + #{item.cord},
+			  userstar.evalue_number = userstar.evalue_number + 1, orders.u_evaluate = 1</set>
+			  where orders.o_id = #{item.orderId} and orders.u_id = userstar.u_id
+		</foreach>
+	</update> -->
+	
+	<!-- <update id="mSureOrder" parameterType="java.util.List">
+		<foreach collection="list" item="item" separator=";" > 
+			 update pushorder 
+			 <set> m_sure = 1 , spend_time = #{item.spendTime} </set>
+			 where o_id = #{item.id} and m_id = #{item.mid}
+		</foreach>
+	</update> -->
+</mapper>

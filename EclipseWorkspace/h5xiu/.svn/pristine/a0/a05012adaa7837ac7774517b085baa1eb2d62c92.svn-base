@@ -1,0 +1,138 @@
+package com.h5.controller;
+
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
+
+import javax.imageio.ImageIO;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.h5.service.CommonService;
+import com.h5.util.Constants;
+import com.h5.util.CryptogramUtil;
+import com.h5.util.MatrixToImageWriter;
+import com.h5.util.SystemUtil;
+
+/**
+ * 
+ * @author Paul Iverson
+ *
+ */
+@Controller
+public class CommonController {
+
+	private static final Logger log = Logger.getLogger(CommonController.class);
+	
+	@Inject
+	public CommonService commonService;
+	
+	@RequestMapping("/home")
+	public String intoHomePage() {
+		
+		return "home";
+	}
+	
+	@RequestMapping("/500")
+	public String into500Page() {
+		
+		return "common/500";
+	}
+	
+	@RequestMapping("/404")
+	public String into404Page() {
+		
+		return "common/404";
+	}
+	
+	@RequestMapping("/403")
+	public String into403Page() {
+		
+		return "common/403";
+	}
+	
+	/***
+	 * 获取aes_key
+	 * */
+	@RequestMapping("/code")
+	@ResponseBody
+	public Map<String, Object> getRandomEncrptCode(HttpServletRequest req) throws Exception {
+		Map<String, Object> codeMap = new HashMap<String, Object>();
+		
+		String ramdomKey = Constants.ENCRYPT_INIT_KEY;
+		if (req.getSession().getAttribute(Constants.ENCRYPT_CODE) == null) {
+			ramdomKey = CryptogramUtil.getRandomKey(); // 随机产生,加密存入session
+			log.debug("\n\n\n生成的没有加密的加密秘钥是:" + ramdomKey + "\n\n\n");
+			ramdomKey = CryptogramUtil.encrypt(ramdomKey, Constants.ENCRYPT_INIT_KEY, Constants.ENCRYPT_INIT_KEY);
+			req.getSession().setAttribute(Constants.ENCRYPT_CODE, ramdomKey);
+			log.debug("\n\n\n加密秘钥是:" + ramdomKey + "\n\n\n");
+		} else {
+			ramdomKey = (String) req.getSession().getAttribute(Constants.ENCRYPT_CODE);
+		}
+		
+		codeMap.put("code", Constants.AJAX_SUCCESS_ALERT_CODE);
+		codeMap.put("msg", ramdomKey);
+		
+		return codeMap;
+	}
+	
+	/**
+	 * 生成二维码
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
+	@RequestMapping("getQrcode")
+	public void getQrcode(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		String url = request.getParameter("url");
+		log.debug("\n\n\n----url: "+url);
+		String text = "http://weibo.com/2643127210";   
+        int width = 100;   
+        int height = 100;     
+        Map<EncodeHintType, String> hints= new Hashtable<EncodeHintType, String>();   
+        hints.put(EncodeHintType.CHARACTER_SET, "utf-8");   
+        BitMatrix bitMatrix = new MultiFormatWriter().encode(text, BarcodeFormat.QR_CODE, width, height,hints);   
+        BufferedImage image = MatrixToImageWriter.toBufferedImage(bitMatrix);
+        OutputStream outStream = response.getOutputStream();
+        ImageIO.write(image, "JPEG", outStream);
+		outStream.flush();
+	}
+
+	/**
+	 * 获取二维码地址
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("getQrcodeAddr")
+	@ResponseBody
+	public String getQrcodeAddr(HttpServletRequest request) throws Exception{
+		String uploadUrl = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort() + "/wedding321_uploads/upload_json.jsp";
+		String string = SystemUtil.getQrcode(uploadUrl, "");
+		log.debug("\n\n\n--- address: " + string);
+		return string;
+	}
+}

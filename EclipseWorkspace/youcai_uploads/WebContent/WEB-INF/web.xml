@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>youcai_uploads</display-name>
+  <context-param>
+    <param-name>fileReceiveThreshold</param-name>
+    <param-value>100</param-value>
+  </context-param>
+  <context-param>
+    <param-name>fileReceiveSingleMaxSize</param-name>
+    <param-value>2048</param-value>
+  </context-param>
+  <context-param>
+    <param-name>fileReceiveTotalMaxSize</param-name>
+    <param-value>5120</param-value>
+  </context-param>
+  <context-param>
+    <param-name>largeUploadRootDirURL</param-name>
+    <param-value>/resources_l</param-value>
+  </context-param>
+  <context-param>
+    <param-name>largeUploadThreshold</param-name>
+    <param-value>256</param-value>
+  </context-param>
+  <context-param>
+    <param-name>middleUploadRootDirURL</param-name>
+    <param-value>/resources_m</param-value>
+  </context-param>
+  <context-param>
+    <param-name>middleUploadThreshold</param-name>
+    <param-value>64</param-value>
+  </context-param>
+  <context-param>
+    <param-name>smallUploadRootDirURL</param-name>
+    <param-value>/resources_s</param-value>
+  </context-param>
+  <context-param>
+    <param-name>fileReceiveTempDir</param-name>
+    <param-value>temp</param-value>
+  </context-param>
+</web-app>

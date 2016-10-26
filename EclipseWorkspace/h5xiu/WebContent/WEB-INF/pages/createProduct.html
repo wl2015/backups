@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" src="<@s.url relativeUrl='res/js/jQuery/jquery.js'/>"></script>
+
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		url:'/h5xiu/createProduct',
+		type:'post',
+		dataType:'json',
+		data:{
+			title:'新建作品',
+			describe:'描述描述描述描述',
+			surfaceAddr:'/fdfdf/dfsa/fd.jpg',
+		},
+		success:function(res){
+			alert(res.code);
+		}
+	});
+});
+</script>
+<title>创建作品测试</title>
+</head>
+<body>
+
+</body>
+</html>

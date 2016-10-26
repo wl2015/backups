@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>upload music</title>
+<#assign base = springMacroRequestContext.getContextUrl("")>
+<script type="text/javascript" src="${base}/res/js/jQuery/jquery.js"></script>
+<script type="text/javascript" src="${base}/res/js/jQuery/jquery.form.js"></script>
+</head>
+<body>
+	<form action="" method="post" id="uploader" enctype="multipart/form-data">
+		<input type="file" name="file"/>
+	</form>
+	<button id="upload">提交</button>
+	
+</body>
+<script type="text/javascript">
+$("#upload").click(doUpload);
+function doUpload() {
+	console.log("ssssss");
+	var imgUploadUrl = '/wedding321_uploads/upload_json.jsp'; //上传图片地址
+	//var imgUploadUrl = '/wedding321_uploads/upload_music_json.jsp'; //上传音乐地址
+	$('#uploader').ajaxSubmit({
+        dataType:  'json',
+        url : imgUploadUrl,
+        type: 'post',
+        data:{
+        	music:'media'
+        	},
+        success:function(res){
+           	console.log("success:" + res);
+        },
+        error: function(res) {
+        	console.log("error:" + res);
+        }
+    });
+	
+	function ajaxRequest(){
+		$.ajax({
+			url: "address",
+			type:"post or get",
+			dataType: "json or xml ....",
+			sync: true,
+			data:{
+				key1: "value1",
+				key2: "value2"
+			},
+			success:function(result){
+				console.log(result.data);
+				//do  something about result
+			},
+			error:function(res){
+				//do something
+			},
+			dataFilter:{
+				s:['key1', 'key2'],
+				g:['key1', 'key2']
+			}
+		});
+		
+	}
+}
+</script>
+</html>

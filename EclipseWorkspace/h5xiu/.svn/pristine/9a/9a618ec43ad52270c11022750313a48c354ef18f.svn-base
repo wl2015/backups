@@ -1,0 +1,2 @@
+<#include "ui/index.ftl">
+<#include "message.ftl">

@@ -1,0 +1,116 @@
+/*推荐部分*/
+.container{
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.content{
+	margin: 80px auto;
+	background: none repeat scroll 0% 0% #F5F5F5;
+	text-align: center;
+}
+
+.warpper{
+	width: 1000px;
+}
+
+/*内容和标题*/
+.frame{
+	width: 930px;
+	margin: 0px auto;
+	text-align: left;
+}
+
+.hotdemo-title {
+    width: 100px;
+    height: 35px;
+    line-height: 35px;
+    background: none repeat scroll 0% 0% #292929;
+    font-size: 14px;
+    color: #E6E6E6;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/*各种模板*/
+ul.hotlist{
+	padding: 15px 0px 0px;
+	height: auto;
+	overflow: hidden;
+}
+
+ul.hotlist li{
+	list-style-type: none;
+}
+
+ul.hotlist li{
+	width: 160px;
+	height: 230px;
+	float: left;
+	position: relative;
+	cursor: pointer;
+	margin-bottom: 30px;
+	border: 1px solid #D2D2D2;
+	display: block;
+}
+
+ul.hotlist li font{
+	padding:10px 15px 0 15px;
+	font-size:12px;
+}
+
+ul.hotlist p{
+	text-align: center;
+	height: 20px;
+	line-height: 20px;
+	width: 100%;
+	overflow: hidden;
+	white-space: nowrap;		/*规定文本是否换行*/
+	text-overflow: ellipsis;	/*规定文本溢出时显示省略号来代表被修剪部分*/
+}
+
+ul.hotlist li:hover .qrcode {
+	background: none repeat scroll 0 0 rbga(20,20,20,0.5);
+	height: 230px;
+	left: 0px;
+	position: absolute;
+	text-align: center;
+	top: 0px;
+	width: 160px;
+	display: block;
+}
+
+ul.hotlist .qrcode{ 
+	display: none;
+}
+
+/*模板间隙*/
+ul.hotlist li.divider{
+	width: 30px;
+	background: none repeat scroll 0% 0% #F5F5F5;
+	border: medium none;
+}
+
+/*热门作品*/
+.relative{
+	position: relative;
+}
+
+.category{
+	line-height: 28px; 
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	width: 800px;
+}
+
+.category span{
+	cursor: pointer;
+	padding: 0px 8px;
+}
+
+.category span:hover, category.span.hover{
+	color: #44C384;
+}

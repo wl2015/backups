@@ -1,0 +1,45 @@
+@CHARSET "UTF-8";
+  #label{
+    width: 22%;
+    height: 100%;
+    background: #89C4F4;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+  }
+  .row{
+    margin-top: 70px;
+  }
+  #labeltext{
+    width: 120px;
+    height: 35px;
+    border: black solid 1px;
+    padding: 10px 20px;
+  }
+  .label{
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .loader{
+    box-sizing: border-box;
+    display: flex;
+    flex: 0 1 auto;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 25%;
+    max-width: 25%;
+    height: 200px;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left:50%;
+    top:50%;
+  }
+  .blur {
+    -webkit-filter: blur(10px); /* Chrome, Opera */
+    -moz-filter: blur(10px);
+    -ms-filter: blur(10px);   
+    filter: blur(10px);   
+  }

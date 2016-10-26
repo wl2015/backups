@@ -1,0 +1,316 @@
+@charset 'utf-8';
+* {
+	margin: 0;
+	padding: 0;
+	font-family:'微软雅黑';
+	border:none;
+	
+}
+img {
+	border: 0;
+}
+
+.header {
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	background: #000;
+}
+.header span {
+	float: right;
+	margin-right: 5%;
+	color: #fff;
+}
+.header .welcome {
+	margin-right: 80%;
+}
+.header span a{
+	text-decoration: none;
+	font-size: 14px;
+	color: #fff;
+}
+.header span a:hover{
+	text-decoration:underline;
+}
+.content {
+	width: 100%;
+	overflow: hidden; 
+}
+.content .middle {
+	float: left;
+	width: 100%;
+	background: #eee;
+	margin-bottom: -9999px;
+	padding-bottom:9999px; 
+}
+.middle .inner {
+	margin: 0 20% 0 25%; 
+	width:55%;
+	margin-top:0;
+	font-family: '华文新魏';
+	position:relative;
+}
+.content .left {
+	float: left;
+	_display: inline;
+	width: 25%;
+	background: #fff;
+	margin-left: -100%;
+	margin-bottom: -9999px;
+	padding-bottom:9999px; 
+}
+.content .right {
+	float: left;
+	_display: inline;
+	width: 20%;
+	background: #fff;
+	margin-left: -20%;
+	margin-bottom: -9999px;
+	padding-bottom:9999px; 
+}
+
+.inner .div1 {
+	margin: 20px;
+	font-size: 40px;/*
+	text-shadow: 3px 3px 5px #800000;
+	*/color:#800000;
+}
+.inner .div2 {
+	margin-top: 10px;
+	margin-left: 20px;
+	width: 80%;
+	height: 30px;
+}
+
+.inner .div2 strong,.div3 .strong3 {
+	display: inline-block;
+	/*width: 15%;
+	*/height: 30px;
+	line-height: 30px;
+	font-weight:normal;
+	/*
+	background: #fff;
+*/}
+/*.inner .div2 span {
+	display: inline-block;
+	width: 70%;
+	height: 30px;
+	line-height: 30px;
+	background: #000;
+	color:#800000;
+}
+*/.inner .div3 {
+	margin-top: 10px;
+	margin-left: 20px;
+	width: 80%;
+	height: 100px;
+}
+.div3 .strong3 {
+	float:left;
+	font-weight:normal;
+}
+#textIntro {
+	float: left;
+	display:block;
+	width: 90%;/*
+	height: 200px;
+	*/line-height:30px;
+	color: black;
+	white-space: normal;
+}
+
+.showEdit {
+	display: none;
+	position: absolute;
+	z-index: 2;
+	width: 500px;
+	height: 240px;
+	background: #fff;
+	border:5px solid #800000;
+	left: 10%;
+	top: 300px;
+	border-radius:20px;
+
+}
+.showEdit .cancel {
+	width:80px;
+	height:30px;
+	line-height: 30px;
+	margin-left: 400px;
+	border-radius:3px;
+	text-align:center;
+	color:#fff;
+	margin-top:5px;
+	background:#800000;
+	cursor:pointer;
+	
+}
+.showEdit textarea {
+	width: 450px;
+	height: 150px;
+	background: #fff;
+	margin-left: 20px;
+	margin-top:5px;
+	resize:none;
+	border:1px solid #000;
+}
+
+.showEdit .showNum {
+	display:block;
+	margin-left: 15px;
+	float: left;
+	width:200px;
+	margin-top:5px;
+}
+.showEdit .sure{
+	margin-top:5px;
+	float: left;
+	width: 80px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	border-radius: 3px;
+	color:#fff;
+	background: #800000;
+	margin-left: 185px;
+	cursor:pointer;
+}
+
+.inner .div4 {
+	margin-top: 150px;
+	margin-left: 20px;
+	width: 98%;
+	height: 30px;
+}
+
+.showEdit .showNum {
+	display: inline-block;
+	zoom:1;
+	*display:Inline;
+	float:none;
+}
+#showmodifyIntro-BTN,#showModifyPass-BTN{
+	display:inline-block;
+	float:right;
+	padding:2px 5px;
+	border:1px solid #000;
+	border-radius:3px;
+	cursor:pointer;
+	color:#800000;
+	margin-right:10px;
+	
+}
+
+
+
+.modifyPassword {
+	display: none;
+	position: absolute;
+	z-index: 2;
+	width: 500px;
+	height: 240px;
+	background: #fff;
+	border:5px solid #800000;
+	top: 300px;
+	left:10%;
+	border-radius:20px;
+}
+.modifyPassword span {
+	display: inline-block;
+	width: 20%;
+	height: 30px;
+	line-height:30px;
+	margin-top: 20px;
+	margin-left: 10%;
+}
+
+.modifyPassword .cancel,#modifyPass-BTN {
+	width: 120px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	border-radius: 3px;
+	background: #800000;
+	margin-left: 5%;
+	cursor:pointer;
+	margin-top: 5px;
+	color:#fff;
+}
+.modifyPassword input{
+	font-family:'微软雅黑';
+	border:1px solid #000;
+	padding:2px 5px;
+	border-radius:3px;
+}
+#modifyPass-BTN {
+	margin-top:15px;
+}
+
+.left .mImage {
+	margin: 10px;
+}
+.left .mImage img {
+	border-radius: 100%;
+	border: 5px solid #800000;
+	max-width: 300px;
+	max-height: 250px;
+}
+
+.left .list {
+	margin-left: 10%;
+}
+.list ul {
+	list-style: none;
+}
+.list ul li {
+	width: 80%;
+	height: 60px;
+	line-height: 60px;
+	border-bottom: 1px solid #eee;
+	position:relative;
+	font-size:20px;
+}
+
+.list ul li a {
+	text-decoration:none;
+	color:#000;
+}
+.list ul li img {
+	width:30px;
+	height:30px;
+	position:absolute;
+	top:14px;
+	z-index:1;
+}
+
+#letterNum,#refundNum,#pushOrderNum {
+	z-index: 2;
+	position: absolute;
+	
+}
+.right .img {
+	width: 100%;
+	height: 300px;
+	margin-top: 30px;
+}
+.right .img img {
+	max-width: 100%;
+	max-height: 300px;
+}
+.footer {
+	width: 100%;
+	height: 100px;
+	background:#fff;
+}
+.footer .version {
+	width: 55%;
+	height:100px;
+	margin: 0 20% 0 25%;
+}
+.footer .version p {
+	padding:10px;
+}
+.current {
+	color: red;
+	/*background:black;*/
+}

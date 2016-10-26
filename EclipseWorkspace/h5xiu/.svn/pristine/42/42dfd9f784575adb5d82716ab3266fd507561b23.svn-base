@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>管理员登录</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+	<script type="text/javascript" charset="utf-8" src="${path}/res/js/adminJs/norma.js"></script>
+	<script type="text/javascript" charset="utf-8" src="${path}/res/js/jQuery/jquery.js"></script>
+	<script type="text/javascript">
+		
+	</script>
+
+  </head>
+  
+  <body>
+  <center>
+  <form id="adLoginForm" action="" method="post">
+    <center>
+    <input type="text" name="phoneNum" value="手机号" />
+    <p class="alert-error"></p>
+ 
+    
+     <br/>
+    <input type="text" name="password" value="密码" />
+    <p class="alert-error"></p>
+     <br/>
+    <input type="button" value="登录" onclick="doAdLogin();" id="sbu">
+    <span class="alert-error"></span>
+ 	 <br/>  
+  	
+  	<span>${msg}</span>  	
+    </center>
+    </form>
+    </center> 
+  </body> 
+</html>

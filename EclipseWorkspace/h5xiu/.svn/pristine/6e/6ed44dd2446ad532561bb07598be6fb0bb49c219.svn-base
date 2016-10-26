@@ -1,0 +1,60 @@
+<!DOCTYPE html> 
+<head> 
+<title>登录</title>
+ <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<#assign base = springMacroRequestContext.getContextUrl("")>
+<link rel="stylesheet" type="text/css" href="${base}/res/css/user/login.css" />
+<script type="text/javascript" charset="utf-8" src="${base}/res/js/jQuery/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="${base}/res/js/inputcheck.js"></script>
+<script type="text/javascript" charset="utf-8" src="${base}/res/js/user/login.js"></script>
+<script type="text/javascript" charset="utf-8" src="${base}/res/js/common.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="${base}/res/js/constants.min.js"></script>
+
+</head> 
+
+<body>
+	<div class="login-content">
+		<div class="login-title">
+			KUAIDāO
+		</div>
+		<div class="login-tip">
+			<span class="tip">
+				提示：
+			</span>
+			<span>
+				为了更好的体验
+			</span>
+			<span>
+				建议使用谷歌浏览器（chrome）进行作品创作。
+			</span>
+		</div>
+		<form method="post" id="loginForm">
+		<ul class="login-information">
+			<li id="phonetip">
+				<span>
+					电	话
+				</span>
+				<input id="input-phone" name="phoneNum" class="onlyNum" type="text" onblur="loginPhoneBlur(this)" onfocus="loginPhoneFocus(this)">
+			</li>
+			<li id="passwordtip">
+				<span>
+					密	码
+				</span>
+				<input id="input-password" name="password" class="onlyNumAlpha" type="password" onfocus="PassFocus(this)" onblur="passBlur(this)">
+			</li>
+
+			<li class="login-BTN">
+				登&nbsp&nbsp&nbsp&nbsp陆
+			</li>
+		</ul>
+		</form>
+		<div class="input-other">
+			<span class="input-othertip">
+				<a href="#" onclick="gotoRegist()" id="goRegist">我要注册</a>
+			</span>
+			<span class="input-othertip">
+				<a id="resetPass" href="#" onclick="toresetPass(this)">忘记密码？</a>
+			</span>
+		</div>
+	</div>
+</body>

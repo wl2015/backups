@@ -1,0 +1,163 @@
+@charset 'utf-8';
+/*重置*/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td{margin:0;padding:0;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img{border:0;}
+address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}
+ol,ul{list-style:none;}
+caption,th{text-align:left;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+q:before,q:after{content: ;}
+abbr,acronym{border:0;}
+.clearfix:after {visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
+body{background-color:#86D2C6;font: 16px/1.5 '微软雅黑',tahoma,arial,'Hiragino Sans GB',宋体,sans-serif;height:100%;}
+.clearfix {zoom:1;}
+html{font-size:16px;color:#fff;height:100%;}
+@media screen and (max-width: 280px){
+  html{
+    font-size: 10px; 
+  }
+}
+@media screen and (min-width: 280px){
+  html{
+    font-size: 12px; 
+  }
+}
+@media screen and (min-width: 328px){
+  html{
+    font-size: 16px; 
+  }
+}
+@media screen and (min-width: 480px){
+  html{
+    font-size: 17px; 
+  }
+}
+@media screen and (min-width: 768px){
+  html{
+    font-size: 18px;
+  }
+}
+@media screen and (min-width: 960px){
+  html{
+    font-size: 19px;
+  }
+}
+@media screen and (min-width: 1200px){
+  html{
+    font-size: 20px;
+  }
+}
+
+
+/*全部菜品*/
+
+.allDishesUl{
+	width:100%;
+}
+.allDishesUl .oneDish{
+	width:90%;
+	margin:0 auto;
+	padding:10px 0;
+	border-bottom:1px solid #6AA79F;
+}
+.allDishesUl .oneDish .oneDishTop{
+	width:100%;
+	height:70px;
+}
+.allDishesUl .oneDish .oneDishTop .oneDishTopLeft{
+	float:left;
+	width:40%;
+	height:60px;
+}
+.allDishesUl .oneDish .oneDishTop .oneDishTopLeft img{
+	width:60px;
+	height:60px;
+}
+.allDishesUl .oneDish .oneDishTop .oneDishTopRight{
+	float:right;
+	width:60%;
+	height:60px;
+}
+.allDishesUl .oneDish .oneDishTop .oneDishTopRight .dishTitle,.dishIntro,.inventory{  /*modify*/
+	width:100%;
+	height:20px;
+	line-height:20px;
+	
+}
+.allDishesUl .oneDish .oneDishTop .oneDishTopRight .dishTitle a{
+	text-decoration:none;
+	color:#715D76;
+	font-size:1.25rem;
+}
+.allDishesUl .oneDish .oneDishTop .oneDishTopRight .dishTitle .dishTaste{
+	color:grey;
+	font-size:0.875rem;
+	margin-left:5px;
+}
+.allDishesUl .oneDish .oneDishTop .oneDishTopRight .inventory{/*modify*/
+	color:#715D76;
+	font-size:0.875rem;
+}
+.allDishesUl .oneDish .oneDishTop .oneDishTopRight .inventory .inventoryNum{/*modify*/
+	color:#fff;
+}
+.allDishesUl .oneDish .oneDishTop .oneDishTopRight .dishIntro{
+	color:#715D76;
+	font-size:0.875rem;
+}
+.allDishesUl .oneDish .oneDishBottom{
+	width:100%;
+	font-size:1rem;
+	
+}
+.allDishesUl .oneDish .oneDishBottom .dishPrice{
+	float:left;
+	width:40%;
+	height:50px;
+	line-height:50px;
+	font-size:0.875rem;
+}
+.allDishesUl .oneDish .oneDishBottom .dishPrice p{
+	height:25px;
+	line-height:15px;
+}
+.allDishesUl .oneDish .oneDishBottom .dishOperate{
+	float:left;
+	width:60%;
+	/* height:30px;
+	line-height:30px; */
+	height:1.875rem;
+	line-height:1.875rem;
+}
+.allDishesUl .oneDish .oneDishBottom .dishOperate .reduce,.add,.copies{
+	display:block;
+	float:left;
+	width:1.875rem;;
+	height:1.875rem;;
+	line-height:1.875rem;
+	text-align:center;
+
+}
+.allDishesUl .oneDish .oneDishBottom .dishOperate .reduce,.add{
+	border-radius:100%;
+	border:1px solid #fff;
+	cursor:pointer;
+	background-color:#715D76;
+}
+.allDishesUl .oneDish .mark{
+	width:100%;
+	height:30px;
+}
+.allDishesUl .oneDish .mark li{
+	float:left;
+	margin-left:3%;
+	padding:2px 3px;
+	background-color:#6AA79F;
+	border-radius:3px;
+	font-size:0.875rem;
+	cursor:default;
+}
+.allDishesUl .oneDish .mark li:nth-child(1){
+	margin-left:0;
+}

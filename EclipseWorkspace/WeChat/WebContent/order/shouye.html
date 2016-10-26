@@ -1,0 +1,50 @@
+<!DOCTYPE  html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gbk">
+<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<link rel="stylesheet" type="text/css" href="../css/menuList.css" />
+<link rel="stylesheet" type="text/css" href="../css/other.css" />
+<script type="text/javascript" src="../js/jquery-1.4.2.min.js"></script>
+<script>
+//让那4张图片的高度等于宽度，但每次都需刷新才可以，否则，高度不会变
+	$(function (){
+    var aa = $("#inside1").innerWidth();
+    $("#inside1").css('height',aa);
+    $("#inside2").css('height',aa);
+    $("#inside3").css('height',aa);
+    $("#inside4").css('height',aa);
+	;
+})
+</script>
+</head>
+	<body style="Font-size:63%;background-color:#F9F5EA"  marginwidth="0" marginheight="0">
+		<div style="width:100%;right:0;left:0;" >
+			<iframe src="pish.html"  width="100%" height="300" frameborder="0" scrolling=no></iframe>
+		</div>
+		<div class="fours" id="fours">
+		<center>
+			<a href="../order/menuList.html" target="_parent"><div class="bors-4" id="inside1" style="float:left">
+				<img src="../picture/1.png" style="height:60%"/>
+				<h1>立即点餐</h1>
+			</div></a>
+			<a href="../mine/myOrder1.html" target="_parent"><div class="bors-4" id="inside2" style="float:left">
+				<img src="../picture/2.png" style="height:60%"/>
+				<h1>我的有菜</h1>
+			</div></a>
+			<a href="#"><div class="bors-4" id="inside3" style="float:left">
+				<img src="../picture/3.png" style="height:60%"/>
+				<h1>团餐服务</h1>
+			</div></a>
+			<a href="#"><div class="bors-4" id="inside4" style="float:left">
+				<img src="../picture/4.png" style="height:60%"/>
+				<h1>精彩活动</h1>
+			</div></a>
+		</center>
+			<div><img src="../picture/h2.png" width="100%"></div>
+			<div class="footer">
+			<iframe src="footer.html" width="100%" height="250px" frameborder="0" scrolling=no></iframe>
+			</div>
+		</div>
+	</body>
+</html>

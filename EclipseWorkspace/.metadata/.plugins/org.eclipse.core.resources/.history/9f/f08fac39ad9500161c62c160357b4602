@@ -1,0 +1,7 @@
+package com.cn.changhong;
+
+import java.util.List;
+
+public class MyEchart {
+  List<Object> list;
+}

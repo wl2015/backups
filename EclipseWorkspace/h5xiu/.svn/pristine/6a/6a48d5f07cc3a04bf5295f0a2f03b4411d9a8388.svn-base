@@ -1,0 +1,275 @@
+﻿/*判断相应输入框输入内容是否正确的全局变量*/
+var checkFPhoneNum = 0;
+var checkFCode = 0;
+var checkFNickName = 0;
+var checkFPassword = 0;
+var checkFSurepass = 0;
+var fpassword;//判断输入的密码
+var fsurepassword//判断重复输入的密码是否正确
+
+$(function(){
+	$('#findpassword-vertify-phone').maxLength(11);
+	$('#findpassword-vertify-input').maxLength(6);
+	$('#findpassword-password').maxLength(16);
+	$('#findpassword-checkpassword').maxLength(16);
+	
+	$('#findpassword-vertify-BTN').click(function(){
+		findPhoneNumber();
+		findVertify();
+		if (checkFPhoneNum == 1 && checkFCode == 1)
+		{
+			showFindPage();
+		}
+	});
+
+	$('#findpassword-BTN').click(function(){
+		findPassword();
+		findSurePassword();		
+		if(checkFPassword==1 && checkFSurepass==1){
+			//alert('密码修改成功');
+			resetPass();
+		}
+	});
+});
+
+
+/*判断输入框内容是否为空*/
+function findPhoneNumber(){
+	var phonenum = $('#findpassword-vertify-information li:eq(0) input');
+	var tip = $('#findpassword-vertify-information li:eq(0) span');
+	var isMobile = /^(?:13\d|15\d|18\d)\d{5}(\d{3}|\*{3})$/; //手机号码验证规则
+
+	if(phonenum.val()==='' || !isMobile.test(phonenum.val())){
+		tip.css('background-color','#FF9FAA');
+		$('#findpassword-vertify-information li:eq(0)').css('border-color','#FF9FAA');
+		tip.html('请输入正确电话');
+		checkFPhoneNum = 0;
+	}else{
+		checkFPhoneNum = 1;
+	}
+	phonenum.bind('input propertychange', function(){
+		if( phonenum.val() != '' && isMobile.test(phonenum.val())){
+			tip.css('background-color','#42C2B3');
+			$('#findpassword-vertify-information li:eq(0)').css('border-color','#F0F0F0');
+			tip.html('电	话');
+			checkFPhoneNum = 1;
+		}
+	});
+}
+
+function findVertify(){
+	var vertify = $('.findpassword-vertify-li input');
+	var tip = $('.findpassword-vertify-li span:eq(0)');
+	var vertifyInput = $('#findpassword-vertify-input');
+	var vertifyBTN = $('.vertify-BTN');
+
+	if(vertify.val()==='' || vertify.val().length < 6){
+		tip.css('background-color','#FF9FAA');
+		vertifyBTN.css('background-color','#FF9FAA');
+		vertifyInput.css('border-color','#FF9FAA');
+		$('#findpassword-vertify-input').css('border-color','#FF9FAA');
+		tip.text('请输入验证码');
+		checkFCode = 0;
+	}else{
+		checkFCode = 1;
+	}
+	vertify.bind('input propertychange', function(){
+		if(vertify.val()!='' && vertify.val().length == 6){
+				tip.css('background-color','#42C2B3');
+				vertifyBTN.css('background-color','#42C2B3');
+				vertifyInput.css('border-color','#F0F0F0');
+				tip.html('验证码');
+				checkFCode = 1;
+		}
+	});
+}
+
+function findPassword(){
+	fpassword = $('#findpassword-information li:eq(0) input');
+	var tip = $('#findpassword-information li:eq(0) span');
+
+	if(fpassword.val() != '' && fpassword.val().length >=6){
+		checkFPassword = 1;
+	}else{
+		if(fpassword.val() === ''){
+			tip.css('background-color','#FF9FAA');
+			$('#findpassword-information li:eq(0)').css('border-color','#FF9FAA');
+			tip.html('请输入密码');
+			checkFPassword = 0;
+		}
+		if(fpassword.val() != '' && fpassword.val().length <6){
+			tip.css('background-color','#FF9FAA');
+			$('#findpassword-information li:eq(0)').css('border-color','#FF9FAA');
+			tip.html('密码长度不足');
+			checkFPassword = 0;
+		}
+		
+	}
+	fpassword.bind('input propertychange', function(){
+		if(fpassword.val()!=''){
+			if(fpassword.val().length < 6){
+				tip.css('background-color','#FF9FAA');
+				$('#findpassword-information li:eq(0)').css('border-color','#FF9FAA');
+				tip.html('密码长度不足');
+			}else{
+				tip.css('background-color','#42C2B3');
+				$('#findpassword-information li:eq(0)').css('border-color','#F0F0F0');
+				tip.html('密	码');
+				if(fpassword.val() === fsurepassword.val()){
+					$('#findpassword-information li:eq(1) span').css('background-color','#42C2B3');
+					$('#findpassword-information li:eq(1)').css('border-color','#F0F0F0');
+					$('#findpassword-information li:eq(1) span').html('确认密码');
+				}else{
+					$('#findpassword-information li:eq(1) span').css('background-color','#FF9FAA');
+					$('#findpassword-information li:eq(1)').css('border-color','#FF9FAA');
+					$('#findpassword-information li:eq(1) span').text('密码不同');
+				}
+				checkFPassword = 1;
+			}
+		}
+	});
+}
+
+
+
+function findSurePassword(){
+	fsurepassword = $('#findpassword-information li:eq(1) input');
+	var tip = $('#findpassword-information li:eq(1) span');
+
+	if(fsurepassword.val() != '' && fsurepassword.val().length >= 6 && fsurepassword.val() === fpassword.val()){
+		checkFSurepass = 1;
+	}else{
+		tip.css('background-color','#FF9FAA');
+		$('#findpassword-information li:eq(1)').css('border-color','#FF9FAA');
+		tip.html('请验证密码');
+		checkFSurepass = 0;
+	}
+	fsurepassword.bind('input propertychange', function(){
+		if(fsurepassword.val()!=''){
+			if(fsurepassword.val().length < 6){
+				tip.css('background-color','#FF9FAA');
+				$('#findpassword-information li:eq(1)').css('border-color','#FF9FAA');
+				tip.text('密码长度不足');
+			}else{
+				if(fsurepassword.val()!= fpassword.val()){
+					tip.css('background-color','#FF9FAA');
+					$('#findpassword-information li:eq(1)').css('border-color','#FF9FAA');
+					tip.text('密码不同');
+				}else{
+					tip.css('background-color','#42C2B3');
+					$('#findpassword-information li:eq(1)').css('border-color','#F0F0F0');
+					tip.html('确认密码');
+					checkFSurepass = 1;
+				}
+			}
+		}
+	});
+}
+//切换页面
+function showFindPage(){
+	$('#findpassword-content').show();
+	$('#findpassword-vertify-content').hide();
+}
+
+/**
+ * checkCode(手机发送验证码)
+ */
+function clickCheckCode(node){
+	var phoneNode=$("#findpassword-vertify-phone");
+	var phoneNum=$("#findpassword-vertify-phone").val();
+	var buttonVal=$(node).val();
+	var $buttonNode=$(node);
+	/*var isMobile = /^(?:13\d|15\d|18\d)\d{5}(\d{3}|\*{3})$/; //手机号码验证规则
+	if(!isMobile.test(phoneNum)){
+		alert("请输入正确的手机号");
+		return;
+	}*/
+	$(node).unbind('click');
+	$(node).html("正在发送...");
+	
+		phoneNode.attr('readonly','readonly');			
+		$.ajax ({
+			url: $.WEB_ROOT + '/getsmsCode?resetPass=1',
+			type:'post',
+			data:{
+				p:phoneNum
+			},
+			dataType:'json',
+			dataFilter: {
+				s:['p']
+			},
+			success:function(res) {
+				if(res.code == 1003) {
+					//获取成功,执行延迟加载程序
+					successCallback();
+				}else if (res.code == 1004) {
+					whenErrorCallBack(res.msg);
+				}else {
+					whenErrorCallBack(res.msg);
+				}
+			},
+			error:function() {
+				whenErrorCallBack("连接错误，请重新发送验证码");
+			}
+		
+		});
+		
+		//发送验证码成功时要调用的函数
+		var successCallback = function() {
+			var waitTime = 60;
+			var timerId = setInterval(timeRun, 1000);
+			function timeRun() {
+				if (waitTime == 0) {
+					clearInterval(timerId);
+					phoneNode.removeAttr('readonly');				
+					$buttonNode.html(buttonVal);
+					$buttonNode.click(clickCheckCode);
+				} else {
+					waitTime --;
+					$buttonNode.html('短信已发送('+waitTime+')');
+				}
+			}
+		};
+		//发送验证码失败时要调用的函数
+		var whenErrorCallBack = function(msg) {			
+			alert(msg);
+			phoneNode.removeAttr('readonly');		
+			$buttonNode.html(buttonVal);
+			$buttonNode.click(clickCheckCode);
+		};	
+}
+
+//重置密码
+function resetPass(){
+	/*var $form=$("#resetPassForm");
+	var $pass=$("#findpassword-password");
+	var $rePass=$("#findpassword-checkpassword");
+	var $phone=$("#findpassword-vertify-phone");
+	var $smsCode=$("#findpassword-vertify-input");*/
+	//var tip = $('#error-msg2');
+	var node=$("#resetPassForm").find("#findpassword-BTN");
+	$(node).unbind('click');
+	$(node).html("正在修改...");
+	//表单合格后提交表单	
+	$.ajax ({
+		url: $.WEB_ROOT + '/user/doResetPass',
+		type:'post',
+		data: $('#resetPassForm'),
+		dataType:'json',
+		success:function(res){
+			$(node).click(resetPass);
+			$(node).html('完成');
+			if(res.code== 2005){				
+				window.location.href = $.WEB_ROOT + '/user/login';
+			}
+			else{
+				alert(res.msg);
+			}					
+		},
+		error:function(){
+			$(node).click(resetPass);
+			$(node).html('完成');
+			alert("密码修改失败，请重新修改");
+		}
+	});		
+}

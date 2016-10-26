@@ -1,0 +1,70 @@
+<html>
+<body>
+<style type="text/css">
+*{margin:0;padding:0;list-style-type:none;}
+a,img{border:0;}
+body{font:12px/180% Arial, Helvetica, sans-serif;}
+/* slidepic-01 */
+.slidebox-01{width:100%;height:300px;overflow:hidden;position:fixed;border:solid 1px #ddd;margin:0px auto;}
+.slidepic-01{position:absolute;width:9999em;}/* ±ØÒªÔªËØ */
+.slidepic-01 li{height:300px;overflow:hidden;float:left;position:relative}
+.slidebtn-01{position:absolute;bottom:10px;right:10px;float:right;}
+.slidebtn-01 li{background:#fff;border:1px solid #D00000;cursor:pointer;float:left;font-family:arial;height:18px;line-height:18px;width:18px;margin:4px;text-align:center;color:#D00000;}
+.slidebtn-01 li.current{background:#FF0000;border:1px solid #D00000;height:24px;line-height:24px;width:24px;margin:0 2px;color:#fff;font-weight:800;}
+</style>
+<div class="slidebox-01">
+	<ul class="slidepic-01">
+		<li><img width="100%" height="300" src="../picture/f1.jpg" /></li>
+		<li><img width="100%" height="300" src="../picture/f2.jpg" /></li>
+		<li><img width="100%" height="300" src="../picture/food1.jpg" /></li>
+		<li><img width="100%" height="300" src="../picture/1.png" /></li>
+	</ul>
+	<div class="slidebtn-01">
+		<ul>
+			<li class="current">1</li>
+			<li>2</li>
+			<li>3</li>		
+			<li>4</li>				
+		</ul>
+	</div>
+</div><!--slidebox-01 end-->
+<script type="text/javascript" src="../js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$(".slidebox-01").css("width",$(window).width());
+	$("img").css("width",$(window).width());
+});
+$(function(){
+	// Í¼Æ¬×óÓÒ·­¹ö
+	var size = $('.slidebtn-01>ul>li').length;
+	var frist = 0;
+	var datetime;
+	$('.slidebtn-01 li').mouseover(function(){
+		frist = $('.slidebtn-01 li').index(this);
+		showpic(frist);
+	}).eq(0).mouseover();
+	
+	$('.slidebox-01').hover(function(){
+		clearInterval(datetime);
+	},function(){
+		datetime = setInterval(function(){
+			showpic(frist)
+			frist++;
+			if(frist==size){
+				frist=0;
+			}
+		},3000);
+	}).trigger('mouseleave');
+
+	function showpic(frist){
+		var imgheight = $('.slidebox-01').width();
+		$('.slidepic-01').stop(true,false).animate({left:-imgheight*frist},600)
+		$('.slidebtn-01 li').removeClass('current').eq(frist).addClass('current');
+	};
+	
+});
+
+</script>
+
+</body>
+</html>

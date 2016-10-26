@@ -1,0 +1,70 @@
+@charseset 'utf-8';
+*{
+	margin:0;
+	padding:0;
+}
+.merchantInfoManage{
+	width:80%;
+	height:auto;
+	margin:0 auto;
+	background:;
+}
+.merchantInfoManage .title{
+	width:100%;
+	height:20px;
+	line-height:20px;
+	font-size:30px;
+	margin-left:20%;
+}
+.merchantInfoManage .list{
+	width:100%;
+	margin:20px auto;
+}
+.merchantInfoManage .list ul{
+	list-style:none;
+}
+.list ul li{
+	width:70%;
+	height:30px;
+	line-height:30px;
+	margin-bottom:20px;
+	clear:both;
+}
+.list ul li strong{
+	float:left;
+	display:block;
+	width:20%;
+	background:#8B0000;
+	color:#fff;
+}
+.list ul li span{
+	display:block;
+	float:left;
+	width:60%;
+	background:#eee;
+	padding-left:5px;
+
+}
+.list ul .aboutMerchant{
+	height:200px;
+}
+.list ul .aboutMerchant span{
+	height:200px;
+}
+
+.answer{
+	width:70%;
+	height:30px;
+	margin-top:30px;
+}
+.answer div{
+	width:20%;
+	height:30px;
+	line-height:30px;
+	border-radius:5px;
+	text-align:center;
+	margin-left:5%;
+	float:left;
+	background:#8B0000;
+	cursor:pointer;
+}

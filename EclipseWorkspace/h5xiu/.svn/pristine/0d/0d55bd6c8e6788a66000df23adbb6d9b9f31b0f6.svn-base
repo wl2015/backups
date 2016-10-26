@@ -1,0 +1,123 @@
+package com.h5.service.impl;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.h5.dao.ProductDao;
+import com.h5.entity.Product;
+import com.h5.service.ProductService;
+import com.h5.util.DateUtil;
+
+@Service
+@Transactional
+public class ProductServiceImpl implements ProductService {
+
+	@Inject
+	private ProductDao productDao;
+
+	/**
+	 * 根据用户id查询所有作品
+	 * */
+	public List<Product> doGetAllProductById(String userId) {
+		return productDao.getAllProductById(userId);
+	}
+
+	/**
+	 * 根据作品id删除该作品
+	 * */
+	public boolean doDeleteProduct(String id) {
+		return productDao.deleteProduct(id);
+	}
+
+/****************************逻辑可能存在问题************************************/
+	/**
+	 * 根据作品id复制一个新的作品
+	 * */
+	public Product doCopyProduct(String id) {
+		Product oldProduct = productDao.getProductById(id);
+		Product newProduct = new Product();
+		newProduct.setAuthorId(oldProduct.getAuthorId());
+		newProduct.setContent(oldProduct.getContent());
+		newProduct.setCreateIp(oldProduct.getCreateIp());
+		newProduct.setCreateTime(DateUtil.convertCurrentDTTMtoInt());
+		newProduct.setDescribe(oldProduct.getDescribe());
+		newProduct.setLastReviseIp(oldProduct.getLastReviseIp());
+		newProduct.setLastReviseTime(DateUtil.convertCurrentDTTMtoInt());
+		newProduct.setMusicId(oldProduct.getMusicId());
+		//未生成相应的二维码
+//		newProduct.setQrCodeAddr(qrCodeAddr)
+		newProduct.setSurfaceAddr(oldProduct.getSurfaceAddr());
+		//title待修改
+		newProduct.setTitle(oldProduct.getTitle()+"(0)");
+		
+		boolean result = productDao.copyProduct(newProduct);
+		if (result){
+			return newProduct;
+		}
+		return null;
+	}
+/****************************逻辑可能存在问题************************************/
+	
+	/**
+	 * 对作品进行下线处理
+	 * */
+	public boolean doOffLineProduct(String id) {
+		return productDao.offLineProduct(id);
+	}
+
+	/**
+	 * 预览作品
+	 * */
+	public Product doPreviewProduct(String id) {
+		Product product = productDao.previewProduct(id);
+		
+		if (product.getMusicId() != null){
+			product.setMusic(productDao.getMusicById(id));
+		}
+		
+		return product;
+	}
+	
+/****************************逻辑可能存在问题************************************/
+	/**
+	 * 保存编辑的作品
+	 * */
+	public boolean doSaveProduct(Product product) {
+		if (product.getMusic() != null){
+			return productDao.saveProduct(product) && productDao.saveMusic(product.getMusic());
+		}
+		
+		return productDao.saveProduct(product);
+	}
+/****************************逻辑可能存在问题************************************/
+	
+	/**
+	 * 编辑作品：获取作品部分信息
+	 * */
+	public Product doEditProduct(String id) {
+		Product product = productDao.editProduct(id);
+		if (product.getMusicId() != null){
+			product.setMusic(productDao.getMusicById(id));
+		}
+		return product;
+	}
+
+	/**
+	 * 用户创建新的作品
+	 * */
+	public String doAddProduct(Product product) {
+		
+		return productDao.addProduct(product);
+	}
+
+	/**
+	 * 用户创建成功新的作品之后，生成相对应的作品的永久二维码
+	 * */
+	public boolean doSetQrCodeAddrById(String productId, String qrCodeAddr) {
+		return productDao.serQrCodeAddrById(productId, qrCodeAddr);
+	}
+}

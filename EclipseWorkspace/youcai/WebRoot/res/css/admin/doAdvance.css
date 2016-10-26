@@ -1,0 +1,65 @@
+@charseset 'utf-8';
+*{
+	margin:0;
+	padding:0;
+}
+.handleAdvance{
+	width:80%;
+	margin:0 auto;
+}
+.handleAdvance .mark{
+	width:100%;
+	height:30px;
+}
+.handleAdvance .oneMerchant{
+	margin-top:10px;
+}
+.handleAdvance .mark div{
+	width:30%;
+	height:30px;
+	line-height:30px;
+	float:left;
+	margin-left:10%;
+	_display:inline;
+}
+.handleAdvance table{
+	width:100%;
+	border-collapse:collapse;
+	border:1px solid #8B0000;
+	text-align:center;
+}
+.handleAdvance table th,td{
+	border-collapse:collapse;
+	border:1px solid #8B0000;
+}
+.handleAdvance table td a{
+	text-decoration:none;
+	color:#8B0000;
+}
+.handleAdvance table td a:hover{
+	text-decoration:underline;
+}
+.backAdvanceButton{
+	float:left;
+	width:100px;
+	height:30px;
+	line-height:30px;
+	margin-top:20px;
+	margin-left:550px;
+	background:#8B0000;
+	border-radius:5px;
+	cursor:pointer;
+	text-align:center;
+}
+.generateButton{
+	float:left;
+	width:100px;
+	height:30px;
+	line-height:30px;
+	margin-top:20px;
+	margin-left:100px;
+	background:#8B0000;
+	border-radius:5px;
+	cursor:pointer;
+	text-align:center;
+}

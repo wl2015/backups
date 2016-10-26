@@ -1,0 +1,120 @@
+@CHARSET 'utf8';
+
+* {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  border: none;
+  z-index: 0;
+}
+
+body {
+  width: 100%;
+  background: #F5F5F5;
+  font-family: '微软雅黑';
+}
+
+.content {
+  margin: 10px;
+}
+
+.content span,a {
+  display: block;
+}
+
+.content li {
+  display: block;
+  width: 100%;
+  height: 30px;
+  line-height: 30px;
+  margin: 15px 0;
+  font-size: 17px;
+  clear: both;
+}
+
+.left {
+  float: left;
+  color: #FE4D3D;
+  margin: 0 10px 0 0;
+}
+
+.center {
+  float: left;
+}
+
+
+#nameModify,#emailModify {
+  float: right;
+  width: 60px;
+  height: 30px;
+  font-size: 16px;
+  text-align: center;
+  line-height: 30px;
+  background: #E94E3D;
+  color: white;
+  border-radius: 10px;
+}
+
+#nameSave,#emailSave {
+  display: none;
+  float: right;
+  width: 60px;
+  height: 30px;
+  font-size: 16px;
+  text-align: center;
+  line-height: 30px;
+  background: #E94E3D;
+  color: white;
+  border-radius: 10px;
+}
+
+.right {
+  float: right;
+  width: 60px;
+  height: 30px;
+  font-size: 16px;
+  text-align: center;
+  line-height: 30px;
+  background: #E94E3D;
+  color: white;
+  border-radius: 10px;
+}
+
+#emailInput,#nameInput {
+  display: none;
+  width: 92%;
+  height: 20px;
+  padding: 5px 3%;
+  font-family: '微软雅黑';
+  font-size: 16px;
+  border: 1px solid #a0a0a0;
+  border-radius: 5px;
+}
+
+.content .button {
+  margin: 40px auto;
+}
+
+.modifyPass {
+  float: left;
+  width: 30%;
+  height: 40px;
+  margin: 10px 5% 10px 15%;
+  text-align: center;
+  line-height: 40px;
+  color: white;
+  background: #E94E3D;
+  border-radius: 10px;
+}
+
+.returnHomepage {
+  float: left;
+  width: 30%;
+  height: 40px;
+  margin: 10px 15% 10px 5%;
+  text-align: center;
+  line-height: 40px;
+  color: white;
+  background: #E94E3D;
+  border-radius: 10px;
+}

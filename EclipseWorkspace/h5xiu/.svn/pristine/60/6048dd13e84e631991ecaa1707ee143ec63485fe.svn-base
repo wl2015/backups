@@ -1,0 +1,15 @@
+package com.h5.dao;
+
+import java.util.List;
+
+import com.h5.entity.Admin;
+import com.h5.entity.User;
+
+
+public interface AdminDao{
+
+	//验证管理员登录
+	//用户登录
+	public Admin doAdLogin(String phoneNum, String pass);
+
+}

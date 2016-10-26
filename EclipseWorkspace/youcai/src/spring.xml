@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-3.0.xsd
+">
+  <!-- 引入属性文件-数据库配置文件 -->
+  <!-- 期望：能不能有一种解决方案可以方便我们在一个阶段内不需要频繁书写一个参数的值，
+  而在不同阶段间又可以方便的切换参数配置信息.
+  解决：spring3中提供了一种简便的方式就是context:property-placeholder/元素
+只需要在spring的配置文件里添加一句：<context:property-placeholder location="classpath:jdbc.properties"/> 
+即可，这里location值为参数配置文件的位置，参数配置文件通常放在src目录下，而参数配置文件的格式跟java通用的参数配置文件相同，即键值对的形式，例如：
+
+#jdbc配置
+test.jdbc.driverClassName=com.mysql.jdbc.Driver
+test.jdbc.url=jdbc:mysql://localhost:3306/test
+test.jdbc.username=root
+test.jdbc.password=root
+
+行内#号后面部分为注释了-->
+  <context:property-placeholder location="classpath:config.properties" />
+  <!-- 自动扫描(自动注入) -->
+  <context:component-scan base-package="com.yc.service..*" />
+  
+  
+    <!-- SpringMVC上传文件时,需配置MultipartResolver处理器 -->
+  <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+      <!-- 指定所上传文件的总大小不能超过8M......注意maxUploadSize属性的限制不是针对单个文件,而是所有文件的容量之和 -->
+      <property name="maxUploadSize" value="8000000"/>
+     <!--  resolveLazily属性启用是为了推迟文件解析，以便在UploadController 中捕获文件大小异常 -->
+         <property name="resolveLazily" value="true"/> 
+  </bean>
+
+  <!-- SpringMVC在超出上传文件限制时,会抛出org.springframework.web.multipart.MaxUploadSizeExceededException -->
+  <!-- 该异常是SpringMVC在检查上传的文件信息时抛出来的,而且此时还没有进入到Controller方法中 -->
+  <bean id="exceptionResolver" class="com.yc.basic.exceptions.WholeExceptionHandler"></bean>
+   
+	<!-- <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+      <property name="exceptionMappings">
+          <props>
+              遇到MaxUploadSizeExceededException异常时,自动跳转到/WEB-INF/jsp/error_fileupload.jsp页面
+              <prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">error/error</prop>
+          </props>
+      </property>
+  </bean> --> 
+
+</beans>

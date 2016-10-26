@@ -1,0 +1,102 @@
+@charset 'utf-8';
+
+*{
+	margin:0;
+	padding:0;
+	border:none;
+	font-family:'微软雅黑';
+}
+
+.refundInfo{
+	width:80%;
+	margin:0 auto;
+}
+.refundInfo .back{
+	width:80px;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+	color:#fff;
+	background:#800000;
+	border-radius:5px;
+	float:right;
+	cursor:pointer;
+}
+.refundInfo .ul1{
+	list-style:none;
+	margin-top:20px;
+	clear:both;
+}
+.refundInfo .ul1 .list1{
+	width:100%;
+	height:30px;
+	line-height:30px;
+	margin-top:10px;
+}
+.refundInfo .ul1 .list1 strong{
+	display:inline-block;
+	width:15%;
+	height:30px;
+	line-height:30px;
+}
+.refundInfo .ul1 .list1 span{
+	display:inline-block;
+	width:70%;
+	height:30px;
+	line-height:30px;
+	padding-left:5px;
+}
+.listDish{
+	margin-top:10px;
+}
+
+.ul2{
+	list-style:none;
+	margin-top:10px;
+}
+.ul2 li{
+	width:100%;
+	height:30px;
+	line-height:30px;
+	text-align:center;
+}
+.ul2 li span{
+	display:inline-block;
+	width:30%;
+	border:1px solid #800000;
+}
+.divTotal{
+	width:50%;
+	height:50px;
+	line-height:50px;
+	font-size:20px;
+}
+.refundReason{
+	margin-top:20px;
+}
+.refundReason div{
+	margin-top:10px;
+	border:1px solid #800000;
+	width:60%;
+	height:100px;
+	white-space:normal;
+	margin-left:40px;
+}
+.list5{
+	margin-top:20px;
+	width:100%;
+	height:30px;
+	line-height:30px;
+}
+.list5 .divRefund,.divSure{
+	float:left;
+	width:80px;
+	height:30px;
+	line-height:30px;
+	margin-left:30%;
+	background:#800000;
+	border-radius:5px;
+	text-align:center;
+	color:#fff;
+	cursor:pointer;
+}

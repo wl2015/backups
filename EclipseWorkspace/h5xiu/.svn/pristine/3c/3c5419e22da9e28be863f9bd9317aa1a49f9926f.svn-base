@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html> 
+<head> 
+<title>注册</title>
+<meta charset=utf-8> 
+<#assign base = springMacroRequestContext.getContextUrl("")>
+<link rel="stylesheet" type="text/css" href="${base}/res/css/user/findpassword.css">
+<script type="text/javascript" charset="utf-8" src="${base}/res/js/jQuery/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="${base}/res/js/inputcheck.js"></script>
+<script type="text/javascript" charset="utf-8" src="${base}/res/js/user/findpassword.js"></script>
+
+</head> 
+
+<body>
+	<form id="resetPassForm" method="post">
+	<div id="findpassword-content" class="findpassword-content" style="display: none">
+		<div class="findpassword-title">
+			KUAIDāO
+		</div>
+		<ul id="findpassword-information" class="findpassword-information ">
+			<li>
+				<span>
+					新密码
+				</span>
+				<input id="findpassword-password" name="newPass" type="password">
+			</li>
+			<li>
+				<span>
+					确认密码
+				</span>
+				<input id="findpassword-checkpassword" name="reNewPass" type="password">	
+						
+			</li>
+			
+			<li id="findpassword-BTN" class="findpassword-BTN">
+				完成
+			</li>
+		</ul>
+	</div>
+
+	<div id="findpassword-vertify-content" class="findpassword-content">
+		<div class="findpassword-title">
+			KUAIDāO
+		</div>
+		<ul id="findpassword-vertify-information" class="findpassword-information">
+			<li>
+				<span>
+					电	话
+				</span>
+				<input id="findpassword-vertify-phone" name="phoneNum" class="vertify-phone" type="text" value="${phoneNum}" readonly>
+			</li>
+			<li class="findpassword-vertify-li">
+				<span>
+					验证码
+				</span>
+				<input id="findpassword-vertify-input" class="vertify-input" name="smsCode" type="text">
+				<span class="vertify-BTN" onclick="clickCheckCode(this)">
+					获取验证码
+				</span>				
+			</li>
+			<li id="findpassword-vertify-BTN" class="findpassword-BTN">
+				下一步
+			</li>
+		</ul>
+	</div>
+	</form>
+</body>

@@ -1,0 +1,134 @@
+.head_box {
+    background: none repeat scroll 0 0 #FBFBFB;
+    box-shadow: 1px 1px 2px rgba(255, 51, 204, 0.1);
+    border-top: 4px solid #ffcc33;
+    position: relative;
+}
+.head .inner:after {
+    clear: both;
+    content: "​";
+    display: block;
+    height: 0;
+}
+.head .inner.wrp {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1200px;
+}
+.head .inner {
+    height: 100px;
+}
+.logo {
+    float: left;
+    font-size: 24px;
+    padding-top: 10px;
+}
+.account {
+    float: right;
+    font-size: 0;
+    padding-top: 10px;
+}
+.logo a:before {
+    display: inline-block;
+}
+.logo a {
+    display: block;
+    overflow: hidden;
+    text-decoration: none;
+    width: 248px;
+}
+.logo a img{
+	max-height:80px;
+}
+.account_info {
+    margin-right: 8px;
+    min-width: 80px;
+    position: relative;
+}
+.account_meta {
+    display: inline-block;
+    font-size: 14px;
+    vertical-align: bottom;
+}
+.account_info .nickname {
+    display: inline-block;
+    font-style: normal;
+    font-weight: 400;
+    margin-top: 18px;
+}
+.account a {
+    color: #222222;
+}
+.account_info .type_wrp {
+    left: 0;
+    position: absolute;
+    top: 2px;
+}
+.account_info .type_wrp .type {
+    vertical-align: top;
+}
+.icon_subscribe_label {
+    display: inline-block;
+    height: 14px;
+    line-height: 100px;
+    overflow: hidden;
+    vertical-align: middle;
+    width: 38px;
+}
+.icon_verify_label {
+    display: inline-block;
+    height: 14px;
+    line-height: 100px;
+    overflow: hidden;
+    vertical-align: middle;
+    width: 37px;
+}
+.account_inbox .icon_inbox {
+    margin-left: 3px;
+    margin-top: 12px;
+}
+.icon_inbox {
+    display: inline-block;
+    height: 15px;
+    line-height: 100px;
+    overflow: hidden;
+    vertical-align: middle;
+    width: 20px;
+}
+.account_info .avatar {
+    background-color: #F0F0F0;
+    height: 38px;
+    left: -50px;
+    position: absolute;
+    top: 0;
+    width: 38px;
+}
+.account_inbox {
+    font-size: 11px;
+    position: relative;
+    top: 2px;
+    z-index: 1;
+}
+.account_inbox_switch {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: rgba(0, 0, 0, 0);
+    border-image: none;
+    border-style: solid;
+    border-width: 1px 1px 0;
+    display: block;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    width: 35px;
+}
+.account_logout a {
+    border-left: 1px solid #E7E7EB;
+    display: inline-block;
+    line-height: 16px;
+    margin-left: 5px;
+    margin-top: 18px;
+    padding-left: 10px;
+}

@@ -1,0 +1,173 @@
+@CHARSET "utf8";
+html {
+    font-size: 62.5%;
+}
+html, body {
+    background: none repeat scroll 0 0 #F9F9F9;
+    font-family: 'Source Sans Pro',sans-serif;
+    min-height: 100%;
+    height: 100%;
+    overflow-x: hidden !important;
+}
+body {
+    background-color: #FFFFFF;
+    color: #333333;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857;
+    margin: 0;
+}
+input, button, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    font-size: 100%;
+    margin: 0;
+}
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+    cursor: pointer;
+}
+button, select {
+    text-transform: none;
+}
+button, input {
+    line-height: normal;
+}
+p {
+    margin: 0 0 10px;
+}
+a {
+    color: #3C8DBC;
+    text-decoration: none;
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+}
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+.bg-black {
+    background-color: #222222 !important;
+}
+.bg-red, .bg-yellow, .bg-aqua, .bg-blue, .bg-light-blue, .bg-green, .bg-navy, .bg-teal, .bg-olive, .bg-lime, .bg-orange, .bg-fuchsia, .bg-purple, .bg-maroon, .bg-black {
+    color: #F9F9F9 !important;
+}
+.form-box {
+    margin: 90px auto 0;
+    width: 360px;
+}
+.form-box .header {
+    background: none repeat scroll 0 0 #3D9970;
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0 -3px 0 rgba(0, 0, 0, 0.2) inset;
+    color: #FFFFFF;
+    font-size: 26px;
+    font-weight: 300;
+    padding: 20px 10px;
+    text-align: center;
+}
+.form-box .body, .form-box .footer {
+    background: none repeat scroll 0 0 #FFFFFF;
+    color: #444444;
+    padding: 10px 20px;
+    padding-top: 20px;
+}
+.bg-gray {
+    background-color: #EAEAEC !important;
+}
+.form-box .body > .form-group, .form-box .footer > .form-group {
+    margin-top: 20px;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+
+
+.form-box .body > .form-group > input, .form-box .footer > .form-group > input {
+    border: medium none #FFFFFF;
+}
+.form-control {
+    border-radius: 0 !important;
+    box-shadow: none;
+}
+.form-control {
+    background-color: #FFFFFF;
+    background-image: none;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555555;
+    display: block;
+    font-size: 14px;
+    height: 34px;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    vertical-align: middle;
+    width: 100%;
+}
+.form-control::-moz-placeholder {
+    color: #999999;
+    opacity: 1;
+}
+.form-box .footer {
+    border-radius: 0 0 4px 4px;
+}
+.form-box .body, .form-box .footer {
+    background: none repeat scroll 0 0 #FFFFFF;
+    color: #444444;
+    padding: 10px 20px;
+}
+
+.form-box .body > .btn, .form-box .footer > .btn {
+    margin-bottom: 10px;
+}
+.btn {
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 3px;
+    box-shadow: 0 -1px 0 0 rgba(0, 0, 0, 0.09) inset;
+    font-weight: 500;
+}
+.bg-olive {
+    background-color: #3D9970 !important;
+}
+.bg-red, .bg-yellow, .bg-aqua, .bg-blue, .bg-light-blue, .bg-green, .bg-navy, .bg-teal, .bg-olive, .bg-lime, .bg-orange, .bg-fuchsia, .bg-purple, .bg-maroon, .bg-black {
+    color: #F9F9F9 !important;
+}
+.btn-block {
+    display: block;
+    padding-left: 0;
+    padding-right: 0;
+    width: 100%;
+}
+.btn {
+    -moz-user-select: none;
+    background-image: none;
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857;
+    margin-bottom: 0;
+    padding: 6px 12px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.border_showdown {
+	transition:border linear .2s,box-shadow linear .5s;
+	-moz-transition:border linear .2s,-moz-box-shadow linear .5s;
+	-webkit-transition:border linear .2s,-webkit-box-shadow linear .5s;
+	-o-transition:border linear .2s,-webkit-box-shadow linear .5s;
+	outline:none;
+	border-color:rgba(241,0,0,.75);
+	/* box-shadow:0 0 8px rgba(241,39,232,.6); */
+	box-shadow:0 0 3px rgba(241,0,0,.6);
+	-moz-box-shadow:0 0 3px rgba(241,0,0,.6);
+	-webkit-box-shadow:0 0 3px rgba(241,0,0,6);
+	-o-box-shadow:0 0 3px rgba(241,0,0,.6);
+}

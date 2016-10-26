@@ -1,0 +1,44 @@
+package com.h5.dao.impl;
+
+import java.util.List;
+
+import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
+
+import com.h5.dao.AdminDao;
+import com.h5.dao.BaseDao;
+
+import com.h5.entity.Admin;
+import com.h5.entity.User;
+
+@Repository
+public class AdminDaoImpl extends BaseDao<Admin> implements AdminDao {
+
+	
+	//获取对应的实体类
+	protected Class<Admin> getEntity() {
+		
+		return Admin.class;
+	}
+	
+	
+	//验证管理员登录
+	
+	public Admin doAdLogin(String phoneNum, String pass){
+		String hql="from Admin where phone_num=? and password=?";
+		Query query=super.createQuery(hql, new Object[]{phoneNum,pass});
+		Admin a=(Admin)query.uniqueResult();
+		return a;		
+	}
+
+	//获取所有用户信息列表
+	public List<User> getUserList() {
+		String hql="SELECT new User(u.userId, u.userName, u.phoneNum, u.registerTime, u.registerIp, u.lastLoginTime, u.lastLoginIp, u.userHeadImg, u.userStatus, u.accountMoney) FROM User u ORDER BY u.registerTime";
+		Query query=super.createQuery(hql);
+
+		List<User> userList = query.list();
+		return userList;
+	}
+
+
+}

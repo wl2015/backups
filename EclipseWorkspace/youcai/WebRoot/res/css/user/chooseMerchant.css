@@ -1,0 +1,119 @@
+/* CSS Document */
+@charset 'utf-8';
+
+*{
+	margin:0;
+	padding:0;
+	border:none;
+	font-family:'微软雅黑';
+}
+img{
+	border:0;
+}
+body{
+	background: #F5F5F5;
+}
+.box{
+	width:96%;
+	margin:0 auto;
+}
+.merchantMap{
+	margin:5px auto;
+	width:100%;
+	background:#FF3300;
+	border:1px solid #000;
+}
+.prevNext{
+	width:100%;
+	text-align:center;
+	color:#fff;
+	margin:10px auto;
+}
+.prevNext .prev{
+	float:left;
+	_display:inline;
+	width:48%;
+	/*height:30px;
+	line-height:30px;*/
+	background:#E94E3D;
+	border-radius:5px;
+	text-align:center;
+	cursor:pointer;
+}
+.prevNext .next{
+	float:right;
+	_display:inline;
+	width:48%;
+	/*height:30px;
+	line-height:30px;*/
+	background:#E94E3D;
+	border-radius:5px;
+	text-align:center;
+	cursor:pointer;
+}
+.merchantInfo{
+	clear:both;
+	width:100%;
+	height:auto;
+	font-size:14px;
+	padding-top:10px;
+}
+.leftPhoto{
+	width:25%;
+	height:100px;
+	float:left;
+}
+.leftPhoto img{
+	max-width:100%;
+	height:100%;
+}
+.rightInfo{
+	float:left;
+	width:65%;
+	height:100px;
+}
+.rightInfo ul{
+	list-style:none;
+	padding-left:5%;
+}
+.rightInfo ul li{
+	width:100%;
+	height:auto;
+	margin:0 auto 3px auto;
+}
+.storeIntro{
+	clear:both;
+	width:100%;
+	height:auto;
+	
+}
+.storeIntro span{
+	font-weight:bold;
+}
+.storeIntro p{
+	padding:5px;
+}
+.evaluate span{
+	font-weight:bold;
+}
+.evaluate p{
+	padding:5px;
+}
+.sureAndExit{
+	width:100%;
+	margin-bottom:5px;
+}
+.sureAndExit .button2{
+	width:100%;
+	/*height:45%;
+	line-height:30px;*/
+	background:#E94E3D;
+	border-radius:5px;
+	text-align:center;
+	color:#fff;
+	margin-top:10px;
+	cursor:pointer;
+}
+
+
+

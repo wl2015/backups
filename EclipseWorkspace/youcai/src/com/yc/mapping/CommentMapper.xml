@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yc.dao.CommentDAO">
+
+  
+  <resultMap id="BaseResultMap" type="com.yc.bean.Comment">
+  
+    <id column="c_id" property="commentId" jdbcType="INTEGER" javaType="int" />
+    <result column="c_intro" property="commentIntro" jdbcType="VARCHAR" />
+    <result column="c_type" property="commentType" jdbcType="VARCHAR" />
+ 
+  </resultMap>
+
+
+  <!-- 查询所有评论 -->
+  <select id="showAllComments"  resultMap="BaseResultMap">
+    select * from comment
+  </select>
+
+  <!-- 查询所有好的评论 -->
+  <select id="showAllGoodComments"  resultMap="BaseResultMap">
+    select * from comment where c_type = 0
+  </select>
+  
+  <!-- 查询所有坏的评论 -->
+  <select id="showAllBadComments"  resultMap="BaseResultMap">
+    select * from comment where c_type = 1
+  </select>
+  
+  
+  <!-- 新增评论 -->
+  <insert id="doAddComment" useGeneratedKeys="true" keyProperty="commentId" parameterType="com.yc.bean.Comment">
+    INSERT INTO comment (c_intro,c_type) VALUES (#{commentIntro}, #{commentType})
+  </insert>
+  
+  <!-- 新增的评论添加到commentShow -->
+  <insert id="addCommentShow" parameterType="java.util.Map">
+    insert into commentshow(m_id,c_id,c_num) values
+    <foreach collection="merIdList" item="item" index="index" separator=",">
+       (#{item}, #{commentId}, 0)
+    </foreach>
+  </insert>
+  
+  <!-- 修改评论信息 -->
+  <update id="updateComment" parameterType="com.yc.bean.Comment">
+    update comment  set  c_intro=#{commentIntro}  where  c_id=#{commentId}
+  </update>
+  
+  <!-- 根据c_id删除评论comment-->
+  <delete id="deleteComment" parameterType="Integer">
+    delete from comment where c_id=#{commentId}
+  </delete>
+  <!-- 根据c_id删除评论commentShow-->
+  <delete id="deleteCommentShow" parameterType="Integer">
+    delete from commentshow where c_id=#{commentId}
+  </delete>
+</mapper>
