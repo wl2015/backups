@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+        namespace="com.changhong.zw.jdbc.mapper.BoardroomUseMapper">
+    <resultMap id="BaseResultMap"
+               type="com.changhong.zw.jdbc.entity.BoardroomUseEntity">
+        <id column="bu_id" property="buId" jdbcType="INTEGER" />
+        <result column="room_id" property="roomId" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+        <result column="plan_end_time" property="planEndTime" jdbcType="TIMESTAMP"/>
+        <result column="actual_end_time" property="actualEndTime" jdbcType="TIMESTAMP"/>
+        <result column="reason" property="reason" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectRoomUseInfoByRoomId" parameterType="map" resultMap="BaseResultMap">
+        select bu_id,room_id,user_id,start_time,plan_end_time,actual_end_time,reason
+        from d_boardroom_use where room_id = #{roomId,jdbcType=VARCHAR}
+    </select>
+</mapper>

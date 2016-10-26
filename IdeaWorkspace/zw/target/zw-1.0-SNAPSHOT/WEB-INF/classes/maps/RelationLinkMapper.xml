@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+        namespace="com.changhong.zw.jdbc.mapper.RelationLinkMapper">
+    <resultMap id="BaseResultMap"
+               type="com.changhong.zw.jdbc.entity.RelationLinkEntity">
+        <id column="l_id" property="linkId" jdbcType="BIGINT" />
+        <result column="l_source" property="source" jdbcType="VARCHAR" />
+        <result column="l_target" property="target" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="selectLinkList" resultMap="BaseResultMap">
+        select l_id,l_source,l_target from t_for_zw_relation_links;
+    </select>
+</mapper>

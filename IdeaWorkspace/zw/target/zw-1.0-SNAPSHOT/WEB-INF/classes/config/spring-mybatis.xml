@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<description>spring数据库配置</description>
+
+	<!-- BoneCP configuration -->
+	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="${jdbc.mysql.url}" />
+		<property name="username" value="${jdbc.mysql.user}" />
+		<property name="password" value="${jdbc.mysql.password}" />
+		<property name="idleConnectionTestPeriod" value="60" />
+		<property name="idleMaxAge" value="240" />
+		<property name="maxConnectionsPerPartition" value="30" />
+		<property name="minConnectionsPerPartition" value="10" />
+		<property name="partitionCount" value="3" />
+		<property name="acquireIncrement" value="5" />
+	</bean>
+
+	<!-- 事务处理 -->
+	<bean id="mysqlTransactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+    <!-- 拦截器方式配置事物 -->
+    <!-- 表示事务的开始策略。
+propagation="REQUIRED"  表示name的那个方法必须要在一个事务的环境中运行。
+read-only="true"  表示只读事务，就是不涉及到数据的修改，只是查询，这是对事务的优化。 -->
+    <!-- PROPAGATION_REQUIRED 支持当前事务，如果当前没有事务，就新建一个事务。这是最常见的选择。 -->
+	<tx:advice id="mysqlTxAdvice" transaction-manager="mysqlTransactionManager">
+		<tx:attributes>
+			<tx:method name="delete*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="insert*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="update*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="batch*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="find*" propagation="SUPPORTS" />
+			<tx:method name="get*" propagation="SUPPORTS" />
+			<tx:method name="select*" propagation="SUPPORTS" />
+			<tx:method name="count*" propagation="SUPPORTS" />
+		</tx:attributes>
+	</tx:advice>
+
+    <!--  配置参与事务的类 -->
+	<aop:config proxy-target-class="true">
+		<aop:pointcut id="mysqlPointCut"
+			expression="execution(public * com.changhong..*.jdbc.service..*.*(..))" />
+		<aop:advisor pointcut-ref="mysqlPointCut" advice-ref="mysqlTxAdvice" order="1"></aop:advisor>
+	</aop:config>
+
+	<!-- 配置sqlSessionFactory工厂 -->
+	
+	<bean id="pgSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath*:maps/**/*.xml" />
+		<property name="typeAliasesPackage" value="com.changhong.**.jdbc.entity"></property>
+	</bean>
+	
+	<!--通过扫描的模式 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- <property name="annotationClass" value="org.springframework.stereotype.Repository" /> -->
+		<property name="sqlSessionFactoryBeanName" value="pgSessionFactory"/>
+		<property name="basePackage" value="com.changhong.**.jdbc.mapper" />
+	</bean>
+</beans>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+        namespace="com.changhong.zw.jdbc.mapper.HeatMapper">
+    <resultMap id="BaseResultMap"
+               type="com.changhong.zw.jdbc.entity.HeatEntity">
+        <id column="heat_id" property="heatId" jdbcType="BIGINT" />
+        <result column="h_name" property="name" jdbcType="VARCHAR" />
+        <result column="heat" property="heat" jdbcType="INTEGER" />
+    </resultMap>
+
+    <select id="selectHeatList" resultMap="BaseResultMap">
+        select heat_id,h_name,heat from t_for_zw_heat;
+    </select>
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+        namespace="com.changhong.zw.jdbc.mapper.IntegralMapper">
+    <resultMap id="BaseResultMap"
+               type="com.changhong.zw.jdbc.entity.IntegralEntity">
+        <id column="integral_id" property="integralId" jdbcType="BIGINT" />
+        <result column="i_add" property="add" jdbcType="INTEGER" />
+        <result column="reduce" property="reduce" jdbcType="INTEGER" />
+        <result column="actual" property="actual" jdbcType="INTEGER" />
+        <result column="i_time" property="time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="selectIntegralListByTime" parameterType="map" resultMap="BaseResultMap">
+        select integral_id,i_add,reduce,actual,i_time from t_for_zw_integral
+        where i_time &gt;= #{startTime,jdbcType=VARCHAR} and i_time &lt;=  #{endTime,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectIntegralList" resultMap="BaseResultMap">
+        select integral_id,i_add,reduce,actual,i_time from t_for_zw_integral;
+    </select>
+
+    <update id="updateIntegralInfoByTime" parameterType="map">
+        update t_for_zw_integral set i_add=#{add,jdbcType=INTEGER}, reduce=#{reduce,jdbcType=INTEGER},
+        actual=#{actual,jdbcType=INTEGER} where i_time &gt;= #{startTime,jdbcType=VARCHAR}
+        and i_time &lt;=  #{endTime,jdbcType=VARCHAR}
+    </update>
+</mapper>

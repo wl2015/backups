@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/assets/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/lib/datepicker/datepicker3.css">
+    <link rel="stylesheet" href="/assets/css/practice3.css">
+</head>
+<body>
+<div class="content">
+    <div class="sub-title">
+        <span class="pull-left">折线图</span>
+        <span class="pull-left fs14 ml620">请选择查看日期</span>
+        <div class="pull-left m-l-lg">
+            <div id="dp1" class="input-group date pull-left w150 p-t-xxs">
+                <input id="setYear1" class="form-control text-center" type="text" readonly>
+                <span class="input-group-addon"><span
+                        class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+            <span class="pull-left text-center p-l-r-s fs14">至</span>
+            <div id="dp2" class="input-group date pull-left w150 p-t-xxs">
+                <input id="setYear2" class="form-control text-center" type="text" value="" readonly>
+                <span class="input-group-addon"><span
+                        class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+        </div>
+        <button id="btnQuery" type="submit" class="btn btn-danger btn-custom pull-right m-t-xxs">查询</button>
+    </div>
+    <div class="margin-top no-margin">
+        <div class="wapper" id="line"></div>
+    </div>
+
+    <div class="sub-title m-b-lg inline-flex">
+        <span>修改折线图数据</span>
+        <span class="fs14 ml450">2016年7月27日&nbsp积分收入</span>
+        <input id="add" class="form-control m-l-lg w150 m-t-xxs">
+        <span class="fs14 p-l-r-s">积分支出</span>
+        <input id="reduce" class="form-control m-l-lg w150 m-t-xxs">
+        <button id="changeData" type="submit" class="btn btn-danger btn-custom m-t-xxs m-l-lg">修改</button>
+    </div>
+
+    <div class="sub-title">
+        <span>柱状图</span>
+    </div>
+    <div class="wapper" id="bar"></div>
+
+    <div class="sub-title">
+        <span>饼图</span>
+    </div>
+    <div class="wapper" id="pie"></div>
+
+    <div class="sub-title">
+        <span>地图热力图</span>
+    </div>
+    <div class="wapper" id="heatmap"></div>
+
+    <div class="sub-title">
+        <span>关系图简单示例</span>
+    </div>
+    <div class="wapper" id="graph"></div>
+
+</div>
+
+</body>
+<!-- jQuery -->
+<script src="/assets/lib/jquery/jquery.min.js"></script>
+<!--bootstarp 3.3.5-->
+<script src="/assets/lib/bootstrap/js/bootstrap.min.js"></script>
+<!-- datepicker -->
+<script src="/assets/lib/datepicker/bootstrap-datepicker.js"></script>
+<script src="/assets/lib/datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
+<!--echart-->
+<script src="/assets/lib/echarts/echarts.min.js"></script>
+<script src="/assets/lib/echarts/china.js"></script>
+<script src="/assets/lib/echarts/sichuan.js"></script>
+<script src="/assets/lib/echarts/xianggang.js"></script>
+<!--引入项目js-->
+<script src="/assets/js/dateMath.js"></script>
+<script src="/assets/js/app-charts.js"></script>
+<script src="/assets/js/app-content.js"></script>
+<script src="/assets/js/practise3.js"></script>
+</html>
