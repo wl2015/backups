@@ -1,0 +1,84 @@
+@CHARSET 'utf8';
+
+* {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  border: none;
+  z-index: 0;
+}
+
+body {
+  width: 100%;
+<!--  background: #808080;-->
+  font-family: '微软雅黑';
+}
+
+.content {
+  width:100%;
+  height:636px;
+  background-image:url('../../img/user/a1.jpg');
+}
+
+.login{
+  margin-left:45%;
+  width:400px;
+  height:200px;
+  background-color: #DDFFFF;
+}
+
+.userName input {
+  width: 200px;
+  height: 20px;
+  margin: 0;
+  padding: 5px 2% 5px 2%;
+  font-size: 16px;
+  font-family: '微软雅黑';
+  background: white;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border: 1px solid gray;
+  border-bottom: none;
+}
+.passWord{
+  margin-top: 4%;
+}
+.passWord input {
+  width: 200px;
+  height: 20px;
+  margin: 0;
+  padding: 5px 2% 5px 2%;
+  font-size: 16px;
+  font-family: '微软雅黑';
+  background: white;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border: 1px solid gray;
+  border-bottom: none;
+}
+
+.buttonDiv{
+  margin-top: 20px;
+  margin-left: 25%;
+}
+.button{
+  width:70px;
+  background: #749a02 url(overlay.png) repeat-x;
+  display: inline-block;
+  padding: 5px 10px 6px;
+  color: #fff;
+  text-decoration: none;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+  border-bottom: 1px solid rgba(0,0,0,0.25);
+  position: relative;
+  cursor: pointer
+}
+.result{
+  margin-left:25%;
+  color: red;
+  font-size: 20px;
+}

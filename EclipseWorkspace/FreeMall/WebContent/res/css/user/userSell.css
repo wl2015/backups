@@ -1,0 +1,34 @@
+@CHARSET 'utf8';
+* {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  border: none;
+  z-index: 0;
+}
+
+body {
+  width: 100%;
+  font-family: '微软雅黑';
+  background-image:url('../../img/user/a4.jpg');
+}
+
+.left{
+  width: 18%;
+  height: 400px;
+  top:120px;
+  left:2%;
+  position: fixed;
+}
+
+.content{
+  width: 100%;
+}
+.left button{
+  line-height: 80px;
+}
+.bottom{
+  widows: 100%;
+  height:46px;
+  background-color: #FF3300;
+}

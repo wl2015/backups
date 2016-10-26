@@ -1,0 +1,154 @@
+html, body {
+  height: 100%;
+}
+.left_btn {
+  border: 1px solid;
+  font-size: 20px;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  -webkit-transition: color 1s;
+  transition: color 1s;
+}
+
+.btn-1 {
+	width:100%;
+	height:15%;
+  color: black;
+}
+
+.btn-1:hover {
+  -webkit-animation: halftone_1 1s forwards;
+  animation: halftone_1 1s forwards;
+  /* background: -webkit-radial-gradient(circle, #9c89f7 0.2em, rgba(0, 0, 0, 0) 0.25em) 0 0/1.25em 1.25em, -webkit-radial-gradient(circle, #9c89f7 0.2em, rgba(0, 0, 0, 0) 0.25em) 6.25em 6.25em/1.25em 1.25em;
+  background: radial-gradient(circle, #9c89f7 0.2em, rgba(0, 0, 0, 0) 0.25em) 0 0/1.25em 1.25em, radial-gradient(circle, #9c89f7 0.2em, rgba(0, 0, 0, 0) 0.25em) 6.25em 6.25em/1.25em 1.25em;
+  color: #e4f789; */
+}
+@-webkit-keyframes halftone_1 {
+  100% {
+    background: #26A65B;
+  }
+}
+@keyframes halftone_1 {
+  100% {
+    background: #26A65B;
+  }
+}
+
+.btn-2 {
+   width:100%;
+  height:15%;
+  color: black;
+}
+.btn-2:hover {
+  -webkit-animation: halftone_2 1s forwards;
+  animation: halftone_2 1s forwards;
+/*   background: -webkit-repeating-linear-gradient(45deg, #82f6d8 0, #82f6d8 0.25em, transparent 0.25em, transparent 0.5em);
+  background: repeating-linear-gradient(45deg, #82f6d8 0, #82f6d8 0.25em, transparent 0.25em, transparent 0.5em);
+  color: #f682a0; */
+}
+@-webkit-keyframes halftone_2 {
+  100% {
+    background: #BF55EC;
+  }
+}
+@keyframes halftone_2 {
+  100% {
+    background: #BF55EC;
+  }
+}
+
+.btn-3 {
+  width:100%;
+  height:15%;
+  color: black;
+}
+.btn-3:hover {
+  -webkit-animation: halftone_3 1s forwards;
+  animation: halftone_3 1s forwards;
+/*   background: -webkit-linear-gradient(45deg, #d3f169 0.5em, transparent 0.5em) 0 0/1em 1em, -webkit-linear-gradient(135deg, #d3f169 0.5em, transparent 0.5em) 0 0/1em 1em;
+  background: linear-gradient(45deg, #d3f169 0.5em, transparent 0.5em) 0 0/1em 1em, linear-gradient(-45deg, #d3f169 0.5em, transparent 0.5em) 0 0/1em 1em;
+  color: #8769f1; */
+}
+@-webkit-keyframes halftone_3 {
+  100% {
+    background: #E74C3C;
+  }
+}
+@keyframes halftone_3 {
+  100% {
+    background: #E74C3C;
+  }
+}
+
+.btn-4 {
+  width:100%;
+  height:15%;
+  color: black;
+}
+.btn-4:hover {
+  -webkit-animation: halftone_4 1s forwards;
+  animation: halftone_4 1s forwards;
+/*   background: -webkit-linear-gradient(315deg, rgba(238, 161, 99, 0.25) 0.25em, transparent 0.25em) -0.5em 0, -webkit-linear-gradient(225deg, rgba(238, 161, 99, 0.25) 0.25em, transparent 0.25em) -0.5em 0, -webkit-linear-gradient(135deg, rgba(238, 161, 99, 0.25) 0.25em, transparent 0.25em) 0 0, -webkit-linear-gradient(45deg, rgba(238, 161, 99, 0.25) 0.25em, transparent 0.25em) 0 0;
+  background: linear-gradient(135deg, rgba(238, 161, 99, 0.25) 0.25em, transparent 0.25em) -0.5em 0, linear-gradient(225deg, rgba(238, 161, 99, 0.25) 0.25em, transparent 0.25em) -0.5em 0, linear-gradient(315deg, rgba(238, 161, 99, 0.25) 0.25em, transparent 0.25em) 0 0, linear-gradient(45deg, rgba(238, 161, 99, 0.25) 0.25em, transparent 0.25em) 0 0;
+  background-size: 0.75em 0.75em;
+  color: #63b0ee; */
+}
+@-webkit-keyframes halftone_4{
+  100% {
+    background: #1E8BC3;
+  }
+}
+@keyframes halftone_4 {
+  100% {
+    background: #1E8BC3;
+  }
+}
+
+.btn-5 {
+  width:100%;
+  height:15%;
+  color: black;
+}
+.btn-5:hover {
+  -webkit-animation: halftone_5 1s forwards;
+  animation: halftone_5 1s forwards;
+/*   background: -webkit-linear-gradient(90deg, #7cf07f 25%, transparent 25%) 0 0/0.5em 0.5em, -webkit-linear-gradient(90deg, #88d6f3 50%, transparent 50%) 0 0/1em 1em;
+  background: linear-gradient(0deg, #7cf07f 25%, transparent 25%) 0 0/0.5em 0.5em, linear-gradient(0deg, #88d6f3 50%, transparent 50%) 0 0/1em 1em;
+  color: #f07ced; */
+}
+
+@-webkit-keyframes halftone_5 {
+  100% {
+    background: #F9690E;
+  }
+}
+
+@keyframes halftone_5 {
+  100% {
+    background: #F9690E;
+  }
+}
+
+.btn-6 {
+  width:100%;
+  height:15%;
+  color: black;
+}
+.btn-6:hover {
+  -webkit-animation: halftone_6 1s forwards;
+  animation: halftone_6 1s forwards;
+/*   background: -webkit-radial-gradient(circle, rgba(249, 135, 155, 0.25) 43%, rgba(0, 0, 0, 0) 50%) 0 0/1em 1em, -webkit-radial-gradient(circle, rgba(249, 135, 155, 0.25) 43%, rgba(0, 0, 0, 0) 50%) 0.5em 0.5em/2em 2em;
+  background: radial-gradient(circle, rgba(249, 135, 155, 0.25) 43%, rgba(0, 0, 0, 0) 50%) 0 0/1em 1em, radial-gradient(circle, rgba(249, 135, 155, 0.25) 43%, rgba(0, 0, 0, 0) 50%) 0.5em 0.5em/2em 2em;
+  color: #0bdcb7; */
+}
+@-webkit-keyframes halftone_6 {
+  100% {
+    background: #F9690E;
+  }
+}
+
+@keyframes halftone_6 {
+  100% {
+    background: #F9690E;
+  }
+}

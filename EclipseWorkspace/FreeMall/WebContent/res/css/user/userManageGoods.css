@@ -1,0 +1,34 @@
+@CHARSET 'utf8';
+.left{
+  width: 10%;
+  height: 400px;
+  top:120px;
+  left:2%;
+  position: fixed;
+}
+
+.content{
+  width: 100%;
+}
+
+table{
+	width: 70%;
+	height: 100px;
+	margin-left: 16%;
+	background-color:white;
+	margin-top: 15px;
+}
+
+table td{
+	color: #EF4836;
+}
+
+td span{
+	color: black;
+}
+
+textarea{
+  resize: none;
+  width: 98%;
+  height: 100%;
+}
