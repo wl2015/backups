@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename type &apos;com.cn.changhong.plsy&apos; to &apos;play&apos;&#x0D;&#x0A;- Original project: &apos;Mytest&apos;&#x0D;&#x0A;- Original element: &apos;com.cn.changhong.plsy&apos;&#x0D;&#x0A;- Renamed element: &apos;com.cn.changhong.play&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;plsy&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;com.cn.changhong{plsy.java[plsy" matchStrategy="1" name="play" qualified="false" references="true" similarDeclarations="false" stamp="1470903905094" textual="false" version="1.0"/>
-</session>
